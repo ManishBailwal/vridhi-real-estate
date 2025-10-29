@@ -56,14 +56,6 @@ export function Header() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
-             <NavigationMenuItem>
-                 <Button 
-                   asChild 
-                   className="ml-4 bg-[var(--accent)] text-primary-foreground hover:bg-[var(--accent)]/90"
-                 >
-                   <Link href="/contact">Contact Us</Link>
-                 </Button>
-            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -94,13 +86,6 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
-              <Button 
-                asChild 
-                className="mt-4 w-full bg-[var(--accent)] text-primary-foreground hover:bg-[var(--accent)]/90"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                 <Link href="/contact">Contact Us</Link>
-              </Button>
             </nav>
           </SheetContent>
         </Sheet>
