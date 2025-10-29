@@ -1,9 +1,16 @@
 // app/page.jsx
 
-import { HeroSection } from "@/components/Hero"; // Corrected import name to match Hero.jsx
+import { HeroSection } from "@/components/Hero"; // Import HeroSection (assuming Hero.jsx exists)
 import { PropertyCard } from "@/components/PropertyCard";
+import { TestimonialCard } from "@/components/TestimonialCard"; // Import TestimonialCard
+import { ServicesSection } from "@/components/ServicesSection"; // Import ServicesSection
+import { Button } from "@/components/ui/button"; // Keep Button import for "View All"
+// Import Carousel components
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
-// This data would normally come from your CMS or API
+// --- Data ---
+
+// Featured Properties Data
 const featuredProperties = [
   {
     slug: "serenity-residential-home",
@@ -38,6 +45,31 @@ const featuredProperties = [
   // Add more properties if needed
 ];
 
+// Testimonials Data (Needed again for mapping)
+const testimonials = [
+  {
+    quote: "Working with Premium Realty was seamless. They understood our needs perfectly and found us our ideal home faster than we expected.",
+    name: "Sarah & Tom Jenkins",
+    location: "Austin, TX"
+  },
+  {
+    quote: "Their market knowledge is unparalleled. They secured an excellent price for our property with utmost professionalism.",
+    name: "Michael Chen",
+    location: "Investor"
+  },
+  {
+    quote: "From start to finish, the experience was first-class. Highly recommend for anyone in the luxury market.",
+    name: "Eleanor Vance",
+    location: "Westlake Resident"
+  },
+  {
+    quote: "The attention to detail and personalized service made all the difference. A truly premium experience.",
+    name: "David Rodriguez",
+    location: "Downtown Austin"
+  }
+];
+
+// --- Component ---
 
 export default function HomePage() {
   return (
@@ -45,18 +77,54 @@ export default function HomePage() {
       {/* 1. Hero Section */}
       <HeroSection />
 
-      {/* 2. Featured Properties Section */}
-      <main className="container mx-auto px-4 py-16">
-        <h2 className="mb-8 text-center text-3xl font-bold text-primary font-serif">
-          Featured Properties
-        </h2>
+      {/* Wrap sections in a main tag with spacing */}
+      <main className="container mx-auto px-4 py-16 space-y-16 md:space-y-24">
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-          {/* Map through the properties and render a card for each */}
-          {featuredProperties.map((prop) => (
-            <PropertyCard key={prop.slug} property={prop} />
-          ))}
-        </div>
+        {/* 2. Featured Properties Section */}
+        <section>
+          <h2 className="mb-8 text-center text-3xl font-bold text-primary font-serif">
+            Featured Properties
+          </h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+            {featuredProperties.map((prop) => (
+              <PropertyCard key={prop.slug} property={prop} />
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+              <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/5 hover:text-primary">
+                View All Listings
+              </Button>
+            </div>
+        </section>
+
+        {/* 3. Services Section - Using the component */}
+        <ServicesSection />
+
+        {/* 4. Testimonials Section - Using TestimonialCard */}
+        <section>
+          <h2 className="mb-10 text-center text-3xl font-bold text-primary font-serif">
+            What Our Clients Say
+          </h2>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-4xl mx-auto" // Centered and limited width
+          >
+            <CarouselContent>
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  {/* Use the TestimonialCard component */}
+                  <TestimonialCard testimonial={testimonial} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="ml-[-50px] hidden sm:flex" /> {/* Position controls outside */}
+            <CarouselNext className="mr-[-50px] hidden sm:flex" />
+          </Carousel>
+        </section>
+
       </main>
     </>
   );
