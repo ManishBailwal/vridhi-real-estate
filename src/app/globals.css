@@ -3,24 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* --- Shadcn UI Theme Inline Definitions (Keep as is) --- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  --font-sans: var(--font-inter); /* Updated to use our font variable */
+  --font-serif: var(--font-playfair); /* Added serif font variable */
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -41,28 +29,56 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  /* Chart and Sidebar colors can be kept or adjusted if needed */
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
 }
 
+/* --- Light Theme Variables --- */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --radius: 0.5rem; /* Slightly reduced for a sharper look */
+
+  /* Our Custom Luxury Palette */
+  --background: 240 14% 99%; /* #F8F9FA - Light Warm Gray */
+  --foreground: 217 33% 15%; /* #1B263B - Charcoal Text */
+
+  --card: 0 0% 100%; /* #FFFFFF - White */
+  --card-foreground: 217 33% 15%; /* Charcoal Text */
+
+  --popover: 0 0% 100%; /* White */
+  --popover-foreground: 217 33% 15%; /* Charcoal Text */
+
+  --primary: 215 65% 11%; /* #0D1B2A - Deep Blue/Charcoal */
+  --primary-foreground: 0 0% 100%; /* White */
+
+  --secondary: 240 14% 97%; /* #F1F3F5 - Slightly darker light gray for subtle contrast */
+  --secondary-foreground: 215 65% 11%; /* Deep Blue */
+
+  --muted: 240 14% 97%; /* Same as secondary */
+  --muted-foreground: 216 15% 52%; /* #778295 - Muted Text Gray */
+
+  --accent: 43 43% 57%; /* #C0A062 - Muted Gold */
+  --accent-foreground: 215 65% 11%; /* Deep Blue on Gold */
+
+  --destructive: 0 84.2% 60.2%; /* Default Red */
+  --destructive-foreground: 0 0% 100%; /* White */
+
+  --border: 220 13% 91%; /* #E0E1E4 - Light Border */
+  --input: 220 13% 91%; /* Light Border for input */
+  --ring: 43 43% 57%; /* Muted Gold for focus rings */
+
+  /* Keep or adjust chart/sidebar colors as needed */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -78,25 +94,37 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* --- Dark Theme Variables (Adjusted for Luxury Feel) --- */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --background: 215 65% 11%; /* #0D1B2A - Deep Blue/Charcoal */
+  --foreground: 220 14% 96%; /* #F0F1F3 - Off-White Text */
+
+  --card: 217 33% 15%; /* #1B263B - Charcoal */
+  --card-foreground: 220 14% 96%; /* Off-White Text */
+
+  --popover: 217 33% 15%; /* Charcoal */
+  --popover-foreground: 220 14% 96%; /* Off-White Text */
+
+  --primary: 220 14% 96%; /* Off-White */
+  --primary-foreground: 215 65% 11%; /* Deep Blue */
+
+  --secondary: 217 33% 20%; /* #243447 - Darker Charcoal */
+  --secondary-foreground: 220 14% 96%; /* Off-White */
+
+  --muted: 217 33% 20%; /* Darker Charcoal */
+  --muted-foreground: 216 15% 65%; /* #9AA5B8 - Lighter Muted Gray */
+
+  --accent: 43 43% 65%; /* #CAA971 - Brighter Gold for Dark Mode */
+  --accent-foreground: 215 65% 11%; /* Deep Blue */
+
+  --destructive: 0 62.8% 30.6%; /* Darker Red */
+  --destructive-foreground: 0 0% 100%; /* White */
+
+  --border: 217 33% 25%; /* #30445C - Dark Border */
+  --input: 217 33% 25%; /* Dark Border for input */
+  --ring: 43 43% 65%; /* Brighter Gold */
+
+  /* Keep or adjust chart/sidebar colors as needed */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -112,11 +140,20 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* --- Base Layer (Keep as is) --- */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+     /* Ensure sans-serif is default, allow override */
+    font-family: var(--font-inter), sans-serif;
+  }
+   /* Apply serif font to specific elements if needed */
+  h1, h2, h3, h4, h5, h6 {
+     /* Example: Apply serif font using the variable */
+     /* font-family: var(--font-playfair), serif; */
+     /* Or use Tailwind's font utility: font-serif */
   }
 }
