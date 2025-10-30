@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { SITE } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import {
   NavigationMenu,
@@ -38,7 +39,7 @@ export function Header() {
            {/* Replace with your SVG logo or Text */}
            <Landmark className="h-6 w-6 text-primary" /> 
            <span className="text-xl font-bold text-primary font-serif">
-             Premium Realty
+             {SITE.title}
            </span>
         </Link>
 
@@ -71,7 +72,7 @@ export function Header() {
             <SheetHeader>
                <SheetTitle className="flex items-center gap-2">
                  <Landmark className="h-5 w-5 text-primary" />
-                 <span className="text-lg font-bold text-primary font-serif">Premium Realty</span>
+                 <span className="text-lg font-bold text-primary font-serif">{SITE.title}</span>
                </SheetTitle>
             </SheetHeader>
             <nav className="mt-8 flex flex-col space-y-4">

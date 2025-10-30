@@ -1,110 +1,142 @@
-// components/HeroSection.jsx
+// components/Hero.jsx
+"use client";
 
-import React from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Search } from 'lucide-react'
+import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+const slides = [
+  {
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=800&fit=crop",
+    title: "Residential Plot for Sale",
+    subtitle: "in Prem Nagar, Dehradun",
+    badge: "Premium Location"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&h=800&fit=crop",
+    title: "Luxury Villa Estate",
+    subtitle: "in Selaqui, Dehradun",
+    badge: "Exclusive Property"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1920&h=800&fit=crop",
+    title: "Modern Apartment Complex",
+    subtitle: "in Sahaspur, Dehradun",
+    badge: "New Launch"
+  }
+];
 
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
-    <div className="relative flex h-[70vh] min-h-[500px] w-full items-center justify-center">
-      {/* BACKGROUND IMAGE */}
-      {/* Use next/image for better performance, or a <div> for a video */}
-      <div 
-        className="absolute inset-0 -z-10"
-        style={{
-          backgroundImage: `url('/images/hero-main.jpg')`, // Add a large hero image to /public/images
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        {/* Dark Overlay for contrast */}
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
+    <section className="relative h-[600px] md:h-[700px] lg:h-[800px] overflow-hidden">
+      {/* Slides */}
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentSlide ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0">
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+          </div>
 
-      {/* CONTENT */}
-      <div className="container mx-auto px-4 text-center">
-        {/* Headline */}
-        <h1 className="mb-4 font-serif text-4xl font-bold text-white md:text-6xl">
-          Your Key to Austin's Premier Properties
-        </h1>
-        <p className="mb-8 text-lg text-gray-200 md:text-xl">
-          Find your next luxury home or investment.
-        </p>
+          {/* Content */}
+          <div className="relative h-full flex items-center">
+            <div className="container mx-auto px-4 md:px-8 lg:px-16">
+              <div className="max-w-3xl">
+                {/* Badge */}
+                <div className="inline-block mb-4 md:mb-6">
+                  <span className="px-4 py-2 bg-red-600 text-white text-sm md:text-base font-semibold rounded-md">
+                    {slide.badge}
+                  </span>
+                </div>
 
-        {/* FILTER BAR */}
-        <div className="mx-auto max-w-4xl rounded-lg bg-white/90 p-4 shadow-lg backdrop-blur-sm">
-          <form className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
-            {/* Location */}
-            <div className="text-left">
-              <label htmlFor="location" className="mb-1 block text-sm font-medium text-primary">
-                Location
-              </label>
-              <Select id="location">
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All Locations" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="downtown">Downtown</SelectItem>
-                  <SelectItem value="westlake">Westlake</SelectItem>
-                  <SelectItem value="barton-creek">Barton Creek</SelectItem>
-                </SelectContent>
-              </Select>
+                {/* Title */}
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
+                  {slide.title}
+                </h1>
+
+                {/* Subtitle */}
+                <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-8">
+                  {slide.subtitle}
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md transition-all transform hover:scale-105 shadow-lg">
+                    View Details
+                  </button>
+                  <button className="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-semibold rounded-md border-2 border-white/30 transition-all">
+                    Contact Us
+                  </button>
+                </div>
+              </div>
             </div>
-
-            {/* Property Type */}
-            <div className="text-left">
-              <label htmlFor="type" className="mb-1 block text-sm font-medium text-primary">
-                Property Type
-              </label>
-              <Select id="type">
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All Types" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="residential">Residential</SelectItem>
-                  <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="plot">Plot</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Budget */}
-            <div className="text-left">
-              <label htmlFor="budget" className="mb-1 block text-sm font-medium text-primary">
-                Budget
-              </label>
-              <Select id="budget">
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Any Price" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="500k">$500,000+</SelectItem>
-                  <SelectItem value="1m">$1,000,000+</SelectItem>
-                  <SelectItem value="3m">$3,000,000+</SelectItem>
-                  <SelectItem value="5m">$5,000,000+</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            {/* Search Button */}
-            <Button 
-              type="submit" 
-              className="w-full bg-[var(--accent)] text-primary-foreground hover:bg-[var(--accent)]/90"
-            >
-              <Search className="mr-2 h-4 w-4" />
-              Search
-            </Button>
-          </form>
+          </div>
         </div>
+      ))}
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-md hover:bg-white/30 rounded-full transition-all z-10"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6 text-white" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-md hover:bg-white/30 rounded-full transition-all z-10"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6 text-white" />
+      </button>
+
+      {/* Slide Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === currentSlide
+                ? 'bg-white w-8'
+                : 'bg-white/50 hover:bg-white/75'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
-    </div>
-  )
+
+      {/* City Skyline SVG Decoration */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 opacity-20">
+        <svg viewBox="0 0 1440 100" className="w-full h-full" preserveAspectRatio="none">
+          <path fill="white" d="M0,50 L50,50 L50,20 L100,20 L100,50 L150,50 L150,10 L200,10 L200,50 L250,50 L250,30 L300,30 L300,50 L1440,50 L1440,100 L0,100 Z" />
+        </svg>
+      </div>
+    </section>
+  );
 }

@@ -5,23 +5,23 @@ export default function AgentsPage() {
   const agents = [
     {
       id: 1,
-      name: 'Alex Doe',
+      name: 'Manish Bailwal',
       title: 'Senior Agent',
-      imageUrl: 'https://placehold.co/400x400/1B263B/ffffff?text=Alex+Doe',
+      imageUrl: 'https://placehold.co/400x400/1B263B/ffffff?text=Manish+Bailwal',
       bio: 'Experienced agent specializing in luxury and waterfront properties.',
-      email: 'alex@example.com',
+      email: 'manish@example.com',
       phone: '123-456-7890',
-      slug: 'alex-doe',
+      slug: 'manish-bailwal',
     },
     {
       id: 2,
-      name: 'Maria Smith',
+      name: 'Aditya Verma',
       title: 'Residential Specialist',
-      imageUrl: 'https://placehold.co/400x400/0D1B2A/ffffff?text=Maria+Smith',
+      imageUrl: 'https://placehold.co/400x400/0D1B2A/ffffff?text=Aditya+Verma',
       bio: 'Local market expert with a focus on family homes and investment properties.',
-      email: 'maria@example.com',
+      email: 'aditya@example.com',
       phone: '987-654-3210',
-      slug: 'maria-smith',
+      slug: 'aditya-verma',
     },
   ]
 

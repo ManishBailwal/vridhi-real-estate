@@ -1,5 +1,6 @@
 // src/app/about/page.js
 import React from 'react';
+import { SITE } from '@/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,7 @@ export default function AboutPage() {
         <div className="container mx-auto">
           <Landmark className="h-8 w-8 text-accent mx-auto mb-2" />
           <h1 className="font-serif text-4xl font-bold text-white md:text-5xl">
-            About Premium Realty
+            About {SITE.title}
           </h1>
           <p className="mt-4 text-lg text-gray-200 md:text-xl">
             Defining Luxury Real Estate in Austin
@@ -36,9 +37,9 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Image Column */}
           <div className="overflow-hidden rounded-lg shadow-lg">
-             <Image
+                <Image
                 src="https://placehold.co/600x400/F8F9FA/1B263B?text=Our+Story" // Placeholder image related to company history/location
-                alt="Premium Realty Office or Cityscape"
+                alt={`${SITE.title} Office or Cityscape`}
                 width={600}
                 height={400}
                 className="w-full h-auto object-cover"
@@ -52,10 +53,10 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-muted-foreground">
               <p>
-                Founded on the principles of integrity, expertise, and unparalleled client service, Premium Realty emerged with a clear vision: to redefine the luxury real estate experience in Austin. We saw a need for a brokerage that not only possessed deep market knowledge but also operated with the discretion and dedication required by discerning clients.
+                Founded on the principles of integrity, expertise, and unparalleled client service, {SITE.title} emerged with a clear vision: to redefine the luxury real estate experience in Austin. We saw a need for a brokerage that not only possessed deep market knowledge but also operated with the discretion and dedication required by discerning clients.
               </p>
               <p>
-                Our journey began over a decade ago, navigating the dynamic Austin market, from serene lakeside estates to sophisticated downtown penthouses. We've built our reputation not just on transactions, but on lasting relationships grounded in trust and exceptional results.
+                Our journey began over a decade ago, navigating the dynamic Austin market, from serene lakeside estates to sophisticated downtown penthouses. We have built our reputation not just on transactions, but on lasting relationships grounded in trust and exceptional results.
               </p>
               <h3 className="font-serif text-2xl font-semibold text-primary pt-4 pb-2">
                 Our Mission
@@ -112,7 +113,7 @@ export default function AboutPage() {
            Meet Our Experts
          </h2>
          <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-8">
-           Our team comprises seasoned professionals dedicated to Austin's luxury market. Get to know the advisors committed to your success.
+           Our team comprises seasoned professionals dedicated to the Austin luxury market. Get to know the advisors committed to your success.
          </p>
          <Button asChild size="lg" className="bg-accent text-primary-foreground hover:bg-accent/90">
            <Link href="/agents">View Our Agents</Link>

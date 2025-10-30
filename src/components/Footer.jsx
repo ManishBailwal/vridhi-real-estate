@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Landmark, Phone, Mail, MapPin } from 'lucide-react' // Import icons
+import { SITE } from '../lib/constants';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,12 +16,12 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Landmark className="h-7 w-7" />
               <span className="text-2xl font-bold font-serif">
-                Premium Realty
+                {SITE.title}
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground/80"> {/* Adjusted text color for better contrast on dark bg */}
-              Your key to Austin's premier properties. Experience unparalleled service and expertise.
-            </p>
+      <p className="text-sm text-muted-foreground/80"> {/* Adjusted text color for better contrast on dark bg */}
+        {SITE.description}
+      </p>
           </div>
 
           {/* Column 2: Quick Links */}
@@ -38,8 +39,8 @@ export function Footer() {
           <div>
             <h4 className="mb-4 text-lg font-semibold uppercase tracking-wider">Resources</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/buyers-guide" className="hover:text-accent transition-colors">Buyer's Guide</Link></li> {/* Added Resources */}
-              <li><Link href="/sellers-guide" className="hover:text-accent transition-colors">Seller's Guide</Link></li>
+              <li><Link href="/buyers-guide" className="hover:text-accent transition-colors">Buyer&apos;s Guide</Link></li> {/* Added Resources */}
+              <li><Link href="/sellers-guide" className="hover:text-accent transition-colors">Seller&apos;s Guide</Link></li>
               <li><Link href="/market-report" className="hover:text-accent transition-colors">Market Report</Link></li>
               <li><Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link></li>
             </ul>
@@ -51,15 +52,15 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                <span>1105 N. Lamar, Suite 100<br />Austin, TX 78703, US</span> {/* Example Address */}
+                <span>{SITE.address}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0" />
-                <a href="tel:+13124313552" className="hover:text-accent transition-colors">(312) 431-3552</a> {/* Example Phone */}
+                <a href={`tel:${SITE.contactPhone}`} className="hover:text-accent transition-colors">{SITE.contactPhone}</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0" />
-                <a href="mailto:info@premiumrealty.com" className="hover:text-accent transition-colors">info@premiumrealty.com</a> {/* Example Email */}
+                <a href={`mailto:${SITE.contactEmail}`} className="hover:text-accent transition-colors">{SITE.contactEmail}</a>
               </li>
             </ul>
             {/* Optional: Add Social Media Icons here */}
@@ -68,7 +69,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-10 border-t border-primary-foreground/20 pt-6 text-center text-sm text-muted-foreground/80">
-          © {currentYear} Premium Realty. All rights reserved.
+          © {currentYear} {SITE.title}. All rights reserved.
         </div>
       </div>
     </footer>

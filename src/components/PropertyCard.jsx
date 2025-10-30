@@ -1,109 +1,76 @@
 // components/PropertyCard.jsx
+"use client";
 
-"use client"
-
-import React from 'react'
-import PropTypes from 'prop-types'
-import Image from 'next/image'
-import Link from 'next/link'
-
-// Shadcn UI Components
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-
-// Icons
-import { BedDouble, Bath, Square } from 'lucide-react'
-
-// Helper for formatting currency
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumFractionDigits: 0,
-});
+import { Home, BedDouble, Bath, Maximize2, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 
 export function PropertyCard({ property }) {
-  // Fallback for missing property data
-  if (!property) return null;
-
-  const {
-    slug,
-    imageUrl,
-    title,
-    address,
-    price,
-    bedrooms,
-    bathrooms,
-    area
-  } = property;
+  const [isHovered, setIsHovered] = useState(false);
+  const imageSrc = property.image || property.imageUrl || property.imageUrl;
 
   return (
-    // Link now wraps the Card directly, no legacyBehavior or <a> tag
-    <Link href={`/properties/${slug}`} className="group block text-decoration-none">
-      <Card className="w-full max-w-sm overflow-hidden rounded-lg border shadow-sm transition-all hover:shadow-xl">
-        {/* IMAGE */}
-        <div className="overflow-hidden">
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={400}
-            height={250}
-            className="h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-            // Add error handling for images
-            onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x250/cccccc/ffffff?text=Image+Error" }}
-          />
+    <div 
+      className="relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer max-w-md"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Property Image */}
+      <div className="relative h-64 overflow-hidden">
+        <img 
+          src={imageSrc} 
+          alt={property.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        {/* Sold Badge */}
+        {property.sold && (
+          <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 rounded text-sm font-semibold">
+            SOLD
+          </div>
+        )}
+
+        {/* Navigation Arrow - appears on hover */}
+        <div 
+          className={`absolute top-1/2 right-6 -translate-y-1/2 bg-white rounded-full p-3 shadow-xl transition-all duration-300 ${
+            isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+          }`}
+        >
+          <ArrowRight className="w-5 h-5 text-gray-800" />
+        </div>
+      </div>
+
+      {/* Property Details */}
+      <div className="bg-white p-6">
+        {/* Title and Price Row */}
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-xl font-bold text-gray-900">{property.title}</h3>
+          <span className="text-xl font-bold text-teal-500">₹{property.price?.toLocaleString?.() ?? property.price}</span>
         </div>
 
-        {/* CONTENT */}
-        <CardContent className="p-4">
-          {/* Title & Price */}
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-primary">
-              {title}
-            </h3>
-            <Badge
-              variant="default"
-              className="shrink-0 bg-[var(--accent)] text-primary-foreground hover:bg-[var(--accent)]/90"
-            >
-              {formatter.format(price)}
-            </Badge>
+        {/* Address */}
+        <p className="text-gray-500 mb-6">{property.address}</p>
+
+        {/* Property Features */}
+        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+          {/* Bedrooms */}
+          <div className="flex flex-col items-start">
+            <BedDouble className="w-5 h-5 text-gray-600 mb-2" />
+            <span className="text-sm font-semibold text-gray-900">{property.bedrooms ?? '-'} Bedrooms</span>
           </div>
 
-          {/* Address */}
-          <p className="mt-1 text-sm text-muted-foreground">
-            {address}
-          </p>
-
-          {/* Stats */}
-          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground"> {/* Use flex-wrap for smaller screens */}
-            <div className="flex items-center gap-1.5">
-              <BedDouble className="h-4 w-4" />
-              <span className="text-sm">{bedrooms} Beds</span> {/* Shortened text */}
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Bath className="h-4 w-4" />
-              <span className="text-sm">{bathrooms} Baths</span> {/* Shortened text */}
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Square className="h-4 w-4" />
-              <span className="text-sm">{area}m²</span>
-            </div>
+          {/* Bathrooms */}
+          <div className="flex flex-col items-start">
+            <Bath className="w-5 h-5 text-gray-600 mb-2" />
+            <span className="text-sm font-semibold text-gray-900">{property.bathrooms ?? '-'} Bathrooms</span>
           </div>
-        </CardContent>
-      </Card>
-    </Link>
-  )
-}
 
-// PropTypes are a good practice in JavaScript to catch bugs
-PropertyCard.propTypes = {
-  property: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    bathrooms: PropTypes.number.isRequired,
-    area: PropTypes.number.isRequired,
-  }).isRequired,
+          {/* Area */}
+          <div className="flex flex-col items-start">
+            <Maximize2 className="w-5 h-5 text-gray-600 mb-2" />
+            <span className="text-sm font-semibold text-gray-900">{property.area ?? '-'}m²</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"; // Import Label
 import { Mail, Phone, MapPin, Send } from 'lucide-react'; // Icons
+import { SITE } from '@/lib/constants';
 
 export default function ContactPage() {
 
@@ -30,7 +31,7 @@ export default function ContactPage() {
             Get In Touch
           </h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            We'd love to hear from you. Whether you have a question about a property, our services, or anything else, our team is ready to answer all your questions.
+            We would love to hear from you. Whether you have a question about a property, our services, or anything else, our team is ready to answer all your questions.
           </p>
         </div>
       </section>
@@ -48,10 +49,9 @@ export default function ContactPage() {
               <MapPin className="h-6 w-6 text-accent mt-1 shrink-0" />
               <div>
                 <h3 className="text-lg font-semibold text-primary">Office Address</h3>
-                {/* Updated Address based on Dehradun context */}
+                {/* Updated Address based on constants.js */}
                 <p className="text-muted-foreground">
-                  Niruwala, Garhi Cantt, NH 72<br />
-                  Dehradun, Uttarakhand, India - 248001
+                  {SITE.address}
                 </p>
                 {/* Add a placeholder for Map */}
                 <div className="mt-4 text-sm text-primary underline hover:text-accent cursor-pointer">
@@ -63,9 +63,9 @@ export default function ContactPage() {
               <Phone className="h-6 w-6 text-accent mt-1 shrink-0" />
               <div>
                 <h3 className="text-lg font-semibold text-primary">Phone</h3>
-                {/* Example Phone - Replace */}
-                <a href="tel:+91XXXXXXXXXX" className="text-muted-foreground hover:text-primary">
-                  +91 (XXX) XXX-XXXX
+                {/* Phone from constants.js */}
+                <a href={`tel:${SITE.contactPhone}`} className="text-muted-foreground hover:text-primary">
+                  {SITE.contactPhone}
                 </a>
               </div>
             </div>
@@ -73,9 +73,9 @@ export default function ContactPage() {
               <Mail className="h-6 w-6 text-accent mt-1 shrink-0" />
               <div>
                 <h3 className="text-lg font-semibold text-primary">Email</h3>
-                 {/* Example Email - Replace */}
-                <a href="mailto:info@premiumrealty.example.com" className="text-muted-foreground hover:text-primary break-all">
-                  info@premiumrealty.example.com
+                 {/* Email from constants.js */}
+                <a href={`mailto:${SITE.contactEmail}`} className="text-muted-foreground hover:text-primary break-all">
+                  {SITE.contactEmail}
                 </a>
               </div>
             </div>

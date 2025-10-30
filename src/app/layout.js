@@ -4,6 +4,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header"; // Import the Header component
 import { Footer } from "@/components/Footer"; // Import the Footer component
+import { SITE } from "@/lib/constants";
 
 // Setup body font
 const inter = Inter({
@@ -19,8 +20,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata = {
-  title: "Premium Realty",
-  description: "Your key to premier properties",
+  title: SITE.title,
+  description: SITE.description,
 };
 
 export default function RootLayout({ children }) {
