@@ -1,63 +1,59 @@
 ## Purpose
-Short, actionable notes to help AI agents be productive in this repo (Next.js + Tailwind site). Focus on discoverable, concrete patterns and commands — not generic advice.
+Concise, actionable notes to help AI coding agents be productive in this Next.js + Tailwind repo. Focus on discoverable patterns, commands, and concrete file examples — not generic advice.
 
 ## Quick commands
-- Development: `npm run dev` (starts Next.js dev server)
-- Build: `npm run build` (Next.js production build)
-- Start (prod): `npm run start`
-- Lint: `npm run lint` (package.json exposes `eslint`)
+- dev: `npm run dev` — Next.js dev server (http://localhost:3000)
+- build: `npm run build` — production build
+- start: `npm run start` — run built app
+- lint: `npm run lint` (calls `eslint`)
 
-Files that demonstrate these workflows: `package.json`, `next.config.mjs`, `tailwind.config.js`.
+Files: `package.json`, `next.config.mjs`, `tailwind.config.js` show important project configs.
 
 ## Big-picture architecture
-- Framework: Next.js (app router). See `src/app/layout.js` and the `app/` directory — pages are colocated as `page.js` / `page.jsx` under folders (e.g. `app/about/page.jsx`).
-- Code layout:
-  - `src/components/` – UI and feature components (many named exports, e.g., `export function Header`)
-  - `src/components/ui/` – design-system primitives/wrappers around Radix UI & Tailwind (e.g. `button.jsx`, `sheet.jsx`, `navigation-menu.jsx`)
-  - `src/lib/` – small utilities and constants (`utils.js`, `constants.js`)
+- Next.js (App Router). Pages live under `src/app/` as `page.js`/`page.jsx` (see `src/app/layout.js`).
+- UI is component-driven under `src/components/`. Design-system primitives live in `src/components/ui/` and are reused across pages.
+- Small utilities and constants in `src/lib/` (`utils.js`, `constants.js`).
 
-Why this matters: most changes are in `src/components` and `app/` — prefer updating shared primitives in `src/components/ui/` to affect site-wide behavior.
+Why this matters: change UI primitives in `src/components/ui/` to affect site-wide behavior (e.g., button variants, sheet behavior).
 
-## Project-specific conventions & patterns
-- Import alias: `@/*` → `src/*` (see `jsconfig.json`). Use absolute imports like `import { Button } from '@/components/ui/button'`.
-- Components follow PascalCase and use named exports (e.g. `export function Header() {}`), so import with braces.
-- Client components: components that use state or browser-only APIs include a top-line `"use client"` directive. Keep server vs client boundaries in mind when moving logic.
-- Styling & utilities:
-  - Tailwind v4 is used; theme custom fonts wired via `next/font` in `src/app/layout.js` and referenced as CSS variables in `tailwind.config.js`.
-  - `src/lib/utils.js` exports `cn(...)` which combines `clsx` + `tailwind-merge`; use it to compose className strings.
-  - `components/ui/button.jsx` uses class-variance-authority (`cva`) to define variant/size patterns — follow this pattern for new primitives.
-- UI primitives: Radix primitives are wrapped under `src/components/ui/` — prefer using those wrappers (Sheet, NavigationMenu, Select, etc.) instead of raw Radix components so you get consistent styling and asChild patterns.
-- Icons: `lucide-react` is used pervasively. Follow the pattern of passing the icon component (not an SVG string) where examples exist (e.g., `Header.jsx` navLinks array uses components).
+## Project-specific conventions
+- Import alias: `@/*` → `src/*` (see `jsconfig.json`). Example: `import { Button } from '@/components/ui/button'`.
+- Exports: components use named exports (PascalCase). Avoid adding default exports unless necessary.
+- Client vs Server: add `"use client"` at the top of files that use state or browser APIs (e.g., interactive components in `src/components/`).
 
-## Image & asset rules discovered
-- `next.config.mjs` already allows external images from `placehold.co` and enables `dangerouslyAllowSVG`. When adding other remote image domains update `remotePatterns`.
-- Many components render images via `img` tag with remote URLs (Hero, PropertyCard). Prefer Next.js `<Image />` only if you also update `next.config.mjs` and handle layout/responsive props.
+Styling & utilities
+- Tailwind v4 is used; fonts are wired via `next/font` in `src/app/layout.js`.
+- Use `cn(...)` from `src/lib/utils.js` to compose classes (it wraps `clsx` + `tailwind-merge`).
+- `cva` is used for component variants (see `src/components/ui/button.jsx`); follow existing `buttonVariants({ variant, size })` patterns.
 
-## Notable code examples (copyable patterns)
-- Button primitive (variant + size with cva): `src/components/ui/button.jsx` — use `buttonVariants({ variant, size })` + `cn(...)` for classes.
-- Navigation + mobile sheet: `src/components/Header.jsx` demonstrates Radix `NavigationMenu` + `Sheet` + `asChild` pattern with `next/link`.
-- Site constants: `src/lib/constants.js` contains `SITE` object (title, contact info) used across Footer and other components.
-- Carousel slicing: `src/components/TestimonialsSection.jsx` uses `itemsPerView = 3` and slices `testimonials.slice(currentIndex, currentIndex + itemsPerView)`; be aware this can lead to fewer items shown near the end — preserve its existing behavior unless intentionally changing UX.
+UI primitives & patterns
+- Radix primitives are wrapped in `src/components/ui/` (Sheet, NavigationMenu, Select, etc.). Prefer wrappers to keep consistent styling and `asChild` semantics.
+- Icons: use `lucide-react` icon components (pass the component, not raw SVG). See `src/components/Header.jsx` for examples.
 
-## Build, lint, and debugging notes
-- Dev server is standard: `npm run dev` -> localhost:3000.
-- Linting: `npm run lint` calls `eslint` (no args in package.json). If you need to run against files, run `npx eslint .` or add args to the script.
-- If you change `next.config.mjs` (image domains, reactCompiler), restart the dev server.
+Images & remote assets
+- `next.config.mjs` already allows `placehold.co` and `dangerouslyAllowSVG`. When adding new remote image hosts, update `remotePatterns` and restart dev server.
+- Many components use plain `<img />`; migrate to `<Image />` only when you update `next.config.mjs` and provide layout props.
 
-## What to watch for when editing
-- Server vs Client: Removing or adding `"use client"` changes where code runs. Keep data fetching and heavy logic on the server unless you need interactivity.
-- Exports: Many components use named exports. Adding a default export may be unexpected for other files that import by name.
-- Tailwind classes are used heavily; avoid accidental class collisions — use `cn(...)` + `cva` for predictable merges.
+Notable files (quick reference)
+- `src/app/layout.js` — app entry, font setup, global layout
+- `src/components/ui/button.jsx` — cva + variants pattern
+- `src/components/ui/sheet.jsx` — sheet wrapper around Radix
+- `src/components/Header.jsx` — navigation + mobile sheet example
+- `src/lib/utils.js` — `cn(...)` helper
+- `src/lib/constants.js` — site-wide constants (SITE object)
 
-## Where to look for more context
-- App entry/layout: `src/app/layout.js`
-- Global styles: `src/app/globals.css`
-- UI primitives: `src/components/ui/` (button, sheet, navigation-menu, input, card, etc.)
-- Example feature UIs: `src/components/Hero.jsx`, `PropertyCard.jsx`, `TestimonialsSection.jsx`, `Header.jsx`, `Footer.jsx`
-- Site constants and utilities: `src/lib/constants.js`, `src/lib/utils.js`
+Build & debugging notes
+- Dev server: `npm run dev` (hot reload)
+- Lint: `npm run lint` (adjust with `npx eslint .` for targeted checks)
+- Changing `next.config.mjs` or Tailwind config requires restarting the dev server.
 
-## If something is missing
-- This file documents only discoverable patterns. Tell me any missing workflows (CI, deploy secrets, custom scripts, or non-standard dev steps) and I will incorporate them.
+Where to look for more context
+- UI primitives: `src/components/ui/`
+- Pages: `src/app/` (each folder has a `page.js`/`page.jsx`)
+- Shared components: `src/components/`
 
----
-Please review: tell me if you want more examples, stricter guardrails (tests/PR linting), or CI/deployment steps added.
+If something is missing
+This file documents only discoverable patterns. If there are CI workflows, tests, or deploy secrets not present here, add them and I will merge updates.
+
+Feedback
+If any section is unclear or you want more examples (tests, CI, PR linting), tell me which area to expand.
