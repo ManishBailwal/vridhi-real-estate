@@ -1,6 +1,7 @@
 // components/AboutSection.jsx
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { SITE } from '@/lib/constants';
 
 export function AboutSection() {
@@ -79,10 +80,12 @@ export function AboutSection() {
           {/* VISUAL (right on large screens) */}
           <div className="lg:col-span-6">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1400&h=1000&fit=crop"
                 alt={`${SITE.title} - premium property`}
                 className="w-full h-[520px] object-cover"
+                width={1400}
+                height={1000}
               />
 
               {/* soft gradient overlay */}

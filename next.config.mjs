@@ -11,6 +11,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
     // Allow SVGs from trusted remote sources (these placeholders return SVG)
     dangerouslyAllowSVG: true,
