@@ -22,13 +22,13 @@ export function AboutSection() {
           {/* CONTENT (left on large screens) */}
           <div className="lg:col-span-6">
             <div className="max-w-xl">
-              <h3 className="text-sm font-medium uppercase tracking-widest text-red-600 mb-3">Who we are</h3>
+              <h3 className="text-sm font-medium uppercase tracking-widest text-amber-600 mb-3">Who we are</h3>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
-                Building trust, delivering value — <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-orange-500">{SITE.title}</span>
+                Building trust, delivering value — <span className="text-amber-500">{SITE.title}</span>
               </h2>
 
-              <p className="text-lg text-slate-700 mb-6">
-                We’re a premium real estate firm based in Dehradun focused on honest deals, thorough documentation and excellent after-sales care. We guide clients from search to ownership with clarity and professionalism.
+              <p className="text-lg text-slate-600 mb-6">
+                We're a premium real estate firm based in Dehradun focused on honest deals, thorough documentation and excellent after-sales care. We guide clients from search to ownership with clarity and professionalism.
               </p>
 
               {/* Stats */}
@@ -66,7 +66,7 @@ export function AboutSection() {
 
               {/* CTAs */}
               <div className="flex flex-wrap gap-3">
-                <Link href="/contact" className="inline-flex items-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transition-transform transform hover:-translate-y-0.5">
+                <Link href="/contact" className="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg transition-transform transform hover:-translate-y-0.5">
                   Get a Consultation
                 </Link>
 
@@ -94,7 +94,7 @@ export function AboutSection() {
               {/* floating glass card */}
               <div className="absolute left-6 bottom-6 max-w-xs bg-white/70 backdrop-blur rounded-2xl p-4 shadow-2xl border border-white/60">
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold">VR</div>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-amber-500 flex items-center justify-center text-white font-bold shadow-md">VR</div>
                   <div>
                     <div className="text-sm font-semibold text-slate-900">Premium Support</div>
                     <div className="text-xs text-slate-600">Dedicated manager for every client</div>
@@ -103,7 +103,7 @@ export function AboutSection() {
 
                 <div className="mt-3 flex items-center justify-between">
                   <div className="text-sm text-slate-700">From</div>
-                  <div className="text-lg font-extrabold text-slate-900">₹ 45L+</div>
+                  <div className="text-lg font-extrabold text-amber-500">₹ 45L+</div>
                 </div>
               </div>
             </div>

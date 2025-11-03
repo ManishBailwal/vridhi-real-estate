@@ -55,15 +55,15 @@ export function TestimonialsSection() {
     <section className="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50 to-slate-100">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-10">
-          <div className="inline-flex items-center justify-center p-3 rounded-xl bg-gradient-to-tr from-red-600 to-orange-500 shadow-lg mb-4">
+          <div className="inline-flex items-center justify-center p-3 rounded-xl bg-amber-500 shadow-lg mb-4 ring-1 ring-amber-400/20">
             <Users className="w-6 h-6 text-white" />
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
-            Hear from our <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-orange-500">clients</span>
+            Hear from our <span className="text-amber-500">clients</span>
           </h2>
 
-          <div className="h-1 w-36 mx-auto rounded-full bg-gradient-to-r from-red-600 to-orange-500 mb-4" />
+          <div className="h-1 w-36 mx-auto rounded-full bg-amber-500 mb-4" />
 
           <p className="text-slate-600 text-lg">Real experiences from people we've helped — transparent, professional, and lasting relationships.</p>
         </div>
@@ -73,17 +73,17 @@ export function TestimonialsSection() {
           <button
             onClick={prev}
             aria-label="Previous testimonials"
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white rounded-full shadow-xl hover:scale-105 transition-transform"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-amber-500 hover:bg-amber-600 rounded-full shadow-xl hover:scale-105 transition-all"
           >
-            <ChevronLeft className="w-6 h-6 text-slate-800" />
+            <ChevronLeft className="w-6 h-6 text-white" />
           </button>
 
           <button
             onClick={next}
             aria-label="Next testimonials"
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white rounded-full shadow-xl hover:scale-105 transition-transform"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-amber-500 hover:bg-amber-600 rounded-full shadow-xl hover:scale-105 transition-all"
           >
-            <ChevronRight className="w-6 h-6 text-slate-800" />
+            <ChevronRight className="w-6 h-6 text-white" />
           </button>
 
           {/* Cards */}
@@ -93,7 +93,7 @@ export function TestimonialsSection() {
                 key={currentIndex + '-' + i}
                 className="relative bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-slate-100"
               >
-                <div className="absolute -top-4 right-6 bg-gradient-to-tr from-red-600 to-orange-500 text-white p-3 rounded-xl shadow-md">
+                <div className="absolute -top-4 right-6 bg-amber-500 text-white p-3 rounded-xl shadow-md">
                   <Quote className="w-5 h-5" />
                 </div>
 

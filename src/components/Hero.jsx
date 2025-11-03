@@ -60,7 +60,7 @@ export function HeroSection() {
               alt={slide.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-sky-900/90 via-indigo-900/80 to-slate-900/60"></div>
           </div>
 
           {/* Content */}
@@ -69,7 +69,7 @@ export function HeroSection() {
               <div className="max-w-3xl">
                 {/* Badge */}
                 <div className="inline-block mb-4 md:mb-6">
-                  <span className="px-4 py-2 bg-red-600 text-white text-sm md:text-base font-semibold rounded-md">
+                  <span className="px-4 py-2 bg-amber-500 text-white text-sm md:text-base font-semibold rounded-md shadow-lg ring-1 ring-amber-400/20">
                     {slide.badge}
                   </span>
                 </div>
@@ -80,13 +80,13 @@ export function HeroSection() {
                 </h1>
 
                 {/* Subtitle */}
-                <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-8">
+                <p className="text-xl md:text-2xl lg:text-3xl text-slate-200 mb-8">
                   {slide.subtitle}
                 </p>
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md transition-all transform hover:scale-105 shadow-lg">
+                  <button className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-md transition-all transform hover:scale-105 shadow-lg">
                     View Details
                   </button>
                   <button className="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-semibold rounded-md border-2 border-white/30 transition-all">
@@ -102,14 +102,14 @@ export function HeroSection() {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-md hover:bg-white/30 rounded-full transition-all z-10"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-amber-500/20 backdrop-blur-md hover:bg-amber-500/40 rounded-full transition-all z-10 ring-1 ring-amber-400/30"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-6 h-6 text-white" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-md hover:bg-white/30 rounded-full transition-all z-10"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-amber-500/20 backdrop-blur-md hover:bg-amber-500/40 rounded-full transition-all z-10 ring-1 ring-amber-400/30"
         aria-label="Next slide"
       >
         <ChevronRight className="w-6 h-6 text-white" />
@@ -123,8 +123,8 @@ export function HeroSection() {
             onClick={() => setCurrentSlide(index)}
             className={`w-3 h-3 rounded-full transition-all ${
               index === currentSlide
-                ? 'bg-white w-8'
-                : 'bg-white/50 hover:bg-white/75'
+                ? 'bg-amber-500 w-8'
+                : 'bg-white/50 hover:bg-amber-400/75'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

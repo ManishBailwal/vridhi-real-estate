@@ -35,9 +35,9 @@ export default function SellersGuidePage() {
     <div className="bg-gradient-to-b from-white to-slate-50">
       <section className="pt-16 pb-12">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-sky-900 mb-4">Seller's Guide</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">Seller's Guide</h1>
           <p className="max-w-3xl mx-auto text-lg text-slate-600">Practical steps and documentation checklist to sell your property quickly and at the best price.</p>
-          <div className="mt-6 inline-flex items-center bg-amber-500 text-slate-900 px-4 py-2 rounded-full font-semibold shadow">Premium seller support</div>
+          <div className="mt-6 inline-flex items-center bg-amber-500 text-white px-4 py-2 rounded-full font-semibold shadow">Premium seller support</div>
         </div>
       </section>
 
@@ -45,11 +45,11 @@ export default function SellersGuidePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             <div>
-              <h2 className="text-2xl font-bold text-sky-900 mb-4">Sell with confidence in 4 steps</h2>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">Sell with confidence in 4 steps</h2>
               <div className="space-y-4">
                 {steps.map((s, i) => (
                   <div key={i} className="flex gap-4 items-start">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-sky-900 text-white shadow-sm font-bold">{i+1}</div>
+                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-amber-500 text-white shadow-md font-bold">{i+1}</div>
                     <div>
                       <div className="text-lg font-semibold text-slate-900">{s.title}</div>
                       <div className="text-sm text-slate-600">{s.desc}</div>

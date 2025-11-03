@@ -50,19 +50,19 @@ export function FeaturedProjects() {
         <div className="flex flex-col md:flex-row items-center justify-between mb-8">
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start mb-4">
-              <div className="p-3 bg-orange-500 rounded-lg shadow-lg">
+              <div className="p-3 bg-amber-500 rounded-lg shadow-lg ring-1 ring-amber-400/20">
                 <Home className="w-6 h-6 text-white" />
               </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              <span className="text-red-600">Featured</span>{' '}
-              <span className="text-blue-900">Projects</span>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              <span className="text-slate-900">Featured</span>{' '}
+              <span className="text-amber-500">Projects</span>
             </h2>
-            <div className="h-1 w-32 bg-gradient-to-r from-red-600 to-blue-900 rounded-full mt-4 mx-auto md:mx-0"></div>
+            <div className="h-1 w-32 bg-amber-500 rounded-full mt-4 mx-auto md:mx-0"></div>
           </div>
 
           <div className="mt-6 md:mt-0">
-            <button className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-semibold shadow hover:scale-[1.02] transition-transform">
+            <button className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-semibold shadow hover:scale-[1.02] transition-all">
               View All Projects
             </button>
           </div>
@@ -75,16 +75,16 @@ export function FeaturedProjects() {
               <div className="relative h-56 overflow-hidden">
                 <img src={p.image} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute top-4 left-4 bg-gradient-to-r from-red-600 to-orange-500 text-white px-3 py-1 rounded-md font-semibold text-sm">{p.type}</div>
-                <div className="absolute top-4 right-4 bg-white/90 text-gray-900 px-3 py-1 rounded-md font-semibold text-sm">{p.price}</div>
+                <div className="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-md font-semibold text-sm shadow-md">{p.type}</div>
+                <div className="absolute top-4 right-4 bg-white/90 text-slate-900 px-3 py-1 rounded-md font-semibold text-sm">{p.price}</div>
               </div>
 
               <div className="p-5">
-                <h3 className="text-lg font-bold text-blue-900 mb-2 group-hover:text-red-600 transition-colors">{p.title}</h3>
+                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors">{p.title}</h3>
 
-                <div className="text-sm text-gray-600 space-y-2 mb-4">
-                  <p className="flex items-center gap-2"><Maximize2 className="w-4 h-4" /> <span className="font-semibold text-gray-900">Area:</span> {p.area}</p>
-                  <p className="flex items-center gap-2"><MapPin className="w-4 h-4" /> <span className="font-semibold text-gray-900">Location:</span> {p.location}</p>
+                <div className="text-sm text-slate-600 space-y-2 mb-4">
+                  <p className="flex items-center gap-2"><Maximize2 className="w-4 h-4" /> <span className="font-semibold text-slate-900">Area:</span> {p.area}</p>
+                  <p className="flex items-center gap-2"><MapPin className="w-4 h-4" /> <span className="font-semibold text-slate-900">Location:</span> {p.location}</p>
                 </div>
 
                 <div className="flex items-center justify-between">

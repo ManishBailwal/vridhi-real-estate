@@ -43,20 +43,20 @@ export function ServicesSection() {
         <div className="text-center mb-12 md:mb-16">
           {/* Icon */}
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-orange-500 rounded-lg shadow-lg">
+            <div className="p-3 bg-amber-500 rounded-lg shadow-lg ring-1 ring-amber-400/20">
               <Home className="w-6 h-6 text-white" />
             </div>
           </div>
 
           {/* Title with Underline */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            <span className="text-red-600">Services</span>{" "}
-            <span className="text-blue-900">We Offer</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            <span className="text-slate-900">Services</span>{" "}
+            <span className="text-amber-500">We Offer</span>
           </h2>
           <div className="flex justify-center mb-6">
-            <div className="h-1 w-32 bg-gradient-to-r from-red-600 to-blue-900 rounded-full"></div>
+            <div className="h-1 w-32 bg-amber-500 rounded-full"></div>
           </div>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
+          <p className="text-slate-600 max-w-3xl mx-auto text-lg">
             We work with the vision to make a modest contribution to the real estate industry by engaging in an array of activities while upholding the highest standards of ethics and morality.
           </p>
         </div>
@@ -68,25 +68,25 @@ export function ServicesSection() {
             return (
               <div
                 key={index}
-                className="group bg-white p-8 rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 border border-gray-200 hover:border-orange-500 hover:-translate-y-2"
+                className="group bg-white p-8 rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 border border-slate-200 hover:border-amber-500 hover:-translate-y-2"
               >
                 {/* Icon */}
-                <div className="mb-6 inline-block p-4 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-500">
+                <div className="mb-6 inline-block p-4 bg-amber-500 rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-500 ring-1 ring-amber-400/20">
                   <Icon className="w-8 h-8 text-white" />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold text-blue-900 mb-4 group-hover:text-red-600 transition-colors">
+                <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-amber-600 transition-colors">
                   {service.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 leading-relaxed mb-6">
+                <p className="text-slate-600 leading-relaxed mb-6">
                   {service.description}
                 </p>
 
                 {/* View More Link */}
-                <button className="text-blue-900 font-semibold hover:text-red-600 transition-colors inline-flex items-center gap-2 group/btn">
+                <button className="text-slate-900 font-semibold hover:text-amber-600 transition-colors inline-flex items-center gap-2 group/btn">
                   View More
                   <svg className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

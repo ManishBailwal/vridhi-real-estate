@@ -32,13 +32,14 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-gradient-to-r from-sky-900 via-indigo-900 to-slate-900 backdrop-blur">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-           {/* Replace with your SVG logo or Text */}
-           <Landmark className="h-6 w-6 text-primary" /> 
-           <span className="text-xl font-bold text-primary font-serif">
+           <div className="rounded-lg bg-amber-500 p-1.5 shadow-md ring-1 ring-amber-400/20">
+             <Landmark className="h-5 w-5 text-white" />
+           </div>
+           <span className="text-xl font-bold text-white font-serif">
              {SITE.title}
            </span>
         </Link>
@@ -51,7 +52,7 @@ export function Header() {
                 {/* Use Radix's asChild pattern so we don't end up with nested <a> tags.
                     NavigationMenuPrimitive.Link will use the child (next/link) as the anchor element. */}
                 <NavigationMenuLink asChild>
-                  <Link href={link.href} className={navigationMenuTriggerStyle()}>
+                  <Link href={link.href} className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 rounded-md transition-colors">
                     {link.label}
                   </Link>
                 </NavigationMenuLink>
@@ -63,16 +64,18 @@ export function Header() {
         {/* Mobile Navigation Trigger */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" className="border-white/20 bg-white/5 hover:bg-white/10 text-white">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right">
+          <SheetContent side="right" className="bg-gradient-to-b from-slate-900 to-indigo-900 border-white/10">
             <SheetHeader>
                <SheetTitle className="flex items-center gap-2">
-                 <Landmark className="h-5 w-5 text-primary" />
-                 <span className="text-lg font-bold text-primary font-serif">{SITE.title}</span>
+                 <div className="rounded-lg bg-amber-500 p-1.5 shadow-md">
+                   <Landmark className="h-4 w-4 text-white" />
+                 </div>
+                 <span className="text-lg font-bold text-white font-serif">{SITE.title}</span>
                </SheetTitle>
             </SheetHeader>
             <nav className="mt-8 flex flex-col space-y-4">
@@ -80,7 +83,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-200 hover:bg-amber-500/20 hover:text-white transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
                 >
                   <link.icon className="h-4 w-4" />

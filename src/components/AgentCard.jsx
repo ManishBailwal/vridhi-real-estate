@@ -13,7 +13,7 @@ export default function AgentCard({ agent }) {
   if (!agent) return null;
 
   return (
-    <Card key={agent.id} className="w-full max-w-sm overflow-hidden border shadow-sm transition-all hover:shadow-lg">
+    <Card key={agent.id} className="w-full max-w-sm overflow-hidden border border-slate-200 shadow-md transition-all hover:shadow-xl hover:border-amber-500">
       <CardHeader className="p-0"> {/* Remove default padding */}
          <Image
             src={agent.imageUrl}
@@ -29,16 +29,16 @@ export default function AgentCard({ agent }) {
           />
       </CardHeader>
       <CardContent className="p-6 text-center"> {/* Center text */}
-        <CardTitle className="text-xl font-semibold text-primary font-serif mb-1">{agent.name}</CardTitle>
-        <CardDescription className="text-accent font-medium mb-3 flex items-center justify-center gap-1.5">
+        <CardTitle className="text-xl font-semibold text-slate-900 font-serif mb-1">{agent.name}</CardTitle>
+        <CardDescription className="text-amber-600 font-medium mb-3 flex items-center justify-center gap-1.5">
            <Briefcase className="h-4 w-4" /> {agent.title}
         </CardDescription>
-        <p className="text-muted-foreground text-sm mb-4">{agent.bio}</p>
+        <p className="text-slate-600 text-sm mb-4">{agent.bio}</p>
         <div className="flex justify-center items-center space-x-4 mb-4">
-          <a href={`mailto:${agent.email}`} title={`Email ${agent.name}`} className="text-muted-foreground hover:text-primary transition-colors">
+          <a href={`mailto:${agent.email}`} title={`Email ${agent.name}`} className="text-slate-600 hover:text-amber-500 transition-colors">
             <Mail className="h-5 w-5" />
           </a>
-          <a href={`tel:${agent.phone.replace(/\s/g, '')}`} title={`Call ${agent.name}`} className="text-muted-foreground hover:text-primary transition-colors">
+          <a href={`tel:${agent.phone.replace(/\s/g, '')}`} title={`Call ${agent.name}`} className="text-slate-600 hover:text-amber-500 transition-colors">
             <Phone className="h-5 w-5" />
           </a>
         </div>

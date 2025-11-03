@@ -47,20 +47,20 @@ export function PopularLocalities() {
   const visible = localities.slice(currentIndex, currentIndex + itemsPerView);
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-blue-900 to-blue-950">
+    <section className="py-16 md:py-24 bg-gradient-to-tr from-sky-900 via-indigo-900 to-slate-900">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between mb-10">
           <div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">Popular Localities</h2>
-            <div className="h-1 w-32 bg-white rounded-full mt-3"></div>
+            <div className="h-1 w-32 bg-amber-500 rounded-full mt-3"></div>
           </div>
 
           <div className="flex items-center gap-3">
-            <button onClick={prev} aria-label="Previous" className="p-2 rounded-full bg-white/90 hover:bg-white shadow">
-              <ChevronLeft className="w-5 h-5 text-blue-900" />
+            <button onClick={prev} aria-label="Previous" className="p-2 rounded-full bg-amber-500 hover:bg-amber-600 shadow transition-colors">
+              <ChevronLeft className="w-5 h-5 text-white" />
             </button>
-            <button onClick={next} aria-label="Next" className="p-2 rounded-full bg-white/90 hover:bg-white shadow">
-              <ChevronRight className="w-5 h-5 text-blue-900" />
+            <button onClick={next} aria-label="Next" className="p-2 rounded-full bg-amber-500 hover:bg-amber-600 shadow transition-colors">
+              <ChevronRight className="w-5 h-5 text-white" />
             </button>
           </div>
         </div>
@@ -74,17 +74,17 @@ export function PopularLocalities() {
 
               <div className="absolute bottom-0 left-0 right-0 p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">{loc.name}</h3>
-                  <p className="text-sm text-white/90">Explore properties &amp; trends</p>
+                  <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors">{loc.name}</h3>
+                  <p className="text-sm text-slate-200">Explore properties &amp; trends</p>
                 </div>
 
-                <button className="bg-white text-blue-900 rounded-md px-3 py-2 flex items-center gap-2 shadow hover:translate-x-1 transition-transform">
+                <button className="bg-amber-500 hover:bg-amber-600 text-white rounded-md px-3 py-2 flex items-center gap-2 shadow hover:translate-x-1 transition-all">
                   Explore
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="absolute inset-0 rounded-2xl border-4 border-transparent group-hover:border-orange-400 transition-all duration-500" />
+              <div className="absolute inset-0 rounded-2xl border-4 border-transparent group-hover:border-amber-500 transition-all duration-500" />
             </article>
           ))}
         </div>

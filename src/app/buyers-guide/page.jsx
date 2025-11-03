@@ -40,7 +40,7 @@ export default function BuyersGuidePage() {
           <p className="max-w-3xl mx-auto text-lg text-slate-600">
             A practical, step-by-step guide to buying property in Dehradun. Use this as a checklist while you search, inspect and close your next home.
           </p>
-          <div className="mt-6 inline-flex items-center bg-amber-500 text-slate-900 px-4 py-2 rounded-full font-semibold shadow">Trusted by local buyers</div>
+          <div className="mt-6 inline-flex items-center bg-amber-500 text-white px-4 py-2 rounded-full font-semibold shadow">Trusted by local buyers</div>
         </div>
       </section>
 
@@ -52,7 +52,7 @@ export default function BuyersGuidePage() {
               <div className="space-y-4">
                 {steps.map((s, i) => (
                   <div key={i} className="flex gap-4 items-start">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-sky-900 text-white shadow-sm font-bold">{i+1}</div>
+                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-amber-500 text-white shadow-md font-bold">{i+1}</div>
                     <div>
                       <div className="text-lg font-semibold text-slate-900">{s.title}</div>
                       <div className="text-sm text-slate-600">{s.desc}</div>

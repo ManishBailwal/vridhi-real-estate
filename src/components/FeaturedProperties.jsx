@@ -61,18 +61,18 @@ export function FeaturedProperties() {
         <div className="text-center mb-12 md:mb-16">
           {/* Icon */}
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-orange-500 rounded-lg shadow-lg">
+            <div className="p-3 bg-amber-500 rounded-lg shadow-lg ring-1 ring-amber-400/20">
               <Home className="w-6 h-6 text-white" />
             </div>
           </div>
 
           {/* Title with Underline */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            <span className="text-red-600">Featured</span>{" "}
-            <span className="text-blue-900">Properties</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            <span className="text-slate-900">Featured</span>{" "}
+            <span className="text-amber-500">Properties</span>
           </h2>
           <div className="flex justify-center">
-            <div className="h-1 w-32 bg-gradient-to-r from-red-600 to-blue-900 rounded-full"></div>
+            <div className="h-1 w-32 bg-amber-500 rounded-full"></div>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export function FeaturedProperties() {
 
         {/* View All Button */}
         <div className="text-center">
-          <button className="px-10 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+          <button className="px-10 py-4 bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
             View All Properties
           </button>
         </div>
