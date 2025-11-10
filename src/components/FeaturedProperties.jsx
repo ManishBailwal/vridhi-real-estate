@@ -1,59 +1,53 @@
 // components/FeaturedProperties.jsx
+"use client";
+
+import { useState, useEffect } from 'react';
 import { PropertyCard } from './PropertyCard';
 import { Home } from 'lucide-react';
-
-const featuredProperties = [
-  {
-    slug: "agricultural-farm-land",
-    imageUrl: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop",
-    title: "150 Sq. Yards Agricultural/Farm Land For Sale In Pondha, Dehradun",
-    address: "Pondha, Dehradun",
-    price: 4275000,
-    area: 150,
-  },
-  {
-    slug: "mdda-approved-plot",
-    imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop",
-    title: "MDDA APPROVED RESIDENTIAL PLOT",
-    address: "Pondha, Dehradun",
-    price: 5700000,
-    area: 200,
-  },
-  {
-    slug: "residential-plot-prem-nagar",
-    imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop",
-    title: "150 Sq. Yards Residential Plot For Sale In Prem Nagar, Dehradun",
-    address: "Prem Nagar, Dehradun",
-    price: 2250000,
-    area: 150,
-  },
-  {
-    slug: "villa-sahaspur",
-    imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
-    title: "Luxury Villa in Sahaspur",
-    address: "Sahaspur, Dehradun",
-    price: 8500000,
-    area: 250,
-  },
-  {
-    slug: "apartment-selaqui",
-    imageUrl: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
-    title: "Modern Apartment Complex",
-    address: "Selaqui, Dehradun",
-    price: 6500000,
-    area: 180,
-  },
-  {
-    slug: "commercial-land",
-    imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-    title: "Premium Commercial Land",
-    address: "Rajpur Road, Dehradun",
-    price: 12500000,
-    area: 300,
-  }
-];
+import { db } from '@/lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export function FeaturedProperties() {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        // Fetch all properties and filter featured ones client-side to avoid index requirement
+        const querySnapshot = await getDocs(collection(db, 'properties'));
+        const allProperties = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          slug: doc.id,
+          ...doc.data()
+        }));
+        
+        // Filter and sort client-side - check both boolean true and string "true"
+        const featuredProps = allProperties
+          .filter(p => p.featured === true || p.featured === 'true')
+          .sort((a, b) => {
+            const dateA = new Date(a.createdAt || 0);
+            const dateB = new Date(b.createdAt || 0);
+            return dateB - dateA; // Sort descending (newest first)
+          })
+          .slice(0, 6); // Limit to 6
+        
+        setProperties(featuredProps);
+      } catch (error) {
+        console.error('Error fetching featured properties:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  // Don't render the section at all if there are no featured properties
+  if (!loading && properties.length === 0) {
+    return null;
+  }
+
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
@@ -77,18 +71,26 @@ export function FeaturedProperties() {
         </div>
 
         {/* Properties Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center mb-12">
-          {featuredProperties.map((property) => (
-            <PropertyCard key={property.slug} property={property} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center mb-12">
+              {properties.map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
 
-        {/* View All Button */}
-        <div className="text-center">
-          <button className="px-10 py-4 bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-            View All Properties
-          </button>
-        </div>
+            {/* View All Button */}
+            <div className="text-center">
+              <a href="/listings" className="inline-block px-10 py-4 bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                View All Properties
+              </a>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

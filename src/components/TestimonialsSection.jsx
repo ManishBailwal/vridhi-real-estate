@@ -1,54 +1,72 @@
 // components/TestimonialsSection.jsx
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, Quote } from 'lucide-react';
 import { SITE } from '@/lib/constants';
-
-const testimonials = [
-  {
-    quote: `Working with ${SITE.title} was seamless. They understood our needs perfectly and found us our ideal property faster than we expected.`,
-    name: 'Rajesh Kumar',
-    location: 'Prem Nagar, Dehradun',
-  },
-  {
-    quote: 'Their market knowledge is unparalleled. They secured an excellent price for our property with utmost professionalism.',
-    name: 'Priya Sharma',
-    location: 'Property Investor',
-  },
-  {
-    quote: 'From start to finish, the experience was first-class. Highly recommend for anyone looking for property in Dehradun.',
-    name: 'Amit Verma',
-    location: 'Selaqui Resident',
-  },
-  {
-    quote: 'The attention to detail and personalized service made all the difference. A truly premium experience from start to finish.',
-    name: 'Neha Singh',
-    location: 'Sahaspur, Dehradun',
-  },
-  {
-    quote: 'Excellent support throughout the buying process. They made what seemed complex very simple and straightforward.',
-    name: 'Vikram Patel',
-    location: 'Pondha, Dehradun',
-  },
-];
+import { db } from '@/lib/firebase';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerView = 3;
 
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const q = query(collection(db, 'testimonials'), orderBy('createdAt', 'desc'));
+        const querySnapshot = await getDocs(q);
+        const testimonialsData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setTestimonials(testimonialsData);
+      } catch (error) {
+        console.error('Error fetching testimonials:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    if (testimonials.length > 0) {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }
   };
 
   const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    if (testimonials.length > 0) {
+      setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    }
   };
 
   // compute visible slice with wrap-around
   const visible = [];
-  for (let i = 0; i < itemsPerView; i++) {
-    visible.push(testimonials[(currentIndex + i) % testimonials.length]);
+  if (testimonials.length > 0) {
+    for (let i = 0; i < Math.min(itemsPerView, testimonials.length); i++) {
+      visible.push(testimonials[(currentIndex + i) % testimonials.length]);
+    }
+  }
+
+  if (loading) {
+    return (
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50 to-slate-100">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center py-20">
+            <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) {
+    return null; // Don't show section if no testimonials
   }
 
   return (

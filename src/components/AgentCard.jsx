@@ -2,8 +2,6 @@
 "use client"; // Mark this as a Client Component because it uses an event handler (onError)
 
 import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 // import { Button } from '@/components/ui/button'; // Uncomment if using the button
@@ -12,14 +10,15 @@ import { Mail, Phone, Briefcase } from 'lucide-react'; // Icons
 export default function AgentCard({ agent }) {
   if (!agent) return null;
 
+  // Provide a fallback image URL if imageUrl is missing or invalid
+  const imageUrl = agent.imageUrl || `https://placehold.co/400x400/1B263B/ffffff?text=${encodeURIComponent(agent.name || 'Agent')}`;
+
   return (
     <Card key={agent.id} className="w-full max-w-sm overflow-hidden border border-slate-200 shadow-md transition-all hover:shadow-xl hover:border-amber-500">
       <CardHeader className="p-0"> {/* Remove default padding */}
-         <Image
-            src={agent.imageUrl}
+         <img
+            src={imageUrl}
             alt={`${agent.name} headshot`}
-            width={400}
-            height={400} // Keep aspect ratio square or adjust as needed
             className="w-full h-auto object-cover aspect-square" // Ensure image covers the area
             // onError handler is allowed here in a Client Component
             onError={(e) => {

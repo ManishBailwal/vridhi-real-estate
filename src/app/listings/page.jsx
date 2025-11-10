@@ -1,6 +1,8 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Home, BedDouble, Bath, Maximize2, ArrowRight } from 'lucide-react';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 const PropertyCard = ({ property, onHover }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -73,74 +75,29 @@ const PropertyCard = ({ property, onHover }) => {
 };
 
 const PropertyListingsPage = () => {
-  const properties = [
-    {
-      id: 1,
-      title: 'Serenity Residential Home',
-      address: '15 S Aurora Ave, Miami',
-      price: 570000,
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 120,
-      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&h=800&fit=crop',
-      sold: true
-    },
-    {
-      id: 2,
-      title: 'Mountain View Villa',
-      address: '18 S Aurora Ave, Miami',
-      price: 575000,
-      bedrooms: 5,
-      bathrooms: 2,
-      area: 150,
-      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=800&fit=crop',
-      sold: false
-    },
-    {
-      id: 3,
-      title: 'Modern Luxe Apartment',
-      address: '20 S Aurora Ave, Miami',
-      price: 580000,
-      bedrooms: 3,
-      bathrooms: 4,
-      area: 180,
-      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=800&fit=crop',
-      sold: false
-    },
-    {
-      id: 4,
-      title: 'Contemporary Villa',
-      address: '22 S Aurora Ave, Miami',
-      price: 620000,
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 140,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop',
-      sold: false
-    },
-    {
-      id: 5,
-      title: 'Elegant Estate',
-      address: '25 S Aurora Ave, Miami',
-      price: 750000,
-      bedrooms: 6,
-      bathrooms: 5,
-      area: 220,
-      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=800&fit=crop',
-      sold: false
-    },
-    {
-      id: 6,
-      title: 'Urban Penthouse',
-      address: '30 S Aurora Ave, Miami',
-      price: 890000,
-      bedrooms: 3,
-      bathrooms: 3,
-      area: 160,
-      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&h=800&fit=crop',
-      sold: false
-    }
-  ];
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const q = query(collection(db, 'properties'), orderBy('createdAt', 'desc'));
+        const querySnapshot = await getDocs(q);
+        const propertiesData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          image: doc.data().imageUrl,
+          ...doc.data()
+        }));
+        setProperties(propertiesData);
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -174,11 +131,21 @@ const PropertyListingsPage = () => {
 
       {/* Property Grid */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : properties.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {properties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20">
+            <p className="text-slate-600 text-lg">No properties available at the moment.</p>
+          </div>
+        )}
       </div>
     </div>
   );

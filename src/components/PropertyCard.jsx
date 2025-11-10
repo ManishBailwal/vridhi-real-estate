@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export function PropertyCard({ property }) {
   const [isHovered, setIsHovered] = useState(false);
-  const imageSrc = property.image || property.imageUrl || property.imageUrl;
+  const imageSrc = property.image || property.imageUrl || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
 
   return (
     <div 
@@ -20,6 +20,10 @@ export function PropertyCard({ property }) {
           src={imageSrc} 
           alt={property.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
+          }}
         />
 
         {/* Sold Badge */}
