@@ -42,12 +42,12 @@ Vridhi Real Estate is a complete real estate website solution with:
 - 📊 **Dashboard**: Real-time statistics for properties, agents, and testimonials
 - 🏢 **Properties Management**:
   - Add, edit, and delete properties
-  - Upload property images to Firebase Storage
+  - Upload property images to Cloudinary
   - Mark properties as featured or sold
   - Full property details (title, address, price, bedrooms, bathrooms, area)
 - 👤 **Agents Management**:
   - Add, edit, and delete agent profiles
-  - Upload agent photos
+  - Upload agent photos to Cloudinary
   - Manage contact information and bios
 - 💬 **Testimonials Management**:
   - Add, edit, and delete client testimonials
@@ -67,7 +67,7 @@ Vridhi Real Estate is a complete real estate website solution with:
 ### Backend & Services
 - **Database**: Firebase Firestore (NoSQL)
 - **Authentication**: Firebase Authentication
-- **Storage**: Firebase Storage (for images)
+- **Image Storage**: Cloudinary (for property and agent images)
 - **Hosting**: Vercel (recommended)
 
 ### Development Tools
@@ -82,6 +82,7 @@ Vridhi Real Estate is a complete real estate website solution with:
 ### Prerequisites
 - Node.js 18+ and npm installed
 - Firebase account ([console.firebase.google.com](https://console.firebase.google.com))
+- Cloudinary account ([cloudinary.com](https://cloudinary.com)) - Free tier available
 - Git installed
 
 ### Installation
@@ -98,6 +99,8 @@ npm install
 ```
 
 3. **Set up Firebase** (see [Firebase Setup](#firebase-setup) section)
+
+4. **Set up Cloudinary** (see [Cloudinary Setup](#cloudinary-setup) section)
 
 4. **Run the development server**
 ```bash
@@ -170,12 +173,66 @@ const firebaseConfig = {
 3. Select a Cloud Firestore location
 4. Click **Enable**
 
-#### Enable Firebase Storage
-1. Go to **Storage** → **Get Started**
-2. Choose **Start in test mode** (for development)
-3. Click **Done**
+---
 
-### Step 4: Configure Security Rules (Recommended)
+## ☁️ Cloudinary Setup
+
+Cloudinary is used for storing and managing property and agent images.
+
+### Step 1: Create Cloudinary Account
+
+1. Go to [cloudinary.com](https://cloudinary.com)
+2. Sign up for a free account
+3. Verify your email
+
+### Step 2: Get Your Credentials
+
+1. After login, go to your **Dashboard**
+2. Note down these values:
+   - **Cloud Name**: `dquflnv4j` (already configured)
+   - **Upload Preset**: You'll create this in the next step
+
+### Step 3: Create Upload Preset
+
+1. Go to **Settings** → **Upload** tab
+2. Scroll down to **Upload presets**
+3. Click **Add upload preset**
+4. Configure the preset:
+   - **Preset name**: `vridhi`
+   - **Signing Mode**: Select **Unsigned** (for browser uploads)
+   - **Folder**: `vridhi-real-estate` (optional, for organization)
+5. Click **Save**
+
+### Step 4: Environment Variables (Optional)
+
+The Cloudinary credentials are already configured in the code:
+```javascript
+Cloud Name: dquflnv4j
+Upload Preset: vridhi
+```
+
+If you want to use environment variables instead, create a `.env.local` file:
+```env
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dquflnv4j
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=vridhi
+```
+
+### Step 5: Enable Auto-Delete (Optional)
+
+To automatically clean up deleted images:
+1. Go to **Settings** → **Upload** tab
+2. Find your `vridhi` preset
+3. Enable **Auto-delete** or set up lifecycle rules
+4. Save changes
+
+**Note**: With unsigned uploads, manual deletion via API is not supported. Images will be logged for deletion, but you'll need to either:
+- Enable auto-delete in Cloudinary settings
+- Manually clean up unused images from the Cloudinary dashboard
+- Upgrade to signed uploads with API key/secret for programmatic deletion
+
+---
+
+### Step 4: Configure Firestore Security Rules (Recommended)
 
 #### Firestore Security Rules
 Go to **Firestore Database** → **Rules** and update:
@@ -193,20 +250,7 @@ service cloud.firestore {
 }
 ```
 
-#### Storage Security Rules
-Go to **Storage** → **Rules** and update:
-
-```javascript
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read: if true; // Public read access
-      allow write: if request.auth != null; // Only authenticated users
-    }
-  }
-}
-```
+---
 
 ---
 
@@ -255,7 +299,8 @@ service firebase.storage {
 - ✅ Add new property
 - ✏️ Edit existing property
 - 🗑️ Delete property (with confirmation)
-- 📸 Upload images to Firebase Storage
+- 📸 Upload images to Cloudinary
+- 🗑️ Auto-delete images from Cloudinary when property is deleted
 
 #### Agents Management (`/admin/agents`)
 **Fields:**
@@ -270,7 +315,8 @@ service firebase.storage {
 - ✅ Add new agent
 - ✏️ Edit agent profile
 - 🗑️ Delete agent (with confirmation)
-- 📸 Upload photos to Firebase Storage
+- 📸 Upload photos to Cloudinary
+- 🗑️ Auto-delete photos from Cloudinary when agent is deleted
 
 #### Testimonials Management (`/admin/testimonials`)
 **Fields:**
@@ -286,13 +332,13 @@ service firebase.storage {
 ### Data Flow
 
 ```
-Admin Panel → Firebase Firestore → Website Pages
-     ↓              ↓                    ↓
-  Add/Edit/Delete  Storage           Real-time Updates
+Admin Panel → Firebase Firestore + Cloudinary → Website Pages
+     ↓              ↓           ↓                    ↓
+  Add/Edit/Delete  Database   Images            Real-time Updates
 ```
 
 1. Admin adds/edits data → Saved to Firebase Firestore
-2. Images uploaded → Stored in Firebase Storage with unique filenames
+2. Images uploaded → Stored in Cloudinary with unique identifiers
 3. Website pages → Fetch real-time data from Firestore on page load
 4. Instant updates → No need to rebuild or redeploy!
 
@@ -443,16 +489,19 @@ vridhi-real-estate/
 - ✅ Write access: Authenticated users only
 - ✅ Security rules configured in Firebase Console
 
-### Storage Security
-- ✅ Read access: Public (for displaying images on website)
-- ✅ Write access: Authenticated users only
-- ✅ Images stored with unique timestamps to prevent collisions
+### Cloudinary Security
+- ✅ Unsigned uploads enabled via upload preset
+- ✅ Images stored in `vridhi-real-estate` folder for organization
+- ✅ Public read access for displaying images on website
+- ✅ Browser-based uploads (no API keys exposed)
+- ✅ Deletion logging for cleanup (enable auto-delete in Cloudinary settings)
 
 ### Best Practices
 - 🔐 Change default admin password before production
-- 🔐 Use environment variables for Firebase config in production
+- 🔐 Use environment variables for Firebase and Cloudinary config in production
 - 🔐 Enable Firebase App Check for additional security
 - 🔐 Set up proper authentication roles if multiple admins
+- 🔐 Enable auto-delete in Cloudinary settings to clean up unused images
 - 🔐 Configure CORS and domain restrictions in Firebase Console
 
 ---
@@ -515,10 +564,11 @@ vridhi-real-estate/
 - ✅ Check browser console for errors
 
 ### Images not uploading?
-- ✅ Ensure Firebase Storage is enabled in Firebase Console
-- ✅ Check storage security rules allow authenticated writes
-- ✅ Verify file size is under 5MB (adjust in admin page if needed)
+- ✅ Verify Cloudinary upload preset 'vridhi' is created and set to 'Unsigned'
+- ✅ Check Cloud Name is correct: `dquflnv4j`
+- ✅ Ensure file size is under Cloudinary's limits (10MB for free tier)
 - ✅ Check browser console for upload errors
+- ✅ Verify network connection and Cloudinary service status
 
 ### Data not showing on website?
 - ✅ Open browser console and check for errors
@@ -529,7 +579,7 @@ vridhi-real-estate/
 
 ### Firebase errors in console?
 - ✅ Check Firebase config credentials
-- ✅ Verify all Firebase services are enabled (Auth, Firestore, Storage)
+- ✅ Verify all Firebase services are enabled (Auth, Firestore)
 - ✅ Check network tab for 403/401 errors (security rules issue)
 - ✅ Ensure Firebase project is active (not deleted/suspended)
 

@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AdminSidebar } from '@/components/AdminSidebar';
 import { useRouter } from 'next/navigation';
-import { db, storage } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, orderBy } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { uploadToCloudinary, deleteFromCloudinary, getPublicIdFromUrl } from '@/lib/cloudinary';
 import { Plus, Edit2, Trash2, ArrowLeft, Upload, X, Building2, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,13 +70,10 @@ export default function PropertiesManagementPage() {
     }
   };
 
-  // Upload image to Firebase Storage
+  // Upload image to Cloudinary
   const uploadImage = async (file) => {
-    const timestamp = Date.now();
-    const storageRef = ref(storage, `properties/${timestamp}_${file.name}`);
-    await uploadBytes(storageRef, file);
-    const downloadURL = await getDownloadURL(storageRef);
-    return downloadURL;
+    const result = await uploadToCloudinary(file);
+    return result.url;
   };
 
   // Handle form submission
@@ -160,7 +157,20 @@ export default function PropertiesManagementPage() {
   const handleDelete = async (id) => {
     if (confirm('Are you sure you want to delete this property?')) {
       try {
+        // Find the property to get its image URL
+        const property = properties.find(p => p.id === id);
+        
+        // Delete from Firestore
         await deleteDoc(doc(db, 'properties', id));
+        
+        // Delete image from Cloudinary if it exists
+        if (property?.imageUrl) {
+          const publicId = getPublicIdFromUrl(property.imageUrl);
+          if (publicId) {
+            await deleteFromCloudinary(publicId);
+          }
+        }
+        
         fetchProperties();
       } catch (error) {
         console.error('Error deleting property:', error);
