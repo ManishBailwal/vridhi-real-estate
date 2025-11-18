@@ -33,13 +33,14 @@ Vridhi Real Estate is a complete real estate website solution with:
 - 🏠 **Home Page**: Hero section, featured properties, popular localities, services, and testimonials
 - 📋 **Listings Page**: Browse all available properties with filtering options
 - 👥 **Agents Page**: Meet the team with detailed agent profiles
+- 📝 **Blog Page**: Read real estate insights, tips, and updates
 - 📞 **Contact Page**: Get in touch with the agency
 - 📖 **Buyer's & Seller's Guide**: Helpful resources for clients
 - 📱 **Fully Responsive**: Works seamlessly on desktop, tablet, and mobile
 
 ### Admin Panel
 - 🔐 **Secure Authentication**: Email/password login with Firebase Auth
-- 📊 **Dashboard**: Real-time statistics for properties, agents, and testimonials
+- 📊 **Dashboard**: Real-time statistics for properties, agents, blogs, and testimonials
 - 🏢 **Properties Management**:
   - Add, edit, and delete properties
   - Upload property images to Cloudinary
@@ -49,6 +50,11 @@ Vridhi Real Estate is a complete real estate website solution with:
   - Add, edit, and delete agent profiles
   - Upload agent photos to Cloudinary
   - Manage contact information and bios
+- 📝 **Blogs Management**:
+  - Add, edit, and delete blog posts
+  - Upload header images to Cloudinary
+  - Write and manage blog content
+  - Auto-delete images when blog is deleted
 - 💬 **Testimonials Management**:
   - Add, edit, and delete client testimonials
   - Display social proof on home page
@@ -271,6 +277,7 @@ service cloud.firestore {
 /admin/dashboard          → Main dashboard with statistics
 /admin/properties         → Manage properties (CRUD)
 /admin/agents            → Manage agents (CRUD)
+/admin/blogs             → Manage blog posts (CRUD)
 /admin/testimonials      → Manage testimonials (CRUD)
 ```
 
@@ -278,7 +285,7 @@ service cloud.firestore {
 
 #### Dashboard (`/admin/dashboard`)
 - Real-time statistics display
-- Total properties, agents, and testimonials count
+- Total properties, agents, blogs, and testimonials count
 - Quick navigation to all management sections
 - "View Site" button to preview public website
 - Logout functionality
@@ -317,6 +324,19 @@ service cloud.firestore {
 - 🗑️ Delete agent (with confirmation)
 - 📸 Upload photos to Cloudinary
 - 🗑️ Auto-delete photos from Cloudinary when agent is deleted
+
+#### Blogs Management (`/admin/blogs`)
+**Fields:**
+- Heading (required)
+- Content (required, textarea for full blog post)
+- Header Image (upload file or paste URL)
+
+**Actions:**
+- ✅ Add new blog post
+- ✏️ Edit blog post
+- 🗑️ Delete blog post (with confirmation)
+- 📸 Upload header images to Cloudinary
+- 🗑️ Auto-delete images from Cloudinary when blog is deleted
 
 #### Testimonials Management (`/admin/testimonials`)
 **Fields:**
@@ -446,6 +466,17 @@ vridhi-real-estate/
 4. Upload agent photo
 5. Click **"Add Agent"**
 6. ✅ Agent appears instantly on agents page!
+
+### Adding Your First Blog Post
+
+1. From dashboard, click **"Manage Blogs"**
+2. Click **"Add Blog"** button
+3. Enter:
+   - Heading (e.g., "Top 10 Tips for First-Time Home Buyers")
+   - Full blog content (detailed article text)
+   - Upload header image or paste URL
+4. Click **"Add Blog"**
+5. ✅ Blog post appears instantly on blog page!
 
 ### Adding Your First Testimonial
 
@@ -643,18 +674,31 @@ vridhi-real-estate/
 }
 ```
 
+### Blogs Collection
+```javascript
+{
+  id: string (auto-generated),
+  heading: string,
+  content: string,
+  imageUrl: string,
+  createdAt: timestamp,
+  updatedAt: timestamp
+}
+```
+
 ---
 
 ## 💡 Tips for Success
 
-1. **Image Quality**: Upload high-resolution images for properties and agents (recommended: 1200x800px)
+1. **Image Quality**: Upload high-resolution images for properties, agents, and blog posts (recommended: 1200x800px)
 2. **SEO**: Add descriptive titles and addresses for better search visibility
-3. **Testimonials**: Collect genuine client feedback to build trust
-4. **Regular Updates**: Keep property status current (mark as sold when appropriate)
-5. **Featured Properties**: Highlight your best listings by marking them featured
-6. **Agent Profiles**: Keep contact information updated and write compelling bios
-7. **Backup Data**: Regularly export Firestore data as backup
-8. **Monitor Usage**: Check Firebase Console for usage stats and quotas
+3. **Blog Content**: Write engaging, informative articles to attract visitors and establish authority
+4. **Testimonials**: Collect genuine client feedback to build trust
+5. **Regular Updates**: Keep property status current (mark as sold when appropriate)
+6. **Featured Properties**: Highlight your best listings by marking them featured
+7. **Agent Profiles**: Keep contact information updated and write compelling bios
+8. **Backup Data**: Regularly export Firestore data as backup
+9. **Monitor Usage**: Check Firebase Console and Cloudinary usage stats and quotas
 
 ---
 

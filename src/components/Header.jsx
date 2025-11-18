@@ -18,7 +18,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Menu, Home, Building, Info, Users, Mail, Landmark } from 'lucide-react' // Import icons
+import { Menu, Home, Building, Info, Users, Mail, Landmark, BookOpen } from 'lucide-react' // Import icons
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -28,6 +28,7 @@ export function Header() {
     { href: '/listings', label: 'Listings', icon: Building },
     { href: '/about', label: 'About Us', icon: Info },
     { href: '/agents', label: 'Agents', icon: Users },
+    { href: '/blog', label: 'Blog', icon: BookOpen },
     { href: '/contact', label: 'Contact', icon: Mail },
   ];
 

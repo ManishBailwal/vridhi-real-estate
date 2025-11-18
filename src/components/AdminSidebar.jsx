@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { Home, Users, Building2, MessageSquare, LogOut, LayoutDashboard, Menu, X } from 'lucide-react';
+import { Home, Users, Building2, MessageSquare, LogOut, LayoutDashboard, Menu, X, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -36,6 +36,11 @@ export function AdminSidebar() {
       title: 'Agents',
       icon: Users,
       href: '/admin/agents',
+    },
+    {
+      title: 'Blogs',
+      icon: BookOpen,
+      href: '/admin/blogs',
     },
     {
       title: 'Testimonials',

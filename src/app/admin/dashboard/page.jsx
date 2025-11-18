@@ -3,7 +3,7 @@
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AdminSidebar } from '@/components/AdminSidebar';
 import { useRouter } from 'next/navigation';
-import { Building2, Users, MessageSquare, Star, TrendingUp } from 'lucide-react';
+import { Building2, Users, MessageSquare, Star, TrendingUp, BookOpen } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -16,6 +16,7 @@ export default function AdminDashboard() {
     soldProperties: 0,
     totalAgents: 0,
     totalTestimonials: 0,
+    totalBlogs: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -37,12 +38,17 @@ export default function AdminDashboard() {
         const testimonialsSnapshot = await getDocs(collection(db, 'testimonials'));
         const totalTestimonials = testimonialsSnapshot.size;
 
+        // Fetch blogs
+        const blogsSnapshot = await getDocs(collection(db, 'blogs'));
+        const totalBlogs = blogsSnapshot.size;
+
         setStats({
           totalProperties,
           featuredProperties,
           soldProperties,
           totalAgents,
           totalTestimonials,
+          totalBlogs,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -121,7 +127,7 @@ export default function AdminDashboard() {
                 {/* Overview Stats */}
                 <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
                   <h3 className="text-2xl font-bold text-slate-900 mb-6">Overview Statistics</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
                       <div className="flex items-center justify-between mb-3">
                         <Building2 className="w-10 h-10 text-blue-600" />
@@ -138,6 +144,15 @@ export default function AdminDashboard() {
                       </div>
                       <p className="text-lg font-semibold text-slate-900">Total Agents</p>
                       <p className="text-sm text-slate-600 mt-1">Active team members</p>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 border border-orange-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <BookOpen className="w-10 h-10 text-orange-600" />
+                        <span className="text-3xl font-bold text-orange-600">{stats.totalBlogs}</span>
+                      </div>
+                      <p className="text-lg font-semibold text-slate-900">Total Blogs</p>
+                      <p className="text-sm text-slate-600 mt-1">Published articles</p>
                     </div>
 
                     <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
