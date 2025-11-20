@@ -1,142 +1,113 @@
 // components/Hero.jsx
 "use client";
 
-import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-const slides = [
-  {
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=800&fit=crop",
-    title: "Residential Plot for Sale",
-    subtitle: "in Prem Nagar, Dehradun",
-    badge: "Premium Location"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&h=800&fit=crop",
-    title: "Luxury Villa Estate",
-    subtitle: "in Selaqui, Dehradun",
-    badge: "Exclusive Property"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1920&h=800&fit=crop",
-    title: "Modern Apartment Complex",
-    subtitle: "in Sahaspur, Dehradun",
-    badge: "New Launch"
-  }
-];
+import { Search, MapPin, Home } from 'lucide-react';
 
 export function HeroSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
   return (
-    <section className="relative h-[600px] md:h-[700px] lg:h-[800px] overflow-hidden">
-      {/* Slides */}
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
+    <section className="relative h-[calc(100vh-64px)] overflow-hidden">
+      {/* Background Video */}
+      <div className="absolute inset-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
         >
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0">
-            <img
-              src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-sky-900/90 via-indigo-900/80 to-slate-900/60"></div>
-          </div>
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+      </div>
 
-          {/* Content */}
-          <div className="relative h-full flex items-center">
-            <div className="container mx-auto px-4 md:px-8 lg:px-16">
-              <div className="max-w-3xl">
-                {/* Badge */}
-                <div className="inline-block mb-4 md:mb-6">
-                  <span className="px-4 py-2 bg-amber-500 text-white text-sm md:text-base font-semibold rounded-md shadow-lg ring-1 ring-amber-400/20">
-                    {slide.badge}
-                  </span>
+      {/* Content */}
+      <div className="relative h-full flex items-center">
+        <div className="container mx-auto px-4 md:px-8 lg:px-16">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Badge */}
+            <div className="inline-block mb-6 animate-fade-in">
+              <span className="px-6 py-2 bg-amber-500/90 backdrop-blur-sm text-white text-sm md:text-base font-semibold rounded-full shadow-xl">
+                🏡 Premium Real Estate in Dehradun
+              </span>
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 leading-tight animate-slide-up">
+              Find Your Dream
+              <span className="block text-amber-400">Property Today</span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl lg:text-2xl text-slate-200 mb-12 max-w-2xl mx-auto animate-slide-up-delay">
+              Discover the perfect residential plots, villas, and apartments in Dehradun's most sought-after locations
+            </p>
+
+            {/* Search Bar */}
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-2xl max-w-3xl mx-auto animate-slide-up-delay-2">
+              <div className="flex flex-col md:flex-row gap-4">
+                {/* Location Input */}
+                <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
+                  <MapPin className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <input
+                    type="text"
+                    placeholder="Enter location..."
+                    className="flex-1 bg-transparent outline-none text-slate-700 placeholder:text-slate-400"
+                  />
                 </div>
 
-                {/* Title */}
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
-                  {slide.title}
-                </h1>
-
-                {/* Subtitle */}
-                <p className="text-xl md:text-2xl lg:text-3xl text-slate-200 mb-8">
-                  {slide.subtitle}
-                </p>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-md transition-all transform hover:scale-105 shadow-lg">
-                    View Details
-                  </button>
-                  <button className="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-semibold rounded-md border-2 border-white/30 transition-all">
-                    Contact Us
-                  </button>
+                {/* Property Type */}
+                <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
+                  <Home className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <select className="flex-1 bg-transparent outline-none text-slate-700 cursor-pointer">
+                    <option>Property Type</option>
+                    <option>Residential Plot</option>
+                    <option>Villa</option>
+                    <option>Apartment</option>
+                    <option>Commercial</option>
+                  </select>
                 </div>
+
+                {/* Search Button */}
+                <button className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                  <Search className="w-5 h-5" />
+                  <span className="hidden md:inline">Search</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 max-w-2xl mx-auto animate-fade-in-delay">
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">500+</div>
+                <div className="text-sm md:text-base text-slate-300">Properties</div>
+              </div>
+              <div className="text-center border-x border-white/20">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">200+</div>
+                <div className="text-sm md:text-base text-slate-300">Happy Clients</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">15+</div>
+                <div className="text-sm md:text-base text-slate-300">Years Experience</div>
               </div>
             </div>
           </div>
         </div>
-      ))}
-
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-amber-500/20 backdrop-blur-md hover:bg-amber-500/40 rounded-full transition-all z-10 ring-1 ring-amber-400/30"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-6 h-6 text-white" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-amber-500/20 backdrop-blur-md hover:bg-amber-500/40 rounded-full transition-all z-10 ring-1 ring-amber-400/30"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-6 h-6 text-white" />
-      </button>
-
-      {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide
-                ? 'bg-amber-500 w-8'
-                : 'bg-white/50 hover:bg-amber-400/75'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
       </div>
 
+      {/* Scroll Indicator */}
+      {/* <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+          <div className="w-1.5 h-2 bg-white rounded-full"></div>
+        </div>
+      </div> */}
+
       {/* City Skyline SVG Decoration */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 opacity-20">
+      {/* <div className="absolute bottom-0 left-0 right-0 h-32 opacity-20">
         <svg viewBox="0 0 1440 100" className="w-full h-full" preserveAspectRatio="none">
           <path fill="white" d="M0,50 L50,50 L50,20 L100,20 L100,50 L150,50 L150,10 L200,10 L200,50 L250,50 L250,30 L300,30 L300,50 L1440,50 L1440,100 L0,100 Z" />
         </svg>
-      </div>
+      </div> */}
     </section>
   );
 }

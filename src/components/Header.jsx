@@ -33,7 +33,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-gradient-to-r from-sky-900 via-indigo-900 to-slate-900 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-gradient-to-r from-sky-900/95 via-indigo-900/95 to-slate-900/95 backdrop-blur-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">

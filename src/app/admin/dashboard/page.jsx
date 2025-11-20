@@ -3,7 +3,7 @@
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AdminSidebar } from '@/components/AdminSidebar';
 import { useRouter } from 'next/navigation';
-import { Building2, Users, MessageSquare, Star, TrendingUp, BookOpen } from 'lucide-react';
+import { Building2, Users, MessageSquare, Star, TrendingUp, BookOpen, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -17,6 +17,8 @@ export default function AdminDashboard() {
     totalAgents: 0,
     totalTestimonials: 0,
     totalBlogs: 0,
+    totalContacts: 0,
+    unreadContacts: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -42,6 +44,12 @@ export default function AdminDashboard() {
         const blogsSnapshot = await getDocs(collection(db, 'blogs'));
         const totalBlogs = blogsSnapshot.size;
 
+        // Fetch contacts
+        const contactsSnapshot = await getDocs(collection(db, 'contacts'));
+        const contacts = contactsSnapshot.docs.map(doc => doc.data());
+        const totalContacts = contacts.length;
+        const unreadContacts = contacts.filter(c => c.status === 'unread').length;
+
         setStats({
           totalProperties,
           featuredProperties,
@@ -49,6 +57,8 @@ export default function AdminDashboard() {
           totalAgents,
           totalTestimonials,
           totalBlogs,
+          totalContacts,
+          unreadContacts,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -162,6 +172,30 @@ export default function AdminDashboard() {
                       </div>
                       <p className="text-lg font-semibold text-slate-900">Testimonials</p>
                       <p className="text-sm text-slate-600 mt-1">Client reviews</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contact Messages Stats */}
+                <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-6">Queries</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-6 border border-indigo-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <Mail className="w-10 h-10 text-indigo-600" />
+                        <span className="text-3xl font-bold text-indigo-600">{stats.totalContacts}</span>
+                      </div>
+                      <p className="text-lg font-semibold text-slate-900">Total Messages</p>
+                      <p className="text-sm text-slate-600 mt-1">All contact submissions</p>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 border border-red-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <Mail className="w-10 h-10 text-red-600" />
+                        <span className="text-3xl font-bold text-red-600">{stats.unreadContacts}</span>
+                      </div>
+                      <p className="text-lg font-semibold text-slate-900">Unread Messages</p>
+                      <p className="text-sm text-slate-600 mt-1">Pending review</p>
                     </div>
                   </div>
                 </div>
