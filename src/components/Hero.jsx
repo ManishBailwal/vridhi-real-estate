@@ -27,7 +27,7 @@ export function HeroSection() {
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-block mb-6 animate-fade-in">
-              <span className="px-6 py-2 bg-amber-500/90 backdrop-blur-sm text-white text-sm md:text-base font-semibold rounded-full shadow-xl">
+              <span className="px-6 py-2 backdrop-blur-sm text-white text-sm md:text-base font-semibold rounded-full shadow-xl">
                 🏡 Premium Real Estate in Dehradun
               </span>
             </div>
@@ -42,39 +42,6 @@ export function HeroSection() {
             <p className="text-lg md:text-xl lg:text-2xl text-slate-200 mb-12 max-w-2xl mx-auto animate-slide-up-delay">
               Discover the perfect residential plots, villas, and apartments in Dehradun's most sought-after locations
             </p>
-
-            {/* Search Bar */}
-            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-2xl max-w-3xl mx-auto animate-slide-up-delay-2">
-              <div className="flex flex-col md:flex-row gap-4">
-                {/* Location Input */}
-                <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
-                  <MapPin className="w-5 h-5 text-slate-400 flex-shrink-0" />
-                  <input
-                    type="text"
-                    placeholder="Enter location..."
-                    className="flex-1 bg-transparent outline-none text-slate-700 placeholder:text-slate-400"
-                  />
-                </div>
-
-                {/* Property Type */}
-                <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-xl">
-                  <Home className="w-5 h-5 text-slate-400 flex-shrink-0" />
-                  <select className="flex-1 bg-transparent outline-none text-slate-700 cursor-pointer">
-                    <option>Property Type</option>
-                    <option>Residential Plot</option>
-                    <option>Villa</option>
-                    <option>Apartment</option>
-                    <option>Commercial</option>
-                  </select>
-                </div>
-
-                {/* Search Button */}
-                <button className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-                  <Search className="w-5 h-5" />
-                  <span className="hidden md:inline">Search</span>
-                </button>
-              </div>
-            </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 max-w-2xl mx-auto animate-fade-in-delay">
