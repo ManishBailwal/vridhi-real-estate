@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { Home, Users, Building2, MessageSquare, LogOut, LayoutDashboard, Menu, X, BookOpen, Mail } from 'lucide-react';
+import { Home, Users, Building2, MessageSquare, LogOut, LayoutDashboard, Menu, X, BookOpen, Mail, ClipboardList } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -31,6 +31,11 @@ export function AdminSidebar() {
       title: 'Properties',
       icon: Building2,
       href: '/admin/properties',
+    },
+    {
+      title: 'Listing Requests',
+      icon: ClipboardList,
+      href: '/admin/listing-requests',
     },
     {
       title: 'Agents',

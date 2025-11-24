@@ -18,7 +18,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Menu, Home, Building, Info, Users, Mail, Landmark, BookOpen } from 'lucide-react' // Import icons
+import { Menu, Home, Building, Info, Users, Mail, Landmark, BookOpen, PlusCircle } from 'lucide-react' // Import icons
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,21 +46,31 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            {navLinks.map((link) => (
-              <NavigationMenuItem key={link.href}>
-                {/* Use Radix's asChild pattern so we don't end up with nested <a> tags.
-                    NavigationMenuPrimitive.Link will use the child (next/link) as the anchor element. */}
-                <NavigationMenuLink asChild>
-                  <Link href={link.href} className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 rounded-md transition-colors">
-                    {link.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="hidden md:flex items-center gap-4">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {navLinks.map((link) => (
+                <NavigationMenuItem key={link.href}>
+                  {/* Use Radix's asChild pattern so we don't end up with nested <a> tags.
+                      NavigationMenuPrimitive.Link will use the child (next/link) as the anchor element. */}
+                  <NavigationMenuLink asChild>
+                    <Link href={link.href} className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 rounded-md transition-colors">
+                      {link.label}
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+          
+          {/* List Your Property Button */}
+          <Link href="/request-listing">
+            <Button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2">
+              <PlusCircle className="h-4 w-4" />
+              List Property
+            </Button>
+          </Link>
+        </div>
 
         {/* Mobile Navigation Trigger */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -91,6 +101,16 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
+              
+              {/* List Property Link for Mobile */}
+              <Link
+                href="/request-listing"
+                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white transition-colors mt-4"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <PlusCircle className="h-4 w-4" />
+                List Your Property
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>
