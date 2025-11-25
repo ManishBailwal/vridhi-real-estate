@@ -27,7 +27,7 @@ export function HeroSection() {
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-block mb-6 animate-fade-in">
-              <span className="px-6 py-2 backdrop-blur-sm text-white text-sm md:text-base font-semibold rounded-full shadow-xl">
+              <span className="px-6 py-2 backdrop-blur-sm text-black text-sm md:text-base font-semibold rounded-full shadow-xl">
                 🏡 Premium Real Estate in Dehradun
               </span>
             </div>
