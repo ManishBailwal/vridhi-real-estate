@@ -152,7 +152,7 @@ export default function ContactPage() {
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full bg-amber-500 text-white hover:bg-amber-600"
+                className="w-full bg-amber-500 text-white hover:bg-amber-600 cursor-pointer"
                 disabled={submitting}
               >
                 <Send className="mr-2 h-4 w-4" />

@@ -18,7 +18,7 @@ export function HeroSection() {
           <source src="/hero.mp4" type="video/mp4" />
         </video>
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+        <div className="absolute inset-0 "></div>
       </div>
 
       {/* Content */}

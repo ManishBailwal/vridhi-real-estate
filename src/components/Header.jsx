@@ -65,7 +65,7 @@ export function Header() {
           
           {/* List Your Property Button */}
           <Link href="/request-listing">
-            <Button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2">
+            <Button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2 cursor-pointer">
               <PlusCircle className="h-4 w-4" />
               List Property
             </Button>
