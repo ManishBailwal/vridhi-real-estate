@@ -7,7 +7,7 @@ import { Home, Users, Building2, MessageSquare, LogOut, LayoutDashboard, Menu, X
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
-export function AdminSidebar() {
+export function AdminSidebar({listingRequestsCount}) {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,6 +20,8 @@ export function AdminSidebar() {
       console.error('Logout error:', error);
     }
   };
+
+  
 
   const menuItems = [
     {
@@ -36,6 +38,7 @@ export function AdminSidebar() {
       title: 'Listing Requests',
       icon: ClipboardList,
       href: '/admin/listing-requests',
+      count: listingRequestsCount,
     },
     {
       title: 'Agents',
@@ -120,18 +123,27 @@ export function AdminSidebar() {
                         setIsMobileMenuOpen(false);
                       }}
                       className={`
-                        w-full flex items-center gap-3 px-4 py-3 rounded-lg
-                        transition-all duration-200
-                        ${
-                          active
-                            ? 'bg-amber-500 text-white shadow-md'
-                            : 'text-slate-700 hover:bg-slate-100'
-                        }
-                      `}
+    w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg
+    transition-all duration-200 cursor-pointer
+    ${active ? 'bg-amber-500 text-white shadow-md' : 'text-slate-700 hover:bg-slate-100'}
+  `}
                     >
-                      <Icon className="w-5 h-5" />
-                      <span className="font-medium">{item.title}</span>
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-5 h-5" />
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+
+                    {item.count !== undefined && (
+                        <span
+                          className={`text-xs font-bold px-2 py-1 rounded-full
+        ${active ? 'bg-white text-amber-600' : 'bg-amber-500 text-white'}
+      `}
+                        >
+                          {item.count}
+                        </span>
+                      )}
                     </button>
+
                   </li>
                 );
               })}
@@ -146,17 +158,17 @@ export function AdminSidebar() {
                 setIsMobileMenuOpen(false);
               }}
               variant="outline"
-              className="w-full gap-2"
+              className="w-full gap-2 cursor-pointer"
             >
-              <Home className="w-4 h-4" />
+              <Home className="w-4 h-4 " />
               View Site
             </Button>
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="w-full gap-2 text-red-600 hover:text-red-700 border-red-200 hover:border-red-300"
+              className="w-full gap-2 text-red-600 hover:text-red-700 border-red-200 hover:border-red-300 cursor-pointer"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4 " />
               Logout
             </Button>
           </div>

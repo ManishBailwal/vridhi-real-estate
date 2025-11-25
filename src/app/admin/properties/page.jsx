@@ -219,7 +219,7 @@ export default function PropertiesManagementPage() {
               </div>
               <Button
                 onClick={() => setShowForm(true)}
-                className="bg-blue-500 hover:bg-blue-600 gap-2"
+                className="bg-blue-500 hover:bg-blue-600 gap-2 cursor-pointer"
               >
                 <Plus className="w-5 h-5" />
                 Add Property
@@ -397,7 +397,7 @@ export default function PropertiesManagementPage() {
                     <Button
                       type="submit"
                       disabled={uploading}
-                      className="flex-1 bg-blue-500 hover:bg-blue-600"
+                      className="flex-1 bg-blue-500 hover:bg-blue-600 cursor-pointer"
                     >
                       {uploading ? 'Saving...' : editingId ? 'Update Property' : 'Add Property'}
                     </Button>
@@ -405,7 +405,7 @@ export default function PropertiesManagementPage() {
                       type="button"
                       onClick={handleCancel}
                       variant="outline"
-                      className="flex-1"
+                      className="flex-1 cursor-pointer"
                     >
                       Cancel
                     </Button>
@@ -452,7 +452,7 @@ export default function PropertiesManagementPage() {
                         onClick={() => handleEdit(property)}
                         variant="outline"
                         size="sm"
-                        className="flex-1 gap-1"
+                        className="flex-1 gap-1 cursor-pointer"
                       >
                         <Edit2 className="w-4 h-4" />
                         Edit
@@ -461,7 +461,7 @@ export default function PropertiesManagementPage() {
                         onClick={() => handleDelete(property.id)}
                         variant="outline"
                         size="sm"
-                        className="flex-1 gap-1 text-red-600 hover:text-red-700 border-red-200 hover:border-red-300"
+                        className="flex-1 gap-1 text-red-600 hover:text-red-700 border-red-200 hover:border-red-300 cursor-pointer"
                       >
                         <Trash2 className="w-4 h-4" />
                         Delete
@@ -478,7 +478,7 @@ export default function PropertiesManagementPage() {
               <Building2 className="w-20 h-20 text-slate-300 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-slate-900 mb-2">No properties yet</h3>
               <p className="text-slate-600 mb-6">Get started by adding your first property</p>
-              <Button onClick={() => setShowForm(true)} className="bg-blue-500 hover:bg-blue-600 gap-2">
+              <Button onClick={() => setShowForm(true)} className="bg-blue-500  hover:bg-blue-600 gap-2 cursor-pointer">
                 <Plus className="w-5 h-5" />
                 Add Property
               </Button>

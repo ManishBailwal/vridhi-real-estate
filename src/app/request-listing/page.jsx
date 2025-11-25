@@ -445,14 +445,14 @@ export default function RequestListingPage() {
                 variant="outline"
                 onClick={() => router.push('/')}
                 disabled={loading}
-                className="flex-1 h-12"
+                className="flex-1 h-12 cursor-pointer"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={loading || images.length < 1}
-                className="flex-1 h-12 bg-amber-500 hover:bg-amber-600"
+                className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 cursor-pointer"
               >
                 {loading ? 'Submitting...' : 'Submit Listing Request'}
               </Button>

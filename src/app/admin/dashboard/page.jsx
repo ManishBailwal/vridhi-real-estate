@@ -19,6 +19,7 @@ export default function AdminDashboard() {
     totalBlogs: 0,
     totalContacts: 0,
     unreadContacts: 0,
+      listingRequestsCount: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -50,6 +51,10 @@ export default function AdminDashboard() {
         const totalContacts = contacts.length;
         const unreadContacts = contacts.filter(c => c.status === 'unread').length;
 
+        //Fetch Listing Requested Properties
+        const listingReqSnapshot = await getDocs(collection(db, 'listingRequests'));
+const listingRequestsCount = listingReqSnapshot.size;
+
         setStats({
           totalProperties,
           featuredProperties,
@@ -59,6 +64,7 @@ export default function AdminDashboard() {
           totalBlogs,
           totalContacts,
           unreadContacts,
+          listingRequestsCount,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -97,7 +103,7 @@ export default function AdminDashboard() {
   return (
     <ProtectedRoute>
       <div className="flex min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-        <AdminSidebar />
+        <AdminSidebar listingRequestsCount={stats.listingRequestsCount} />
 
         {/* Main Content */}
         <main className="flex-1 lg:ml-64 p-8">

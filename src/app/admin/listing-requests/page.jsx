@@ -15,35 +15,55 @@ export default function ListingRequestsPage() {
   const [showModal, setShowModal] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [filter, setFilter] = useState('pending'); // pending, approved, rejected, all
+  const [counts, setCounts] = useState({
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+    all: 0,
+  });
+
 
   // Fetch listing requests
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      
-      // Fetch all requests and filter/sort client-side to avoid composite index requirement
+
       const q = query(collection(db, 'listingRequests'));
       const querySnapshot = await getDocs(q);
-      
+
       let reqs = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate(),
         reviewedAt: doc.data().reviewedAt?.toDate(),
       }));
-      
+
+      // 🔥 Count status totals
+      const pendingCount = reqs.filter(r => r.status?.toLowerCase() === 'pending').length;
+      const approvedCount = reqs.filter(r => r.status?.toLowerCase() === 'approved').length;
+      const rejectedCount = reqs.filter(r => r.status?.toLowerCase() === 'rejected').length;
+      const allCount = reqs.length;
+
+
+      setCounts({
+        pending: pendingCount,
+        approved: approvedCount,
+        rejected: rejectedCount,
+        all: allCount,
+      });
+
       // Filter by status if not 'all'
       if (filter !== 'all') {
         reqs = reqs.filter(req => req.status === filter);
       }
-      
+
       // Sort by createdAt descending (newest first)
       reqs.sort((a, b) => {
         if (!a.createdAt) return 1;
         if (!b.createdAt) return -1;
         return b.createdAt - a.createdAt;
       });
-      
+
       setRequests(reqs);
     } catch (error) {
       console.error('Error fetching listing requests:', error);
@@ -52,6 +72,7 @@ export default function ListingRequestsPage() {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchRequests();
@@ -136,7 +157,7 @@ export default function ListingRequestsPage() {
     <ProtectedRoute>
       <div className="flex min-h-screen bg-slate-50">
         <AdminSidebar />
-        
+
         <div className="flex-1 ml-64">
           <div className="p-8">
             {/* Header */}
@@ -150,34 +171,38 @@ export default function ListingRequestsPage() {
               <Button
                 variant={filter === 'pending' ? 'default' : 'outline'}
                 onClick={() => setFilter('pending')}
-                className={filter === 'pending' ? 'bg-amber-500 hover:bg-amber-600' : ''}
+                className={filter === 'pending' ? 'bg-amber-500 hover:bg-amber-600 cursor-pointer' : 'cursor-pointer'}
               >
                 <Clock className="w-4 h-4 mr-2" />
-                Pending
+                Pending ({counts.pending})
               </Button>
+
               <Button
                 variant={filter === 'approved' ? 'default' : 'outline'}
                 onClick={() => setFilter('approved')}
-                className={filter === 'approved' ? 'bg-amber-500 hover:bg-amber-600' : ''}
+                className={filter === 'approved' ? 'bg-amber-500 hover:bg-amber-600 cursor-pointer ' : 'cursor-pointer'}
               >
                 <CheckCircle className="w-4 h-4 mr-2" />
-                Approved
+                Approved ({counts.approved})
               </Button>
+
               <Button
                 variant={filter === 'rejected' ? 'default' : 'outline'}
                 onClick={() => setFilter('rejected')}
-                className={filter === 'rejected' ? 'bg-amber-500 hover:bg-amber-600' : ''}
+                className={filter === 'rejected' ? 'bg-amber-500 hover:bg-amber-600 cursor-pointer ' : 'cursor-pointer'}
               >
                 <XCircle className="w-4 h-4 mr-2" />
-                Rejected
+                Rejected ({counts.rejected})
               </Button>
+
               <Button
                 variant={filter === 'all' ? 'default' : 'outline'}
                 onClick={() => setFilter('all')}
-                className={filter === 'all' ? 'bg-amber-500 hover:bg-amber-600' : ''}
+                className={filter === 'all' ? 'bg-amber-500 hover:bg-amber-600 cursor-pointer ' : 'cursor-pointer'}
               >
-                All
+                All ({counts.all})
               </Button>
+
             </div>
 
             {/* Requests List */}
@@ -275,6 +300,7 @@ export default function ListingRequestsPage() {
                             variant="outline"
                             size="sm"
                             onClick={() => viewDetails(request)}
+                            className="cursor-pointer"
                           >
                             <Eye className="w-4 h-4 mr-1" />
                             View Details
@@ -285,7 +311,7 @@ export default function ListingRequestsPage() {
                                 size="sm"
                                 onClick={() => handleApprove(request)}
                                 disabled={processing}
-                                className="bg-green-600 hover:bg-green-700"
+                                className="bg-green-600 hover:bg-green-700 cursor-pointer"
                               >
                                 <CheckCircle className="w-4 h-4 mr-1" />
                                 Approve
@@ -326,7 +352,7 @@ export default function ListingRequestsPage() {
                   </div>
                   <button
                     onClick={() => setShowModal(false)}
-                    className="text-slate-400 hover:text-slate-600"
+                    className="text-slate-400 hover:text-slate-600 cursor-pointer"
                   >
                     <XCircle className="w-6 h-6" />
                   </button>
@@ -415,7 +441,7 @@ export default function ListingRequestsPage() {
                     <Button
                       onClick={() => handleApprove(selectedRequest)}
                       disabled={processing}
-                      className="flex-1 bg-green-600 hover:bg-green-700"
+                      className="flex-1 bg-green-600 hover:bg-green-700 cursor-pointer"
                     >
                       <CheckCircle className="w-5 h-5 mr-2" />
                       {processing ? 'Processing...' : 'Approve Listing'}
