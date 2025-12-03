@@ -40,7 +40,7 @@ export function Header() {
            <div className="rounded-lg bg-amber-500 p-1.5 shadow-md ring-1 ring-amber-400/20">
              <Landmark className="h-5 w-5 text-white" />
            </div>
-           <span className="text-xl font-bold text-white font-serif">
+           <span className="text-2xl font-bold text-white font-serif">
              {SITE.title}
            </span>
         </Link>
