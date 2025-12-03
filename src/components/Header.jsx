@@ -1,6 +1,6 @@
 "use client" // Needed for Sheet state and NavigationMenu
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { SITE } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
@@ -18,22 +18,43 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Menu, Home, Building, Info, Users, Mail, Landmark, BookOpen, PlusCircle } from 'lucide-react' // Import icons
+import { Menu, Home, Building, Info, Users, Mail, Landmark, BookOpen, PlusCircle, DollarSign, Key, Settings, ShoppingBag } from 'lucide-react' // Import icons
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
-    { href: '/', label: 'Home', icon: Home },
+    { href: '/buy', label: 'Buy', icon: ShoppingBag },
+    { href: '/rent', label: 'Rent', icon: Key },
+    { href: '/sell', label: 'Sell', icon: DollarSign },
+    { href: '/manage', label: 'Manage', icon: Settings },
     { href: '/listings', label: 'Listings', icon: Building },
     { href: '/about', label: 'About Us', icon: Info },
-    { href: '/agents', label: 'Agents', icon: Users },
-    { href: '/blog', label: 'Blog', icon: BookOpen },
     { href: '/contact', label: 'Contact', icon: Mail },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-gradient-to-r from-sky-900/95 via-indigo-900/95 to-slate-900/95 backdrop-blur-md">
+    <header 
+      className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
+        isScrolled 
+          ? 'border-white/10 bg-gradient-to-r from-sky-900/95 via-indigo-900/95 to-slate-900/95 backdrop-blur-md shadow-lg' 
+          : 'border-transparent bg-transparent'
+      }`}
+    >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">

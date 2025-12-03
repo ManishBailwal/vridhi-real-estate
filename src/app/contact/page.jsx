@@ -51,15 +51,15 @@ export default function ContactPage() {
   return (
     <div className="bg-white">
       {/* 1. Page Header */}
-      <section className="bg-gradient-to-b from-slate-50 to-white py-16 text-center px-4">
+      <section className="bg-slate-900 py-24 text-center px-4">
         <div className="container mx-auto">
           <div className="inline-flex items-center justify-center p-3 rounded-xl bg-amber-500 shadow-lg mb-4 ring-1 ring-amber-400/20">
             <Mail className="h-6 w-6 text-white" />
           </div>
-          <h1 className="font-serif text-4xl font-bold text-slate-900 md:text-5xl">
+          <h1 className="font-serif text-4xl font-bold text-white md:text-5xl">
             Get In Touch
           </h1>
-          <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
             We would love to hear from you. Whether you have a question about a property, our services, or anything else, our team is ready to answer all your questions.
           </p>
         </div>

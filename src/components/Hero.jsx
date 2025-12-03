@@ -5,7 +5,7 @@ import { Search, MapPin, Home } from 'lucide-react';
 
 export function HeroSection() {
   return (
-    <section className="relative h-[calc(100vh-64px)] overflow-hidden">
+    <section className="relative h-screen overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0">
         <video
