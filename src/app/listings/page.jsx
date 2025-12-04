@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Home, BedDouble, Bath, Maximize2, ArrowRight, X } from 'lucide-react';
+import { Home, BedDouble, Bath, Maximize2, ArrowRight, X, Search } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { Input } from '@/components/ui/input';
 
 const PropertyCard = ({ property, onHover }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -169,6 +170,7 @@ const PropertyCard = ({ property, onHover }) => {
 const PropertyListingsPage = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -191,6 +193,16 @@ const PropertyListingsPage = () => {
     fetchProperties();
   }, []);
 
+  const filteredProperties = properties.filter(property => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      property.title?.toLowerCase().includes(searchLower) ||
+      property.address?.toLowerCase().includes(searchLower) ||
+      property.city?.toLowerCase().includes(searchLower) ||
+      property.state?.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
@@ -202,9 +214,23 @@ const PropertyListingsPage = () => {
             </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Discover Inspiring Designed Homes</h1>
-          <p className="text-xl text-slate-300 mb-0">
+          <p className="text-xl text-slate-300 mb-8">
             Experience elegance and comfort with our exclusive luxury villas, designed for sophisticated living.
           </p>
+          
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto relative">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+              <Input 
+                type="text" 
+                placeholder="Search by title, location, or city..." 
+                className="w-full pl-12 pr-4 py-6 text-lg rounded-full shadow-lg border-transparent focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -214,15 +240,17 @@ const PropertyListingsPage = () => {
           <div className="flex items-center justify-center py-20">
             <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
-        ) : properties.length > 0 ? (
+        ) : filteredProperties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {properties.map((property) => (
+            {filteredProperties.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-slate-600 text-lg">No properties available at the moment.</p>
+            <p className="text-slate-600 text-lg">
+              {searchTerm ? 'No properties found matching your search.' : 'No properties available at the moment.'}
+            </p>
           </div>
         )}
       </div>
