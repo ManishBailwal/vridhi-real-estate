@@ -51,19 +51,19 @@ export default function ContactPage() {
   return (
     <div className="bg-white">
       {/* 1. Page Header */}
-      <section className="bg-slate-900 py-24 text-center px-4">
-        <div className="container mx-auto">
-          <div className="inline-flex items-center justify-center p-3 rounded-xl bg-amber-500 shadow-lg mb-4 ring-1 ring-amber-400/20">
-            <Mail className="h-6 w-6 text-white" />
+      <div className="bg-blue-900 py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="bg-amber-500 p-4 rounded-full shadow-lg">
+              <Mail className="w-12 h-12 text-white" />
+            </div>
           </div>
-          <h1 className="font-serif text-4xl font-bold text-white md:text-5xl">
-            Get In Touch
-          </h1>
-          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Get In Touch</h1>
+          <p className="text-xl text-slate-300 mb-0">
             We would love to hear from you. Whether you have a question about a property, our services, or anything else, our team is ready to answer all your questions.
           </p>
         </div>
-      </section>
+      </div>
 
       {/* 2. Content Section (Info + Form) */}
       <section className="container mx-auto px-4 py-16 md:py-24">

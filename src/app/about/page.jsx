@@ -10,29 +10,21 @@ export default function AboutPage() {
   return (
     <div className="bg-background">
       {/* 1. Hero Section */}
-      <section className="relative h-[40vh] min-h-[300px] w-full flex items-center justify-center text-center px-4">
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            backgroundImage: `url('https://placehold.co/1920x500/0D1B2A/ffffff?text=Our+Team')`, // Placeholder Office/Team Image
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-sky-900/90 via-indigo-900/80 to-slate-900/60" /> {/* Dark Overlay with brand gradient */}
-        </div>
-        <div className="container mx-auto">
-          <div className="inline-flex items-center justify-center p-3 rounded-xl bg-amber-500 shadow-lg mb-4 ring-1 ring-amber-400/20">
-            <Landmark className="h-6 w-6 text-white" />
+      <div className="bg-blue-900 py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="bg-amber-500 p-4 rounded-full shadow-lg">
+              <Landmark className="w-12 h-12 text-white" />
+            </div>
           </div>
-          <h1 className="font-serif text-4xl font-bold text-white md:text-5xl">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             About {SITE.title}
           </h1>
-          <p className="mt-4 text-lg text-slate-200 md:text-xl">
-            Defining Luxury Real Estate in Austin
+          <p className="text-xl text-slate-300 mb-0">
+            Defining Luxury Real Estate in Dehradun
           </p>
         </div>
-      </section>
+      </div>
 
       {/* 2. Our Story & Mission Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">

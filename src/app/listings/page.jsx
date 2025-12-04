@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Home, BedDouble, Bath, Maximize2, ArrowRight, X, Search } from 'lucide-react';
+import { Home, BedDouble, Bath, Maximize2, ArrowRight, X } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { Input } from '@/components/ui/input';
 
 const PropertyCard = ({ property, onHover }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -170,7 +169,6 @@ const PropertyCard = ({ property, onHover }) => {
 const PropertyListingsPage = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -193,61 +191,20 @@ const PropertyListingsPage = () => {
     fetchProperties();
   }, []);
 
-  const filteredProperties = properties.filter(property => {
-    const searchLower = searchTerm.toLowerCase();
-    return (
-      property.title?.toLowerCase().includes(searchLower) ||
-      property.address?.toLowerCase().includes(searchLower) ||
-      property.city?.toLowerCase().includes(searchLower) ||
-      property.state?.toLowerCase().includes(searchLower)
-    );
-  });
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Section */}
-      <div className="relative bg-slate-900 py-24 px-6">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-slate-800 opacity-90"></div>
-          {/* Optional: Add a background image here */}
-        </div>
-        <div className="relative max-w-7xl mx-auto text-center z-10">
-          {/* Icon */}
-          <div className="flex justify-center mb-4">
-            <div className="bg-amber-500 rounded-lg p-3 shadow-lg ring-1 ring-amber-400/20">
-              <Home className="w-6 h-6 text-white" />
+      <div className="bg-blue-900 py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="bg-amber-500 p-4 rounded-full shadow-lg">
+              <Home className="w-12 h-12 text-white" />
             </div>
           </div>
-          
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-            <span className="text-slate-300 font-medium">Properties</span>
-          </div>
-
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Discover inspiring designed homes.
-          </h1>
-
-          {/* Subheading */}
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Discover Inspiring Designed Homes</h1>
+          <p className="text-xl text-slate-300 mb-0">
             Experience elegance and comfort with our exclusive luxury villas, designed for sophisticated living.
           </p>
-
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto relative">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-              <Input 
-                type="text" 
-                placeholder="Search by title, location, or city..." 
-                className="w-full pl-12 pr-4 py-6 text-lg rounded-full shadow-lg border-transparent focus:ring-amber-500 focus:border-amber-500 text-slate-900"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
         </div>
       </div>
 
@@ -257,15 +214,15 @@ const PropertyListingsPage = () => {
           <div className="flex items-center justify-center py-20">
             <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
-        ) : filteredProperties.length > 0 ? (
+        ) : properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProperties.map((property) => (
+            {properties.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-slate-600 text-lg">No properties found matching your search.</p>
+            <p className="text-slate-600 text-lg">No properties available at the moment.</p>
           </div>
         )}
       </div>

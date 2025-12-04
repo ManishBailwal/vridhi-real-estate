@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { SITE } from '@/lib/constants'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,6 +24,7 @@ import { Menu, Home, Building, Info, Users, Mail, Landmark, BookOpen, PlusCircle
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,7 +53,7 @@ export function Header() {
     <header 
       className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
         isScrolled 
-          ? 'border-white/10 bg-gradient-to-r from-sky-900/95 via-indigo-900/95 to-slate-900/95 backdrop-blur-md shadow-lg' 
+          ? 'border-blue-800/30 bg-blue-900 shadow-lg' 
           : 'border-transparent bg-transparent'
       }`}
     >
@@ -61,7 +63,9 @@ export function Header() {
            <div className="rounded-lg bg-amber-500 p-1.5 shadow-md ring-1 ring-amber-400/20">
              <Landmark className="h-5 w-5 text-white" />
            </div>
-           <span className="text-2xl font-bold text-white font-serif">
+           <span className={`text-2xl font-bold font-serif transition-colors duration-300 ${
+             isScrolled ? 'text-white' : 'text-slate-900'
+           }`}>
              {SITE.title}
            </span>
         </Link>
@@ -70,17 +74,29 @@ export function Header() {
         <div className="hidden md:flex items-center gap-4">
           <NavigationMenu>
             <NavigationMenuList>
-              {navLinks.map((link) => (
-                <NavigationMenuItem key={link.href}>
-                  {/* Use Radix's asChild pattern so we don't end up with nested <a> tags.
-                      NavigationMenuPrimitive.Link will use the child (next/link) as the anchor element. */}
-                  <NavigationMenuLink asChild>
-                    <Link href={link.href} className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10 rounded-md transition-colors">
-                      {link.label}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <NavigationMenuItem key={link.href}>
+                    <NavigationMenuLink asChild>
+                      <Link 
+                        href={link.href} 
+                        className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                          isScrolled 
+                            ? isActive 
+                              ? 'text-amber-500 hover:text-amber-400' 
+                              : 'text-white hover:text-amber-500 hover:bg-white/10'
+                            : isActive
+                              ? 'text-amber-500 hover:text-amber-600'
+                              : 'text-slate-900 hover:text-amber-500 hover:bg-slate-100'
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                );
+              })}
             </NavigationMenuList>
           </NavigationMenu>
           
@@ -96,12 +112,20 @@ export function Header() {
         {/* Mobile Navigation Trigger */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="outline" size="icon" className="border-white/20 bg-white/5 hover:bg-white/10 text-white">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className={`border transition-colors ${
+                isScrolled 
+                  ? 'border-white/20 bg-white/5 hover:bg-white/10 text-white'
+                  : 'border-slate-900/20 bg-slate-900/5 hover:bg-slate-900/10 text-slate-900'
+              }`}
+            >
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-gradient-to-b from-slate-900 to-indigo-900 border-white/10">
+          <SheetContent side="right" className="bg-gradient-to-b from-blue-900 to-indigo-900 border-white/10">
             <SheetHeader>
                <SheetTitle className="flex items-center gap-2">
                  <div className="rounded-lg bg-amber-500 p-1.5 shadow-md">
@@ -111,17 +135,24 @@ export function Header() {
                </SheetTitle>
             </SheetHeader>
             <nav className="mt-8 flex flex-col space-y-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-200 hover:bg-amber-500/20 hover:text-white transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
-                >
-                  <link.icon className="h-4 w-4" />
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                      isActive 
+                        ? 'bg-amber-500/20 text-amber-400'
+                        : 'text-slate-200 hover:bg-amber-500/20 hover:text-white'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <link.icon className="h-4 w-4" />
+                    {link.label}
+                  </Link>
+                );
+              })}
               
               {/* List Property Link for Mobile */}
               <Link

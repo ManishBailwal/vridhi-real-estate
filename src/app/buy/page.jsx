@@ -5,7 +5,7 @@ export default function BuyPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero Section */}
-      <div className="bg-slate-900 py-24 px-6">
+      <div className="bg-blue-900 py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <div className="bg-amber-500 p-4 rounded-full shadow-lg">

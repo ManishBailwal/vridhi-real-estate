@@ -15,7 +15,7 @@ export function HeroSection() {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero_1.mp4" type="video/mp4" />
         </video>
         {/* Dark Overlay */}
         <div className="absolute inset-0 "></div>
