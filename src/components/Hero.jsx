@@ -1,27 +1,58 @@
 // components/Hero.jsx
 "use client";
 
-import { Search, MapPin, Home } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 export function HeroSection() {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const videoRef = useRef(null);
+
+  // Defer video loading until after initial render to improve LCP
+  useEffect(() => {
+    // Load video after a short delay to prioritize content rendering
+    const timer = setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleVideoLoaded = () => {
+    setVideoLoaded(true);
+  };
+
   return (
     <section className="relative h-screen overflow-hidden">
-      {/* Background Video */}
-      <div className="absolute inset-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src="/hero_1.mp4" type="video/mp4" />
-        </video>
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/30"></div>
-      </div>
+      {/* Placeholder Background - Shows immediately while video loads */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 transition-opacity duration-1000 ${videoLoaded ? 'opacity-0' : 'opacity-100'
+          }`}
+        aria-hidden="true"
+      />
 
-      {/* Content */}
+      {/* Background Video - Lazy loaded */}
+      {shouldLoadVideo && (
+        <div className={`absolute inset-0 transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'
+          }`}>
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="w-full h-full object-cover"
+            onLoadedData={handleVideoLoaded}
+          >
+            <source src="/hero_1.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
+
+      {/* Content - Always visible immediately */}
       <div className="relative h-full flex items-center">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="max-w-4xl mx-auto text-center">
