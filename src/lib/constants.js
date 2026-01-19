@@ -1,13 +1,28 @@
 export const SITE = {
-    title: "Vridhi Real Estate",
-    description: "Discover your dream home with Vridhi Real Estate - where luxury meets comfort.",
+    title: "Vrddhi Real Estate",
+    tagline: "Your Trusted Real Estate Partner in Dehradun",
+    description: "Buy flats, villas, plots and commercial property in Dehradun with Vrddhi Real Estate. Trusted property consultants for premium and affordable properties.",
     defaultLanguage: "en_US",
-    address: "123 Rajpur Road, Dehradun, India",
-    contactEmail: "info@vridhi.com",
-    contactPhone: "+91-9876543210",
+    address: "4, East Canal Road, Dehradun 248001 (Uttarakhand)",
+    contactEmail: "info@vrddhirealestate.com",
+    contactPhone: "+91 97190 50969",
+    alternatePhone: "+91 135 2745897",
+    url: "https://vrddhirealestate.com",
+    keywords: [
+        "real estate in Dehradun",
+        "property in Dehradun",
+        "Dehradun property dealers",
+        "flats for sale in Dehradun",
+        "villas in Dehradun",
+        "buy property Dehradun",
+        "Vrddhi Real Estate",
+        "commercial property in Dehradun",
+        "plots in Dehradun",
+        "residential property in Dehradun"
+    ],
     socialMedia: {
-        facebook: "https://facebook.com/vridhi",
-        instagram: "https://instagram.com/vridhi",
-        twitter: "https://twitter.com/vridhi"
+        facebook: "https://facebook.com/vrddhirealestate",
+        instagram: "https://instagram.com/vrddhirealestate",
+        twitter: "https://twitter.com/vrddhirealestate"
     }
 };

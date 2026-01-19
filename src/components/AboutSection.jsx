@@ -6,12 +6,12 @@ import { SITE } from '@/lib/constants';
 
 export function AboutSection() {
   const features = [
-    'Expert Consultation',
-    'Legal Compliance',
-    'Transparent Deals',
-    'Market Insights',
-    'Complete Documentation',
-    'After-Sales Support',
+    'Local Expertise in Dehradun Real Estate',
+    'Verified, RERA-approved Properties',
+    'Premium & Affordable Options',
+    'Transparent Deals & Legal Compliance',
+    'Complete Documentation Support',
+    'Dedicated Customer Support',
   ];
 
   return (
@@ -22,13 +22,17 @@ export function AboutSection() {
           {/* CONTENT (left on large screens) */}
           <div className="lg:col-span-6">
             <div className="max-w-xl">
-              <h3 className="text-sm font-medium uppercase tracking-widest text-amber-600 mb-3">Who we are</h3>
+              <h3 className="text-sm font-medium uppercase tracking-widest text-amber-600 mb-3">About Vrddhi Real Estate</h3>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
-                Building trust, delivering value — <span className="text-amber-500">{SITE.title}</span>
+                Dehradun's Most Trusted <span className="text-amber-500">Property Consultants</span>
               </h2>
 
+              <p className="text-lg text-slate-600 mb-4">
+                Vrddhi Real Estate is a leading real estate agency in Dehradun, committed to helping clients discover the perfect property for living or investment. With years of experience and deep local knowledge, we provide expert property recommendations, market insights, and end-to-end support throughout your buying journey.
+              </p>
+
               <p className="text-lg text-slate-600 mb-6">
-                We're a premium real estate firm based in Dehradun focused on honest deals, thorough documentation and excellent after-sales care. We guide clients from search to ownership with clarity and professionalism.
+                Whether you want to buy, sell, or invest in flats, villas, plots, or commercial spaces across Dehradun, our team ensures a smooth and secure real estate experience. We stand for trust, transparency, and long-term value creation.
               </p>
 
               {/* Stats */}
@@ -49,7 +53,7 @@ export function AboutSection() {
                 </div>
               </div>
 
-              {/* Features grid */}
+              {/* Features grid - SEO optimized */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                 {features.map((f, i) => (
                   <div
@@ -82,7 +86,7 @@ export function AboutSection() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1400&h=1000&fit=crop"
-                alt={`${SITE.title} - premium property`}
+                alt="Premium property in Dehradun - Vrddhi Real Estate"
                 className="w-full h-[520px] object-cover"
                 width={1400}
                 height={1000}

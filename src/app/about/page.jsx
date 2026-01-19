@@ -6,6 +6,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Landmark, Target, Award, Users, TrendingUp, Handshake } from 'lucide-react'; // Icons for values
 
+// SEO Metadata for About Page
+export const metadata = {
+  title: "About Us",
+  description: "Learn about Vrddhi Real Estate - Dehradun's trusted property consultants. 15+ years of experience in residential, commercial properties, plots & villas.",
+  keywords: ["about Vrddhi Real Estate", "Dehradun real estate company", "property consultants Dehradun", "trusted property dealers"],
+};
+
 export default function AboutPage() {
   return (
     <div className="bg-background">
@@ -31,13 +38,13 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Image Column */}
           <div className="overflow-hidden rounded-lg shadow-lg">
-                <Image
-                src="https://placehold.co/600x400/F8F9FA/1B263B?text=Our+Story" // Placeholder image related to company history/location
-                alt={`${SITE.title} Office or Cityscape`}
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-              />
+            <Image
+              src="https://placehold.co/600x400/F8F9FA/1B263B?text=Our+Story" // Placeholder image related to company history/location
+              alt={`${SITE.title} Office or Cityscape`}
+              width={600}
+              height={400}
+              className="w-full h-auto object-cover"
+            />
           </div>
           {/* Text Column */}
           <div>
@@ -106,21 +113,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-       {/* 4. Meet the Team Teaser (Optional) */}
-       <section className="container mx-auto px-4 py-16 md:py-24 text-center">
-         <div className="inline-flex items-center justify-center p-3 rounded-xl bg-amber-500 shadow-lg mb-4 ring-1 ring-amber-400/20">
-           <Users className="h-6 w-6 text-white" />
-         </div>
-         <h2 className="font-serif text-3xl font-bold text-slate-900 mb-4">
-           Meet Our Experts
-         </h2>
-         <p className="max-w-2xl mx-auto text-lg text-slate-600 mb-8">
-           Our team comprises seasoned professionals dedicated to the Austin luxury market. Get to know the advisors committed to your success.
-         </p>
-         <Button asChild size="lg" className="bg-amber-500 text-white hover:bg-amber-600">
-           <Link href="/agents">View Our Agents</Link>
-         </Button>
-       </section>
+      {/* 4. Meet the Team Teaser (Optional) */}
+      <section className="container mx-auto px-4 py-16 md:py-24 text-center">
+        <div className="inline-flex items-center justify-center p-3 rounded-xl bg-amber-500 shadow-lg mb-4 ring-1 ring-amber-400/20">
+          <Users className="h-6 w-6 text-white" />
+        </div>
+        <h2 className="font-serif text-3xl font-bold text-slate-900 mb-4">
+          Meet Our Experts
+        </h2>
+        <p className="max-w-2xl mx-auto text-lg text-slate-600 mb-8">
+          Our team comprises seasoned professionals dedicated to the Austin luxury market. Get to know the advisors committed to your success.
+        </p>
+        <Button asChild size="lg" className="bg-amber-500 text-white hover:bg-amber-600">
+          <Link href="/agents">View Our Agents</Link>
+        </Button>
+      </section>
 
     </div>
   );

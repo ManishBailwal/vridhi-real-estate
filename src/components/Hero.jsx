@@ -18,7 +18,7 @@ export function HeroSection() {
           <source src="/hero_1.mp4" type="video/mp4" />
         </video>
         {/* Dark Overlay */}
-        <div className="absolute inset-0 "></div>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
       {/* Content */}
@@ -27,54 +27,56 @@ export function HeroSection() {
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-block mb-6 animate-fade-in">
-              <span className="px-6 py-2 backdrop-blur-sm text-black text-sm md:text-base font-semibold rounded-full shadow-xl">
+              <span className="px-6 py-2 bg-white/90 backdrop-blur-sm text-slate-800 text-sm md:text-base font-semibold rounded-full shadow-xl">
                 🏡 Premium Real Estate in Dehradun
               </span>
             </div>
 
-            {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 leading-tight animate-slide-up">
-              Find Your Dream
-              <span className="block text-amber-400">Property Today</span>
+            {/* Main Heading - SEO Optimized H1 */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight animate-slide-up">
+              Your Trusted Real Estate
+              <span className="block text-amber-400">Partner in Dehradun</span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-lg md:text-xl lg:text-2xl text-slate-200 mb-12 max-w-2xl mx-auto animate-slide-up-delay">
-              Discover the perfect residential plots, villas, and apartments in Dehradun's most sought-after locations
+            {/* Subtitle - SEO Optimized */}
+            <p className="text-lg md:text-xl lg:text-2xl text-slate-100 mb-12 max-w-3xl mx-auto animate-slide-up-delay">
+              Find premium flats, villas, plots, and commercial properties across Dehradun's most desirable locations. At Vrddhi Real Estate, we help you discover homes and investments that truly match your lifestyle.
             </p>
 
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12 animate-slide-up-delay">
+              <a
+                href="/listings"
+                className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5"
+              >
+                Explore Properties
+              </a>
+              <a
+                href="/contact"
+                className="px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold rounded-lg border border-white/30 transition-all"
+              >
+                Schedule a Site Visit
+              </a>
+            </div>
+
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 max-w-2xl mx-auto animate-fade-in-delay">
+            <div className="grid grid-cols-3 gap-4 md:gap-8 mt-8 max-w-2xl mx-auto animate-fade-in-delay">
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">500+</div>
-                <div className="text-sm md:text-base text-slate-300">Properties</div>
+                <div className="text-sm md:text-base text-slate-200">Properties</div>
               </div>
               <div className="text-center border-x border-white/20">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">200+</div>
-                <div className="text-sm md:text-base text-slate-300">Happy Clients</div>
+                <div className="text-sm md:text-base text-slate-200">Happy Clients</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">15+</div>
-                <div className="text-sm md:text-base text-slate-300">Years Experience</div>
+                <div className="text-sm md:text-base text-slate-200">Years Experience</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      {/* <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-          <div className="w-1.5 h-2 bg-white rounded-full"></div>
-        </div>
-      </div> */}
-
-      {/* City Skyline SVG Decoration */}
-      {/* <div className="absolute bottom-0 left-0 right-0 h-32 opacity-20">
-        <svg viewBox="0 0 1440 100" className="w-full h-full" preserveAspectRatio="none">
-          <path fill="white" d="M0,50 L50,50 L50,20 L100,20 L100,50 L150,50 L150,10 L200,10 L200,50 L250,50 L250,30 L300,30 L300,50 L1440,50 L1440,100 L0,100 Z" />
-        </svg>
-      </div> */}
     </section>
   );
 }

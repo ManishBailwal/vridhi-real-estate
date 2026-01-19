@@ -1,6 +1,13 @@
 import React from 'react';
 import { Building2, Search, Home, Key } from 'lucide-react';
 
+// SEO Metadata for Buy Page
+export const metadata = {
+  title: "Buy Property in Dehradun",
+  description: "Buy flats, villas, plots and residential properties in Dehradun. Find RERA-approved projects, 2 BHK & 3 BHK apartments, and luxury homes with Vrddhi Real Estate.",
+  keywords: ["buy property Dehradun", "flats for sale Dehradun", "villas in Dehradun", "plots in Dehradun", "2 BHK Dehradun", "3 BHK Dehradun"],
+};
+
 export default function BuyPage() {
   return (
     <div className="min-h-screen bg-slate-50">

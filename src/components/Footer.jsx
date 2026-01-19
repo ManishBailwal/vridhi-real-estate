@@ -7,7 +7,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-  <footer className="mt-auto bg-gradient-to-tr from-sky-900 via-indigo-900 to-slate-900 text-white">
+    <footer className="mt-auto bg-gradient-to-tr from-sky-900 via-indigo-900 to-slate-900 text-white">
       <div className="container mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
 
@@ -70,7 +70,12 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-slate-300" />
-                <a href={`tel:${SITE.contactPhone}`} className="hover:text-white transition">{SITE.contactPhone}</a>
+                <div className="flex flex-col">
+                  <a href={`tel:${SITE.contactPhone}`} className="hover:text-white transition">{SITE.contactPhone}</a>
+                  {SITE.alternatePhone && (
+                    <a href={`tel:${SITE.alternatePhone}`} className="hover:text-white transition text-slate-300">{SITE.alternatePhone}</a>
+                  )}
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-slate-300" />
@@ -78,7 +83,7 @@ export function Footer() {
               </li>
             </ul>
 
-              <div className="bg-white/5 p-4 rounded-xl ring-1 ring-white/6">
+            <div className="bg-white/5 p-4 rounded-xl ring-1 ring-white/6">
               <div className="text-sm font-semibold text-slate-200 mb-2">Subscribe to our newsletter</div>
               <p className="text-xs text-slate-300 mb-3">Latest listings, market insights and curated offers — delivered monthly.</p>
 
