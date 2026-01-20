@@ -53,7 +53,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
 
       {/* Content - Always visible immediately */}
-      <div className="relative h-full flex items-center">
+      <div className="relative h-full flex items-center pt-24 md:pt-16">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="max-w-4xl mx-auto text-center">
             {/* Badge */}
