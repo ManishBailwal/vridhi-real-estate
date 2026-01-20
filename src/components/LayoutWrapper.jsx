@@ -4,6 +4,7 @@
 import { usePathname } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export function LayoutWrapper({ children }) {
     const pathname = usePathname();
@@ -16,6 +17,7 @@ export function LayoutWrapper({ children }) {
                 {children}
             </main>
             {!isAdminRoute && <Footer />}
+            {!isAdminRoute && <WhatsAppButton />}
         </>
     );
 }
