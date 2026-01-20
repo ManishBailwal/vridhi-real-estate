@@ -88,9 +88,10 @@ const jsonLd = {
     "name": "Dehradun"
   },
   "sameAs": [
-    "https://facebook.com/vrddhirealestate",
-    "https://instagram.com/vrddhirealestate",
-    "https://twitter.com/vrddhirealestate"
+    "https://www.facebook.com/VrddhiRealEstateConsultants",
+    "https://www.instagram.com/vrddhi.consultants.dehradun",
+    "https://youtube.com/@vrddhirealestateconsultants",
+    "https://wa.me/message/XO43AKEANE2MI1"
   ]
 };
 
