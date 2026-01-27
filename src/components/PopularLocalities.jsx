@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const localities = [
@@ -78,10 +79,10 @@ export function PopularLocalities() {
                   <p className="text-sm text-slate-200">Explore properties &amp; trends</p>
                 </div>
 
-                <button className="bg-amber-500 hover:bg-amber-600 text-white rounded-md px-3 py-2 flex items-center gap-2 shadow hover:translate-x-1 transition-all">
+                <Link href="/listings" className="bg-amber-500 hover:bg-amber-600 text-white rounded-md px-3 py-2 flex items-center gap-2 shadow hover:translate-x-1 transition-all">
                   Explore
                   <ChevronRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
 
               <div className="absolute inset-0 rounded-2xl border-4 border-transparent group-hover:border-amber-500 transition-all duration-500" />

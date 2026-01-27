@@ -14,7 +14,7 @@ export default function RequestListingPage() {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-  
+
   const [formData, setFormData] = useState({
     title: '',
     propertyType: 'residential', // residential, commercial, plot
@@ -39,9 +39,9 @@ export default function RequestListingPage() {
 
   const handleImageSelect = (e) => {
     const files = Array.from(e.target.files);
-    
-    if (images.length + files.length > 5) {
-      alert('You can upload a maximum of 5 images');
+
+    if (images.length + files.length > 2) {
+      alert('You can upload a maximum of 2 images');
       return;
     }
 
@@ -51,7 +51,7 @@ export default function RequestListingPage() {
     }
 
     setImages(prev => [...prev, ...files]);
-    
+
     // Create previews
     files.forEach(file => {
       const reader = new FileReader();
@@ -69,14 +69,14 @@ export default function RequestListingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (images.length < 1) {
       alert('Please upload at least 1 image');
       return;
     }
 
-    if (images.length > 5) {
-      alert('Maximum 5 images allowed');
+    if (images.length > 2) {
+      alert('Maximum 2 images allowed');
       return;
     }
 
@@ -86,7 +86,7 @@ export default function RequestListingPage() {
       // Upload all images to Cloudinary
       const uploadPromises = images.map(file => uploadToCloudinary(file));
       const uploadedImages = await Promise.all(uploadPromises);
-      
+
       const imageUrls = uploadedImages.map(img => img.url);
       const publicIds = uploadedImages.map(img => img.publicId);
 
@@ -100,9 +100,9 @@ export default function RequestListingPage() {
           ...formData,
           images: imageUrls,
           publicIds: publicIds,
-          price: parseFloat(formData.price),
-          bedrooms: formData.propertyType === 'plot' ? 0 : parseInt(formData.bedrooms) || 0,
-          bathrooms: formData.propertyType === 'plot' ? 0 : parseInt(formData.bathrooms) || 0,
+          price: formData.price ? parseFloat(formData.price) : null,
+          bedrooms: formData.propertyType === 'plot' ? null : (parseInt(formData.bedrooms) || null),
+          bathrooms: formData.propertyType === 'plot' ? null : (parseInt(formData.bathrooms) || null),
           area: parseFloat(formData.area),
         }),
       });
@@ -240,7 +240,7 @@ export default function RequestListingPage() {
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
                 <Label htmlFor="price" className="text-base font-semibold text-slate-900 mb-2">
-                  Price (₹) *
+                  Price (₹) <span className="text-slate-400 text-sm font-normal">(Optional)</span>
                 </Label>
                 <Input
                   id="price"
@@ -249,7 +249,6 @@ export default function RequestListingPage() {
                   value={formData.price}
                   onChange={handleChange}
                   placeholder="e.g., 5000000"
-                  required
                   className="h-12"
                 />
               </div>
@@ -275,7 +274,7 @@ export default function RequestListingPage() {
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <Label htmlFor="bedrooms" className="text-base font-semibold text-slate-900 mb-2">
-                    Bedrooms *
+                    Bedrooms <span className="text-slate-400 text-sm font-normal">(Optional)</span>
                   </Label>
                   <Input
                     id="bedrooms"
@@ -284,13 +283,12 @@ export default function RequestListingPage() {
                     value={formData.bedrooms}
                     onChange={handleChange}
                     placeholder="e.g., 3"
-                    required={formData.propertyType !== 'plot'}
                     className="h-12"
                   />
                 </div>
                 <div>
                   <Label htmlFor="bathrooms" className="text-base font-semibold text-slate-900 mb-2">
-                    Bathrooms *
+                    Bathrooms <span className="text-slate-400 text-sm font-normal">(Optional)</span>
                   </Label>
                   <Input
                     id="bathrooms"
@@ -299,7 +297,6 @@ export default function RequestListingPage() {
                     value={formData.bathrooms}
                     onChange={handleChange}
                     placeholder="e.g., 2"
-                    required={formData.propertyType !== 'plot'}
                     className="h-12"
                   />
                 </div>
@@ -326,7 +323,7 @@ export default function RequestListingPage() {
             {/* Owner Details */}
             <div className="border-t pt-6 mb-6">
               <h3 className="text-xl font-bold text-slate-900 mb-4">Contact Information</h3>
-              
+
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <Label htmlFor="ownerName" className="text-base font-semibold text-slate-900 mb-2">
@@ -379,12 +376,12 @@ export default function RequestListingPage() {
             {/* Image Upload */}
             <div className="border-t pt-6 mb-8">
               <Label className="text-base font-semibold text-slate-900 mb-2 block">
-                Property Images * (Min: 1, Max: 5)
+                Property Images * (Min: 1, Max: 2)
               </Label>
               <p className="text-sm text-slate-600 mb-4">
                 Upload clear images of your property. First image will be used as the main image.
               </p>
-              
+
               <div className="space-y-4">
                 {/* Image Previews */}
                 {imagePreviews.length > 0 && (
@@ -414,7 +411,7 @@ export default function RequestListingPage() {
                 )}
 
                 {/* Upload Button */}
-                {images.length < 5 && (
+                {images.length < 2 && (
                   <div>
                     <input
                       type="file"
@@ -430,7 +427,7 @@ export default function RequestListingPage() {
                     >
                       <Upload className="w-5 h-5 text-slate-600" />
                       <span className="text-slate-700 font-medium">
-                        Click to upload images ({images.length}/5)
+                        Click to upload images ({images.length}/2)
                       </span>
                     </label>
                   </div>

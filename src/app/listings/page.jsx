@@ -5,84 +5,94 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { Input } from '@/components/ui/input';
 
-const PropertyCard = ({ property, onHover }) => {
+const PropertyCard = ({ property, showPrice = false }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const hasBedrooms = property.bedrooms !== null && property.bedrooms !== undefined && property.bedrooms > 0;
+  const hasBathrooms = property.bathrooms !== null && property.bathrooms !== undefined && property.bathrooms > 0;
+
   return (
     <>
-      <div 
+      <div
         className="relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setShowModal(true)}
       >
-      {/* Property Image */}
-      <div className="relative h-80 overflow-hidden">
-        <img 
-          src={property.image} 
-          alt={property.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        
-        {/* Sold Badge */}
-        {property.sold && (
-          <div className="absolute top-4 left-4 bg-slate-900 text-white px-4 py-1 rounded text-sm font-semibold shadow-lg">
-            SOLD
-          </div>
-        )}
+        {/* Property Image */}
+        <div className="relative h-80 overflow-hidden">
+          <img
+            src={property.image}
+            alt={property.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
 
-        {/* Navigation Arrow - appears on hover */}
-        <div 
-          className={`absolute top-1/2 right-6 -translate-y-1/2 bg-amber-500 rounded-full p-4 shadow-xl transition-all duration-300 ${
-            isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-          }`}
-        >
-          <ArrowRight className="w-6 h-6 text-white" />
+          {/* Sold Badge */}
+          {property.sold && (
+            <div className="absolute top-4 left-4 bg-slate-900 text-white px-4 py-1 rounded text-sm font-semibold shadow-lg">
+              SOLD
+            </div>
+          )}
+
+          {/* Navigation Arrow - appears on hover */}
+          <div
+            className={`absolute top-1/2 right-6 -translate-y-1/2 bg-amber-500 rounded-full p-4 shadow-xl transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+              }`}
+          >
+            <ArrowRight className="w-6 h-6 text-white" />
+          </div>
+        </div>
+
+        {/* Property Details */}
+        <div className="bg-white p-6">
+          {/* Title and Price Row */}
+          <div className="flex justify-between items-start mb-2">
+            <h3 className="text-xl font-bold text-slate-900">{property.title}</h3>
+            {showPrice && property.price ? (
+              <span className="text-xl font-bold text-amber-500">₹{property.price.toLocaleString()}</span>
+            ) : (
+              <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Contact for Price</span>
+            )}
+          </div>
+
+          {/* Address */}
+          <p className="text-slate-600 mb-6">{property.address}</p>
+
+          {/* Property Features */}
+          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200">
+            {/* Bedrooms */}
+            <div className="flex flex-col items-start">
+              <BedDouble className="w-5 h-5 text-slate-600 mb-2" />
+              <span className="text-sm font-semibold text-slate-900">
+                {hasBedrooms ? `${property.bedrooms} Bedrooms` : '-'}
+              </span>
+            </div>
+
+            {/* Bathrooms */}
+            <div className="flex flex-col items-start">
+              <Bath className="w-5 h-5 text-slate-600 mb-2" />
+              <span className="text-sm font-semibold text-slate-900">
+                {hasBathrooms ? `${property.bathrooms} Bathrooms` : '-'}
+              </span>
+            </div>
+
+            {/* Area */}
+            <div className="flex flex-col items-start">
+              <Maximize2 className="w-5 h-5 text-slate-600 mb-2" />
+              <span className="text-sm font-semibold text-slate-900">{property.area}m²</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Property Details */}
-      <div className="bg-white p-6">
-        {/* Title and Price Row */}
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-bold text-slate-900">{property.title}</h3>
-          <span className="text-xl font-bold text-amber-500">₹{property.price.toLocaleString()}</span>
-        </div>
-
-        {/* Address */}
-        <p className="text-slate-600 mb-6">{property.address}</p>
-
-        {/* Property Features */}
-        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200">
-          {/* Bedrooms */}
-          <div className="flex flex-col items-start">
-            <BedDouble className="w-5 h-5 text-slate-600 mb-2" />
-            <span className="text-sm font-semibold text-slate-900">{property.bedrooms} Bedrooms</span>
-          </div>
-
-          {/* Bathrooms */}
-          <div className="flex flex-col items-start">
-            <Bath className="w-5 h-5 text-slate-600 mb-2" />
-            <span className="text-sm font-semibold text-slate-900">{property.bathrooms} Bathrooms</span>
-          </div>
-
-          {/* Area */}
-          <div className="flex flex-col items-start">
-            <Maximize2 className="w-5 h-5 text-slate-600 mb-2" />
-            <span className="text-sm font-semibold text-slate-900">{property.area}m²</span>
-          </div>
-        </div>
-      </div>
-    </div>
 
       {/* Property Detail Modal */}
       {showModal && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setShowModal(false)}
         >
-          <div 
+          <div
             className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
@@ -96,8 +106,8 @@ const PropertyCard = ({ property, onHover }) => {
 
             {/* Property Image */}
             <div className="relative h-96">
-              <img 
-                src={property.image} 
+              <img
+                src={property.image}
                 alt={property.title}
                 className="w-full h-full object-cover"
               />
@@ -119,22 +129,29 @@ const PropertyCard = ({ property, onHover }) => {
                     {property.address}
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm text-slate-600 mb-1">Price</p>
-                  <p className="text-3xl font-bold text-amber-500">₹{property.price.toLocaleString()}</p>
-                </div>
+                {showPrice && property.price ? (
+                  <div className="text-right">
+                    <p className="text-sm text-slate-600 mb-1">Price</p>
+                    <p className="text-3xl font-bold text-amber-500">₹{property.price.toLocaleString()}</p>
+                  </div>
+                ) : (
+                  <div className="text-right">
+                    <p className="text-sm text-slate-600 mb-1">Price</p>
+                    <p className="text-lg font-semibold text-slate-500">Contact for Price</p>
+                  </div>
+                )}
               </div>
 
               {/* Features Grid */}
               <div className="grid grid-cols-3 gap-6 mb-6">
                 <div className="bg-slate-50 rounded-xl p-6 text-center">
                   <BedDouble className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-slate-900 mb-1">{property.bedrooms}</p>
+                  <p className="text-2xl font-bold text-slate-900 mb-1">{hasBedrooms ? property.bedrooms : '-'}</p>
                   <p className="text-sm text-slate-600">Bedrooms</p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-6 text-center">
                   <Bath className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-slate-900 mb-1">{property.bathrooms}</p>
+                  <p className="text-2xl font-bold text-slate-900 mb-1">{hasBathrooms ? property.bathrooms : '-'}</p>
                   <p className="text-sm text-slate-600">Bathrooms</p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-6 text-center">
@@ -146,8 +163,8 @@ const PropertyCard = ({ property, onHover }) => {
 
               {/* Action Buttons */}
               <div className="flex gap-4">
-                <a 
-                  href="/contact" 
+                <a
+                  href="/contact"
                   className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-6 rounded-xl transition-colors text-center"
                 >
                   Contact Us
@@ -217,14 +234,14 @@ const PropertyListingsPage = () => {
           <p className="text-xl text-slate-300 mb-8">
             Experience elegance and comfort with our exclusive luxury villas, designed for sophisticated living.
           </p>
-          
+
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto relative">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-              <Input 
-                type="text" 
-                placeholder="Search by title, location, or city..." 
+              <Input
+                type="text"
+                placeholder="Search by title, location, or city..."
                 className="w-full pl-12 pr-4 py-6 text-lg rounded-full shadow-lg border-transparent focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
