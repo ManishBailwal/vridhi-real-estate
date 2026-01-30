@@ -22,13 +22,13 @@ export function AboutSection() {
           {/* CONTENT (left on large screens) */}
           <div className="lg:col-span-6">
             <div className="max-w-xl">
-              <h3 className="text-sm font-medium uppercase tracking-widest text-amber-600 mb-3">About Vrddhi Real Estate</h3>
+              <h3 className="text-sm font-medium uppercase tracking-widest text-amber-600 mb-3">About Vṛddhi Real Estate</h3>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
                 Dehradun's Most Trusted <span className="text-amber-500">Property Consultants</span>
               </h2>
 
               <p className="text-lg text-slate-600 mb-4">
-                Vrddhi Real Estate is a leading real estate agency in Dehradun, committed to helping clients discover the perfect property for living or investment. With years of experience and deep local knowledge, we provide expert property recommendations, market insights, and end-to-end support throughout your buying journey.
+                Vṛddhi Real Estate is a leading real estate agency in Dehradun, committed to helping clients discover the perfect property for living or investment. With years of experience and deep local knowledge, we provide expert property recommendations, market insights, and end-to-end support throughout your buying journey.
               </p>
 
               <p className="text-lg text-slate-600 mb-6">
@@ -86,7 +86,7 @@ export function AboutSection() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1400&h=1000&fit=crop"
-                alt="Premium property in Dehradun - Vrddhi Real Estate"
+                alt="Premium property in Dehradun - Vṛddhi Real Estate"
                 className="w-full h-[520px] object-cover"
                 width={1400}
                 height={1000}
