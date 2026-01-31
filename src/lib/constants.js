@@ -1,7 +1,7 @@
 export const SITE = {
-    title: "Vrddhi Real Estate",
+    title: "Vṛddhi Real Estate",
     tagline: "Your Trusted Real Estate Partner in Dehradun",
-    description: "Buy flats, villas, plots and commercial property in Dehradun with Vrddhi Real Estate. Trusted property consultants for premium and affordable properties.",
+    description: "Buy flats, villas, plots and commercial property in Dehradun with Vṛddhi Real Estate. Trusted property consultants for premium and affordable properties.",
     defaultLanguage: "en_US",
     address: "4, East Canal Road, Dehradun 248001 (Uttarakhand)",
     contactEmail: "vrddhiconsultants@gmail.com",
@@ -14,7 +14,7 @@ export const SITE = {
         "flats for sale in Dehradun",
         "villas in Dehradun",
         "buy property Dehradun",
-        "Vrddhi Real Estate",
+        "Vṛddhi Real Estate",
         "commercial property in Dehradun",
         "plots in Dehradun",
         "residential property in Dehradun"

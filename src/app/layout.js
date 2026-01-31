@@ -19,10 +19,10 @@ const playfair = Playfair_Display({
 // SEO Metadata
 export const metadata = {
   title: {
-    default: "Vrddhi Real Estate | Buy Property, Flats & Homes in Dehradun",
-    template: "%s | Vrddhi Real Estate"
+    default: "Vṛddhi Real Estate | Buy Property, Flats & Homes in Dehradun",
+    template: "%s | Vṛddhi Real Estate"
   },
-  description: "Looking for property in Dehradun? Vrddhi Real Estate offers premium flats, villas, plots & commercial spaces. Trusted property dealers in Dehradun.",
+  description: "Looking for property in Dehradun? Vṛddhi Real Estate offers premium flats, villas, plots & commercial spaces. Trusted property dealers in Dehradun.",
   keywords: [
     "real estate in Dehradun",
     "property in Dehradun",
@@ -30,7 +30,7 @@ export const metadata = {
     "flats for sale in Dehradun",
     "villas in Dehradun",
     "buy property Dehradun",
-    "Vrddhi Real Estate",
+    "Vṛddhi Real Estate",
     "commercial property in Dehradun",
     "plots in Dehradun",
     "residential property in Dehradun",
@@ -38,9 +38,9 @@ export const metadata = {
     "affordable flats in Dehradun",
     "luxury villas in Dehradun"
   ],
-  authors: [{ name: "Vrddhi Real Estate" }],
-  creator: "Vrddhi Real Estate",
-  publisher: "Vrddhi Real Estate",
+  authors: [{ name: "Vṛddhi Real Estate" }],
+  creator: "Vṛddhi Real Estate",
+  publisher: "Vṛddhi Real Estate",
   robots: {
     index: true,
     follow: true,
@@ -49,14 +49,14 @@ export const metadata = {
     type: "website",
     locale: "en_IN",
     url: "https://vrddhirealestate.com",
-    siteName: "Vrddhi Real Estate",
-    title: "Vrddhi Real Estate | Property & Homes in Dehradun",
-    description: "Buy flats, villas, plots and commercial property in Dehradun with Vrddhi Real Estate. Trusted property consultants for premium and affordable properties.",
+    siteName: "Vṛddhi Real Estate",
+    title: "Vṛddhi Real Estate | Property & Homes in Dehradun",
+    description: "Buy flats, villas, plots and commercial property in Dehradun with Vṛddhi Real Estate. Trusted property consultants for premium and affordable properties.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vrddhi Real Estate | Property & Homes in Dehradun",
-    description: "Buy flats, villas, plots and commercial property in Dehradun with Vrddhi Real Estate.",
+    title: "Vṛddhi Real Estate | Property & Homes in Dehradun",
+    description: "Buy flats, villas, plots and commercial property in Dehradun with Vṛddhi Real Estate.",
   },
   alternates: {
     canonical: "https://vrddhirealestate.com",
@@ -70,8 +70,8 @@ export const metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
-  "name": "Vrddhi Real Estate",
-  "description": "Buy flats, villas, plots and commercial property in Dehradun with Vrddhi Real Estate. Trusted property consultants for premium and affordable properties.",
+  "name": "Vṛddhi Real Estate",
+  "description": "Buy flats, villas, plots and commercial property in Dehradun with Vṛddhi Real Estate. Trusted property consultants for premium and affordable properties.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "4, East Canal Road",

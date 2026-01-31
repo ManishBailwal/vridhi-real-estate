@@ -71,7 +71,7 @@ export function HeroSection() {
 
             {/* Subtitle - SEO Optimized */}
             <p className="text-lg md:text-xl lg:text-2xl text-slate-100 mb-12 max-w-3xl mx-auto animate-slide-up-delay">
-              Find premium flats, villas, plots, and commercial properties across Dehradun's most desirable locations. At Vrddhi Real Estate, we help you discover homes and investments that truly match your lifestyle.
+              Find premium flats, villas, plots, and commercial properties across Dehradun's most desirable locations. At Vṛddhi Real Estate, we help you discover homes and investments that truly match your lifestyle.
             </p>
 
             {/* CTA Buttons */}

@@ -9,8 +9,8 @@ import { Landmark, Target, Award, Users, TrendingUp, Handshake } from 'lucide-re
 // SEO Metadata for About Page
 export const metadata = {
   title: "About Us",
-  description: "Learn about Vrddhi Real Estate - Dehradun's trusted property consultants. 15+ years of experience in residential, commercial properties, plots & villas.",
-  keywords: ["about Vrddhi Real Estate", "Dehradun real estate company", "property consultants Dehradun", "trusted property dealers"],
+  description: "Learn about Vṛddhi Real Estate - Dehradun's trusted property consultants. 15+ years of experience in residential, commercial properties, plots & villas.",
+  keywords: ["about Vṛddhi Real Estate", "Dehradun real estate company", "property consultants Dehradun", "trusted property dealers"],
 };
 
 export default function AboutPage() {
