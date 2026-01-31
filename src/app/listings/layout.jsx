@@ -17,7 +17,7 @@ export const metadata = {
         description: "Browse premium property listings in Dehradun. Find flats, villas, plots, and commercial spaces for sale.",
         type: "website",
         locale: "en_IN",
-        url: "https://Vṛddhi Realestate.com/listings",
+        url: "https://vrddhirealestate.com/listings",
     },
     twitter: {
         card: "summary_large_image",
@@ -25,7 +25,7 @@ export const metadata = {
         description: "Browse premium property listings in Dehradun. Find flats, villas, plots, and commercial spaces for sale.",
     },
     alternates: {
-        canonical: "https://Vṛddhi Realestate.com/listings",
+        canonical: "https://vrddhirealestate.com/listings",
     },
 };
 
