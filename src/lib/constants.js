@@ -6,7 +6,7 @@ export const SITE = {
     address: "4, East Canal Road, Dehradun 248001 (Uttarakhand)",
     contactEmail: "vrddhiconsultants@gmail.com",
     contactPhone: "+91 97190 50969",
-    url: "https://Vṛddhi Realestate.com",
+    url: "https://vrddhirealestate.com",
     keywords: [
         "real estate in Dehradun",
         "property in Dehradun",
@@ -20,9 +20,9 @@ export const SITE = {
         "residential property in Dehradun"
     ],
     socialMedia: {
-        facebook: "https://www.facebook.com/Vṛddhi RealEstateConsultants",
-        instagram: "https://www.instagram.com/Vṛddhi.consultants.dehradun?igsh=MTU1cDdoZml0MmlyNg==",
-        youtube: "https://youtube.com/@Vṛddhi Realestateconsultants?si=OF2pwKDXjKet-fQm",
+        facebook: "https://www.facebook.com/VrddhiRealEstateConsultants",
+        instagram: "https://www.instagram.com/vrddhi.consultants.dehradun?igsh=MTU1cDdoZml0MmlyNg==",
+        youtube: "https://youtube.com/@vrddhirealestateconsultants?si=OF2pwKDXjKet-fQm",
         whatsapp: "https://wa.me/message/XO43AKEANE2MI1"
     }
 };
