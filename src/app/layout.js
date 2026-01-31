@@ -48,7 +48,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://Vṛddhi Realestate.com",
+    url: "https://vrddhirealestate.com",
     siteName: "Vṛddhi Real Estate",
     title: "Vṛddhi Real Estate | Property & Homes in Dehradun",
     description: "Buy flats, villas, plots and commercial property in Dehradun with Vṛddhi Real Estate. Trusted property consultants for premium and affordable properties.",
@@ -59,7 +59,7 @@ export const metadata = {
     description: "Buy flats, villas, plots and commercial property in Dehradun with Vṛddhi Real Estate.",
   },
   alternates: {
-    canonical: "https://Vṛddhi Realestate.com",
+    canonical: "https://vrddhirealestate.com",
   },
   other: {
     "language": "English",
@@ -81,16 +81,16 @@ const jsonLd = {
     "addressCountry": "India"
   },
   "telephone": "+91 97190 50969",
-  "url": "https://Vṛddhi Realestate.com",
+  "url": "https://vrddhirealestate.com",
   "priceRange": "$$",
   "areaServed": {
     "@type": "City",
     "name": "Dehradun"
   },
   "sameAs": [
-    "https://www.facebook.com/Vṛddhi RealEstateConsultants",
-    "https://www.instagram.com/Vṛddhi.consultants.dehradun",
-    "https://youtube.com/@Vṛddhi Realestateconsultants",
+    "https://www.facebook.com/VrddhiRealEstateConsultants",
+    "https://www.instagram.com/vrddhi.consultants.dehradun",
+    "https://youtube.com/@vrddhirealestateconsultants",
     "https://wa.me/message/XO43AKEANE2MI1"
   ]
 };
