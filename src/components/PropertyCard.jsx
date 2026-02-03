@@ -1,16 +1,33 @@
 // components/PropertyCard.jsx
 "use client";
 
-import { Home, BedDouble, Bath, Maximize2, ArrowRight, X } from 'lucide-react';
+import { Home, BedDouble, Bath, Maximize2, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 export function PropertyCard({ property, showPrice = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const imageSrc = property.image || property.imageUrl || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Handle both single imageUrl and multiple images array
+  const images = property.images && property.images.length > 0 
+    ? property.images 
+    : [property.image || property.imageUrl || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop'];
+  
+  const imageSrc = images[0];
 
   const hasBedrooms = property.bedrooms !== null && property.bedrooms !== undefined && property.bedrooms > 0;
   const hasBathrooms = property.bathrooms !== null && property.bathrooms !== undefined && property.bathrooms > 0;
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
     <>
@@ -111,7 +128,7 @@ export function PropertyCard({ property, showPrice = false }) {
             {/* Property Image */}
             <div className="relative h-96">
               <img
-                src={imageSrc}
+                src={images[currentImageIndex]}
                 alt={property.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -119,12 +136,62 @@ export function PropertyCard({ property, showPrice = false }) {
                   e.target.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
                 }}
               />
+              
+              {/* Image Navigation Arrows */}
+              {images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all z-10"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-slate-900" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all z-10"
+                  >
+                    <ChevronRight className="w-6 h-6 text-slate-900" />
+                  </button>
+                  
+                  {/* Image Counter */}
+                  <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                    {currentImageIndex + 1} / {images.length}
+                  </div>
+                </>
+              )}
+              
               {property.sold && (
                 <div className="absolute top-4 left-4 bg-slate-900 text-white px-6 py-2 rounded-lg text-lg font-bold shadow-lg">
                   SOLD
                 </div>
               )}
             </div>
+            
+            {/* Image Thumbnails */}
+            {images.length > 1 && (
+              <div className="px-8 py-4 bg-slate-50 border-b">
+                <div className="flex gap-2 overflow-x-auto">
+                  {images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImageIndex(idx);
+                      }}
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                        idx === currentImageIndex ? 'border-amber-500 scale-105' : 'border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Property Details */}
             <div className="p-8">

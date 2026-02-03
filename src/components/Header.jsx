@@ -60,13 +60,11 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="rounded-lg bg-amber-500 p-1.5 shadow-md ring-1 ring-amber-400/20">
-            <Landmark className="h-5 w-5 text-white" />
-          </div>
-          <span className={`text-2xl font-bold font-serif transition-colors duration-300 ${isScrolled ? 'text-white' : 'text-slate-900'
-            }`}>
-            {SITE.title}
-          </span>
+          <img 
+            src="/logo.png" 
+            alt={SITE.title} 
+            className="h-14 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Navigation */}

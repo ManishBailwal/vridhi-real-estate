@@ -14,9 +14,11 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-4">
             <Link href="/" className="inline-flex items-center gap-3 mb-4">
-              <div className="rounded-lg bg-amber-500 p-2 shadow-md ring-1 ring-amber-400/20">
-                <Landmark className="w-6 h-6 text-white" />
-              </div>
+              <img 
+                src="/logo.png" 
+                alt={SITE.title} 
+                className="h-12 w-auto object-contain"
+              />
               <div>
                 <div className="text-2xl font-bold leading-tight">{SITE.title}</div>
                 <div className="text-sm text-slate-300">{SITE.tagline || SITE.description}</div>

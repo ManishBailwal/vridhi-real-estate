@@ -29,12 +29,14 @@ export default function PropertiesManagementPage() {
     bathrooms: '',
     area: '',
     imageUrl: '',
+    images: [],
+    publicIds: [],
     sold: false,
     featured: false,
   });
 
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   // Fetch properties from Firestore
   const fetchProperties = async () => {
@@ -59,15 +61,39 @@ export default function PropertiesManagementPage() {
 
   // Handle image file selection
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
+    const files = Array.from(e.target.files);
+    
+    if (imageFiles.length + files.length > 5) {
+      alert('Maximum 5 images allowed');
+      return;
+    }
+    
+    setImageFiles(prev => [...prev, ...files]);
+    
+    // Create previews
+    files.forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        setImagePreviews(prev => [...prev, reader.result]);
       };
       reader.readAsDataURL(file);
-    }
+    });
+  };
+  
+  const removeImage = (index) => {
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
+  };
+  
+  const removeExistingImage = (index) => {
+    const updatedImages = formData.images.filter((_, i) => i !== index);
+    const updatedPublicIds = formData.publicIds.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      images: updatedImages,
+      publicIds: updatedPublicIds,
+      imageUrl: updatedImages[0] || ''
+    });
   };
 
   // Upload image to Cloudinary
@@ -82,11 +108,18 @@ export default function PropertiesManagementPage() {
     setUploading(true);
 
     try {
-      let imageUrl = formData.imageUrl;
+      let images = formData.images || [];
+      let publicIds = formData.publicIds || [];
 
-      // Upload image if a new file is selected
-      if (imageFile) {
-        imageUrl = await uploadImage(imageFile);
+      // Upload new images if any are selected
+      if (imageFiles.length > 0) {
+        const uploadPromises = imageFiles.map(file => uploadToCloudinary(file));
+        const uploadedImages = await Promise.all(uploadPromises);
+        const newImageUrls = uploadedImages.map(img => img.url);
+        const newPublicIds = uploadedImages.map(img => img.publicId);
+        
+        images = [...images, ...newImageUrls];
+        publicIds = [...publicIds, ...newPublicIds];
       }
 
       const propertyData = {
@@ -95,7 +128,9 @@ export default function PropertiesManagementPage() {
         bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : null,
         bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : null,
         area: parseFloat(formData.area),
-        imageUrl,
+        imageUrl: images[0] || formData.imageUrl,
+        images,
+        publicIds,
         updatedAt: new Date().toISOString(),
       };
 
@@ -119,11 +154,13 @@ export default function PropertiesManagementPage() {
         bathrooms: '',
         area: '',
         imageUrl: '',
+        images: [],
+        publicIds: [],
         sold: false,
         featured: false,
       });
-      setImageFile(null);
-      setImagePreview('');
+      setImageFiles([]);
+      setImagePreviews([]);
       setEditingId(null);
       setShowForm(false);
       fetchProperties();
@@ -145,10 +182,13 @@ export default function PropertiesManagementPage() {
       bathrooms: property.bathrooms?.toString() || '',
       area: property.area.toString(),
       imageUrl: property.imageUrl,
+      images: property.images || [property.imageUrl],
+      publicIds: property.publicIds || [],
       sold: property.sold || false,
       featured: property.featured || false,
     });
-    setImagePreview(property.imageUrl);
+    setImageFiles([]);
+    setImagePreviews([]);
     setEditingId(property.id);
     setShowForm(true);
   };
@@ -189,11 +229,13 @@ export default function PropertiesManagementPage() {
       bathrooms: '',
       area: '',
       imageUrl: '',
+      images: [],
+      publicIds: [],
       sold: false,
       featured: false,
     });
-    setImageFile(null);
-    setImagePreview('');
+    setImageFiles([]);
+    setImagePreviews([]);
     setEditingId(null);
     setShowForm(false);
   };
@@ -243,52 +285,78 @@ export default function PropertiesManagementPage() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Image Upload */}
                     <div className="space-y-2">
-                      <Label>Property Image</Label>
-                      <div className="flex items-start gap-4">
-                        <div className="flex-1">
-                          <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors cursor-pointer">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleImageChange}
-                              className="hidden"
-                              id="image-upload"
-                            />
-                            <label htmlFor="image-upload" className="cursor-pointer">
-                              <Upload className="w-12 h-12 text-slate-400 mx-auto mb-2" />
-                              <p className="text-sm text-slate-600">Click to upload image</p>
-                              <p className="text-xs text-slate-400 mt-1">PNG, JPG up to 5MB</p>
-                            </label>
-                          </div>
-                          <Input
-                            type="text"
-                            placeholder="Or paste image URL"
-                            value={formData.imageUrl}
-                            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                            className="mt-2"
-                          />
+                      <Label>Property Images (Max: 5)</Label>
+                      
+                      {/* Existing Images */}
+                      {formData.images && formData.images.length > 0 && (
+                        <div className="grid grid-cols-3 gap-4 mb-4">
+                          {formData.images.map((img, idx) => (
+                            <div key={idx} className="relative w-full h-40 rounded-xl overflow-hidden border-2 border-slate-200">
+                              <img
+                                src={img}
+                                alt={`Property ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeExistingImage(idx)}
+                                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                              {idx === 0 && (
+                                <div className="absolute bottom-2 left-2 bg-amber-500 text-white text-xs px-2 py-1 rounded">
+                                  Main Image
+                                </div>
+                              )}
+                            </div>
+                          ))}
                         </div>
-                        {(imagePreview || formData.imageUrl) && (
-                          <div className="relative w-40 h-40 rounded-xl overflow-hidden border-2 border-slate-200">
-                            <img
-                              src={imagePreview || formData.imageUrl}
-                              alt="Preview"
-                              className="w-full h-full object-cover"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setImageFile(null);
-                                setImagePreview('');
-                                setFormData({ ...formData, imageUrl: '' });
-                              }}
-                              className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )}
-                      </div>
+                      )}
+                      
+                      {/* New Image Previews */}
+                      {imagePreviews.length > 0 && (
+                        <div className="grid grid-cols-3 gap-4 mb-4">
+                          {imagePreviews.map((preview, idx) => (
+                            <div key={idx} className="relative w-full h-40 rounded-xl overflow-hidden border-2 border-blue-200">
+                              <img
+                                src={preview}
+                                alt={`New ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeImage(idx)}
+                                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                              <div className="absolute bottom-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                                New
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {/* Upload Button */}
+                      {(formData.images.length + imageFiles.length) < 5 && (
+                        <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors cursor-pointer">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handleImageChange}
+                            className="hidden"
+                            id="image-upload"
+                          />
+                          <label htmlFor="image-upload" className="cursor-pointer">
+                            <Upload className="w-12 h-12 text-slate-400 mx-auto mb-2" />
+                            <p className="text-sm text-slate-600">Click to upload images</p>
+                            <p className="text-xs text-slate-400 mt-1">PNG, JPG up to 5MB each ({formData.images.length + imageFiles.length}/5)</p>
+                          </label>
+                        </div>
+                      )}
                     </div>
 
                     {/* Title */}
