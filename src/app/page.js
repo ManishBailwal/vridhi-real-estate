@@ -1,6 +1,7 @@
 // app/page.jsx
 import dynamic from 'next/dynamic';
 import { HeroSection } from "@/components/Hero";
+import Slider from '@/components/Slider';
 
 // Lazy load below-the-fold components for better LCP
 // Remove ssr: false since we're in a Server Component
@@ -49,22 +50,25 @@ export default function HomePage() {
       {/* 1. Hero Section - Critical, loaded immediately */}
       <HeroSection />
 
-      {/* 2. Featured Properties Section - Lazy loaded */}
+      {/* 2. Image Slider - Critical, loaded immediately */}
+      <Slider />
+
+      {/* 3. Featured Properties Section - Lazy loaded */}
       <FeaturedProperties />
 
-      {/* 3. Featured Projects Section - Lazy loaded */}
+      {/* 4. Featured Projects Section - Lazy loaded */}
       <FeaturedProjects />
 
-      {/* 4. Popular Localities Section - Lazy loaded */}
+      {/* 5. Popular Localities Section - Lazy loaded */}
       <PopularLocalities />
 
-      {/* 5. Services Section - Lazy loaded */}
+      {/* 6. Services Section - Lazy loaded */}
       <ServicesSection />
 
-      {/* 6. About Section - Lazy loaded */}
+      {/* 7. About Section - Lazy loaded */}
       <AboutSection />
 
-      {/* 7. Testimonials Section - Lazy loaded */}
+      {/* 8. Testimonials Section - Lazy loaded */}
       <TestimonialsSection />
     </div>
   );
