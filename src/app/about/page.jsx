@@ -36,7 +36,7 @@ export default function AboutPage() {
       {/* 2. Our Story & Mission Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Image Column */}
+          
           <div className="overflow-hidden rounded-lg shadow-lg">
             <Image
               src="https://placehold.co/600x400/F8F9FA/1B263B?text=Our+Story" // Placeholder image related to company history/location
