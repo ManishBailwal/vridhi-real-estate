@@ -51,6 +51,7 @@ export function Footer() {
               <li><Link href="/about" className="text-slate-200 hover:text-white transition">About Us</Link></li>
               <li><Link href="/agents" className="text-slate-200 hover:text-white transition">Our Agents</Link></li>
               <li><Link href="/contact" className="text-slate-200 hover:text-white transition">Contact</Link></li>
+              <li><Link href="/emi-calculator" className="text-slate-200 hover:text-white transition">EMI Calculator</Link></li>
             </ul>
           </div>
 

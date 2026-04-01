@@ -128,12 +128,12 @@ const PropertyCard = ({ property, showPrice = false }) => {
             </button>
 
             {/* Property Image */}
-            <div className="relative h-96">
+       <div className="relative w-full bg-black flex items-center justify-center" style={{ height: "500px" }}>
               <img
-                src={images[currentImageIndex]}
-                alt={property.title}
-                className="w-full h-full object-cover"
-              />
+  src={images[currentImageIndex]}
+  alt={property.title}
+  className="max-h-full max-w-full object-contain"
+/>
               
               {/* Image Navigation Arrows */}
               {images.length > 1 && (
