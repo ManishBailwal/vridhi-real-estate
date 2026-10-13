@@ -9,13 +9,13 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBsvPv8KzmdVWTzSP5wYUaDmq-eKbuoQZw",
-  authDomain: "vridhi-real-estate.firebaseapp.com",
-  projectId: "vridhi-real-estate",
-  storageBucket: "vridhi-real-estate.firebasestorage.app",
-  messagingSenderId: "440791844975",
-  appId: "1:440791844975:web:b190c6993b486ae9cbe59a",
-  measurementId: "G-PC7JWGMWQW"
+  apiKey: "AIzaSyBdePCQ42nVUlA8tGplmPezELeJq0Brjqw",
+  authDomain: "vridhi-real-estate-fbe03.firebaseapp.com",
+  projectId: "vridhi-real-estate-fbe03",
+  storageBucket: "vridhi-real-estate-fbe03.firebasestorage.app",
+  messagingSenderId: "965976125906",
+  appId: "1:965976125906:web:2fb5ebaeaa07a23047d80b",
+  measurementId: "G-L91759KK0X"
 };
 
 // Initialize Firebase

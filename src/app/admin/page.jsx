@@ -8,6 +8,11 @@ import { Lock, Mail, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  
+  sendEmailVerification,
+  signOut,
+} from 'firebase/auth';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -17,21 +22,46 @@ export default function AdminLoginPage() {
   const router = useRouter();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+  e.preventDefault();
+  setError('');
+  setLoading(true);
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push('/admin/dashboard');
-    } catch (err) {
-      setError('Invalid email or password. Please try again.');
-      console.error('Login error:', err);
-    } finally {
-      setLoading(false);
+  try {
+    const credential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // Refresh the user's profile from Firebase.
+await credential.user.reload();
+
+// console.log('Email:', credential.user.email);
+// console.log('Email verified:', credential.user.emailVerified);
+
+    if (!credential.user.emailVerified) {
+      await sendEmailVerification(credential.user);
+
+      setError(
+        'Verification email sent. Please check your inbox and spam folder, click the verification link, then sign in again.'
+      );
+
+      await signOut(auth);
+      return;
     }
-  };
 
+    router.push('/admin/dashboard');
+  } catch (err) {
+    console.error('Login error:', err);
+    setError(
+      err.code === 'auth/too-many-requests'
+        ? 'Too many attempts. Please try again later.'
+        : 'Unable to sign in or send verification email. Please try again.'
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
