@@ -1,191 +1,339 @@
 // components/PropertyCard.jsx
 "use client";
 
-import { Home, BedDouble, Bath, Maximize2, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState } from "react";
+import {
+  Home,
+  BedDouble,
+  Bath,
+  Maximize2,
+  ArrowRight,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+} from "lucide-react";
+
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop";
 
 export function PropertyCard({ property, showPrice = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  // Handle both single imageUrl and multiple images array
-  const images = property.images && property.images.length > 0 
-    ? property.images 
-    : [property.image || property.imageUrl || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop'];
-  
-  const imageSrc = images[0];
 
-  const hasBedrooms = property.bedrooms !== null && property.bedrooms !== undefined && property.bedrooms > 0;
-  const hasBathrooms = property.bathrooms !== null && property.bathrooms !== undefined && property.bathrooms > 0;
+  const hasBedrooms =
+    property.bedrooms !== null &&
+    property.bedrooms !== undefined &&
+    property.bedrooms !== "" &&
+    Number(property.bedrooms) > 0;
+
+  const hasBathrooms =
+    property.bathrooms !== null &&
+    property.bathrooms !== undefined &&
+    property.bathrooms !== "" &&
+    Number(property.bathrooms) > 0;
+
+  // Support multiple images and legacy single-image fields.
+  const images = (
+    Array.isArray(property.images) && property.images.length > 0
+      ? property.images
+      : [property.image, property.imageUrl]
+  ).filter(
+    (image) => typeof image === "string" && image.trim() !== ""
+  );
+
+  const imageSrc = images[0] || FALLBACK_IMAGE;
+
+  const hasArea =
+    property.area !== null &&
+    property.area !== undefined &&
+    property.area !== "";
+
+  const formattedPrice =
+    property.price !== null &&
+    property.price !== undefined &&
+    property.price !== "" &&
+    Number.isFinite(Number(property.price))
+      ? Number(property.price).toLocaleString("en-IN")
+      : null;
 
   const nextImage = (e) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+
+    if (images.length > 1) {
+      setCurrentImageIndex(
+        (prev) => (prev + 1) % images.length
+      );
+    }
   };
 
   const prevImage = (e) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+
+    if (images.length > 1) {
+      setCurrentImageIndex(
+        (prev) => (prev - 1 + images.length) % images.length
+      );
+    }
+  };
+
+  const openModal = () => {
+    setCurrentImageIndex(0);
+    setShowModal(true);
   };
 
   return (
     <>
+      {/* Property Card */}
       <div
-        className="relative overflow-hidden rounded-2xl shadow-lg group cursor-pointer max-w-md"
+        className="relative w-full overflow-hidden rounded-2xl bg-white shadow-md transition-shadow duration-300 hover:shadow-xl group cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setShowModal(true)}
+        onClick={openModal}
       >
         {/* Property Image */}
-        <div className="relative h-64 overflow-hidden">
+        <div className="relative h-52 overflow-hidden bg-slate-100 sm:h-60">
           <img
             src={imageSrc}
-            alt={property.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            alt={property.title || "Property"}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = FALLBACK_IMAGE;
             }}
           />
 
+          {/* Image Count */}
+          {images.length > 1 && (
+            <div className="absolute bottom-3 right-3 rounded-full bg-black/70 px-2.5 py-1 text-xs text-white">
+              {images.length} photos
+            </div>
+          )}
+
           {/* Sold Badge */}
           {property.sold && (
-            <div className="absolute top-4 left-4 bg-slate-900 text-white px-4 py-1 rounded text-sm font-semibold shadow-lg">
+            <div className="absolute left-3 top-3 rounded bg-slate-900 px-3 py-1 text-xs font-semibold text-white shadow-md">
               SOLD
             </div>
           )}
 
-          {/* Navigation Arrow - appears on hover */}
+          {/* Featured Badge */}
+          {property.featured && (
+            <div className="absolute right-3 top-3 rounded bg-amber-500 px-2.5 py-1 text-xs font-semibold text-white shadow-md">
+              FEATURED
+            </div>
+          )}
+
+          {/* Hover Arrow */}
           <div
-            className={`absolute top-1/2 right-6 -translate-y-1/2 bg-amber-500 rounded-full p-3 shadow-xl transition-all duration-300 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-              }`}
+            className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-amber-500 p-3 shadow-lg transition-all duration-300 ${
+              isHovered
+                ? "translate-x-0 opacity-100"
+                : "translate-x-4 opacity-0"
+            }`}
           >
-            <ArrowRight className="w-5 h-5 text-white" />
+            <ArrowRight className="h-5 w-5 text-white" />
           </div>
         </div>
 
         {/* Property Details */}
-        <div className="bg-white p-6">
-          {/* Title and Price Row */}
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-xl font-bold text-gray-900">{property.title}</h3>
-            {showPrice && property.price ? (
-              <span className="text-xl font-bold text-amber-500">₹{property.price?.toLocaleString?.() ?? property.price}</span>
-            ) : (
-              <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Contact for Price</span>
-            )}
+        <div className="bg-white p-4">
+          {/* Title */}
+          <h3 className="mb-2 line-clamp-2 break-words text-base font-semibold text-slate-900">
+            {property.title || "Untitled Property"}
+          </h3>
+
+          {/* Property Type and Price */}
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              {property.propertyType && (
+                <span className="inline-block max-w-full truncate rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800">
+                  {property.propertyType}
+                </span>
+              )}
+            </div>
+
+            <div className="shrink-0">
+              {showPrice && formattedPrice !== null ? (
+                <span className="text-base font-bold text-blue-600">
+                  ₹{formattedPrice}
+                </span>
+              ) : (
+                <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-800">
+                  Contact for Price
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* Address */}
-          <p className="text-slate-600 mb-6">{property.address}</p>
+          {/* Address and Description */}
+          {(property.address || property.description) && (
+            <div className="mb-3 border-t border-slate-200 pt-3">
+              {property.address && (
+                <p className="mb-2 flex items-center gap-1.5 text-sm text-slate-600">
+                  <MapPin className="h-4 w-4 shrink-0 text-blue-500" />
+                  <span className="truncate">
+                    {property.address}
+                  </span>
+                </p>
+              )}
+
+              {property.description && (
+                <p className="line-clamp-2 text-xs leading-5 text-slate-600">
+                  {property.description}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Property Features */}
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200">
-            {/* Bedrooms */}
-            <div className="flex flex-col items-start">
-              <BedDouble className="w-5 h-5 text-slate-600 mb-2" />
-              <span className="text-sm font-semibold text-slate-900">
-                {hasBedrooms ? `${property.bedrooms} Bedrooms` : '-'}
-              </span>
-            </div>
+          {(hasBedrooms || hasBathrooms || hasArea) && (
+            <div
+              className={`grid gap-2 border-t border-slate-200 pt-3 ${
+                hasBedrooms && hasBathrooms
+                  ? "grid-cols-3"
+                  : hasBedrooms || hasBathrooms
+                    ? "grid-cols-2"
+                    : "grid-cols-1"
+              }`}
+            >
+              {hasBedrooms && (
+                <div className="flex min-w-0 flex-col items-start">
+                  <BedDouble className="mb-1 h-4 w-4 text-slate-500" />
+                  <span className="text-xs font-medium text-slate-800">
+                    {property.bedrooms} Bedrooms
+                  </span>
+                </div>
+              )}
 
-            {/* Bathrooms */}
-            <div className="flex flex-col items-start">
-              <Bath className="w-5 h-5 text-slate-600 mb-2" />
-              <span className="text-sm font-semibold text-slate-900">
-                {hasBathrooms ? `${property.bathrooms} Bathrooms` : '-'}
-              </span>
-            </div>
+              {hasBathrooms && (
+                <div className="flex min-w-0 flex-col items-start">
+                  <Bath className="mb-1 h-4 w-4 text-slate-500" />
+                  <span className="text-xs font-medium text-slate-800">
+                    {property.bathrooms} Bathrooms
+                  </span>
+                </div>
+              )}
 
-            {/* Area */}
-            <div className="flex flex-col items-start">
-              <Maximize2 className="w-5 h-5 text-slate-600 mb-2" />
-              <span className="text-sm font-semibold text-slate-900">{property.area ?? '-'}m²</span>
+              {hasArea && (
+                <div className="flex min-w-0 flex-col items-start">
+                  <Maximize2 className="mb-1 h-4 w-4 text-slate-500" />
+                  <span className="text-xs font-medium text-slate-800">
+                    {property.area} m²
+                  </span>
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
       </div>
 
-      {/* Property Detail Modal */}
+      {/* Property Details Modal */}
       {showModal && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
+              type="button"
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all"
+              aria-label="Close property details"
+              className="absolute right-4 top-4 z-20 rounded-full bg-white/90 p-2 shadow-lg transition-colors hover:bg-white"
             >
-              <X className="w-6 h-6 text-slate-900" />
+              <X className="h-6 w-6 text-slate-900" />
             </button>
 
-            {/* Property Image */}
-            <div className="relative h-96">
-              <img
-                src={images[currentImageIndex]}
-                alt={property.title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop';
-                }}
-              />
-              
-              {/* Image Navigation Arrows */}
+            {/* Main Property Image */}
+            <div className="relative flex h-64 w-full items-center justify-center bg-slate-100 sm:h-96 md:h-[500px]">
+              {images.length > 0 ? (
+                <img
+                  src={images[currentImageIndex] || FALLBACK_IMAGE}
+                  alt={property.title || "Property"}
+                  className="max-h-full max-w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = FALLBACK_IMAGE;
+                  }}
+                />
+              ) : (
+                <div className="flex flex-col items-center gap-3 text-slate-500">
+                  <Home className="h-16 w-16" />
+                  <span>No image available</span>
+                </div>
+              )}
+
+              {/* Image Navigation */}
               {images.length > 1 && (
                 <>
                   <button
+                    type="button"
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all z-10"
+                    aria-label="Previous image"
+                    className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-lg transition-colors hover:bg-white"
                   >
-                    <ChevronLeft className="w-6 h-6 text-slate-900" />
+                    <ChevronLeft className="h-6 w-6 text-slate-900" />
                   </button>
+
                   <button
+                    type="button"
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all z-10"
+                    aria-label="Next image"
+                    className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-lg transition-colors hover:bg-white"
                   >
-                    <ChevronRight className="w-6 h-6 text-slate-900" />
+                    <ChevronRight className="h-6 w-6 text-slate-900" />
                   </button>
-                  
-                  {/* Image Counter */}
-                  <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+
+                  <div className="absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-sm text-white">
                     {currentImageIndex + 1} / {images.length}
                   </div>
                 </>
               )}
-              
+
+              {/* Sold Badge */}
               {property.sold && (
-                <div className="absolute top-4 left-4 bg-slate-900 text-white px-6 py-2 rounded-lg text-lg font-bold shadow-lg">
+                <div className="absolute left-4 top-4 rounded-lg bg-slate-900 px-5 py-2 text-base font-bold text-white shadow-lg">
                   SOLD
                 </div>
               )}
+
+              {/* Featured Badge */}
+              {property.featured && (
+                <div className="absolute left-4 top-16 rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+                  FEATURED
+                </div>
+              )}
             </div>
-            
+
             {/* Image Thumbnails */}
             {images.length > 1 && (
-              <div className="px-8 py-4 bg-slate-50 border-b">
+              <div className="border-b bg-slate-50 px-4 py-4 sm:px-8">
                 <div className="flex gap-2 overflow-x-auto">
                   {images.map((img, idx) => (
                     <button
-                      key={idx}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentImageIndex(idx);
-                      }}
-                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                        idx === currentImageIndex ? 'border-amber-500 scale-105' : 'border-slate-200 hover:border-slate-300'
+                      type="button"
+                      key={`${img}-${idx}`}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      aria-label={`View image ${idx + 1}`}
+                      className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all ${
+                        idx === currentImageIndex
+                          ? "scale-105 border-amber-500"
+                          : "border-slate-200 hover:border-slate-300"
                       }`}
                     >
                       <img
                         src={img}
-                        alt={`Thumbnail ${idx + 1}`}
-                        className="w-full h-full object-cover"
+                        alt={`Property image ${idx + 1}`}
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = FALLBACK_IMAGE;
+                        }}
                       />
                     </button>
                   ))}
@@ -194,59 +342,133 @@ export function PropertyCard({ property, showPrice = false }) {
             )}
 
             {/* Property Details */}
-            <div className="p-8">
-              {/* Title and Price */}
-              <div className="flex justify-between items-start mb-6 pb-6 border-b border-slate-200">
-                <div>
-                  <h2 className="text-3xl font-bold text-slate-900 mb-2">{property.title}</h2>
-                  <p className="text-lg text-slate-600 flex items-center gap-2">
-                    <Home className="w-5 h-5" />
-                    {property.address}
+            <div className="p-5 sm:p-8">
+              {/* Title, Address and Price */}
+              <div className="mb-6 flex flex-col items-start justify-between gap-4 border-b border-slate-200 pb-6 sm:flex-row">
+                <div className="min-w-0">
+                  <h2 className="mb-2 break-words text-2xl font-bold text-slate-900 sm:text-3xl">
+                    {property.title || "Untitled Property"}
+                  </h2>
+
+                  {property.address && (
+                    <p className="flex items-start gap-2 text-base text-slate-600 sm:text-lg">
+                      <MapPin className="mt-1 h-5 w-5 shrink-0 text-blue-500" />
+                      <span>{property.address}</span>
+                    </p>
+                  )}
+                </div>
+
+                <div className="shrink-0 sm:text-right">
+                  <p className="mb-1 text-sm text-slate-600">Price</p>
+
+                  {showPrice && formattedPrice !== null ? (
+                    <p className="text-2xl font-bold text-blue-600 sm:text-3xl">
+                      ₹{formattedPrice}
+                    </p>
+                  ) : (
+                    <p className="inline-block rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-800">
+                      Contact for Price
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Property Type and Transaction Type */}
+              {(property.propertyType || property.transactionType) && (
+                <div className="mb-6 flex w-full flex-wrap items-center gap-3">
+                  {property.propertyType && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-slate-500">
+                        Type:
+                      </span>
+                      <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-sm font-medium text-amber-800">
+                        {property.propertyType}
+                      </span>
+                    </div>
+                  )}
+
+                  {property.transactionType && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-slate-500">
+                        Transaction:
+                      </span>
+                      <span className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700">
+                        {property.transactionType}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Property Description */}
+              {property.description && (
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    Property Description
+                  </h3>
+
+                  <p className="mt-2 whitespace-pre-line break-words text-sm leading-7 text-slate-600 sm:text-base">
+                    {property.description}
                   </p>
                 </div>
-                {showPrice && property.price ? (
-                  <div className="text-right">
-                    <p className="text-sm text-slate-600 mb-1">Price</p>
-                    <p className="text-3xl font-bold text-amber-500">₹{property.price?.toLocaleString?.() ?? property.price}</p>
-                  </div>
-                ) : (
-                  <div className="text-right">
-                    <p className="text-sm text-slate-600 mb-1">Price</p>
-                    <p className="text-lg font-semibold text-slate-500">Contact for Price</p>
-                  </div>
-                )}
-              </div>
+              )}
 
               {/* Features Grid */}
-              <div className="grid grid-cols-3 gap-6 mb-6">
-                <div className="bg-slate-50 rounded-xl p-6 text-center">
-                  <BedDouble className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-slate-900 mb-1">{hasBedrooms ? property.bedrooms : '-'}</p>
-                  <p className="text-sm text-slate-600">Bedrooms</p>
+              {(hasBedrooms || hasBathrooms || hasArea) && (
+                <div
+                  className={`mb-8 grid grid-cols-1 gap-4 sm:gap-6 ${
+                    hasBedrooms && hasBathrooms
+                      ? "sm:grid-cols-3"
+                      : hasBedrooms || hasBathrooms
+                        ? "sm:grid-cols-2"
+                        : "sm:grid-cols-1"
+                  }`}
+                >
+                  {hasBedrooms && (
+                    <div className="rounded-xl bg-slate-50 p-5 text-center sm:p-6">
+                      <BedDouble className="mx-auto mb-3 h-8 w-8 text-blue-500" />
+                      <p className="mb-1 text-2xl font-bold text-slate-900">
+                        {property.bedrooms}
+                      </p>
+                      <p className="text-sm text-slate-600">Bedrooms</p>
+                    </div>
+                  )}
+
+                  {hasBathrooms && (
+                    <div className="rounded-xl bg-slate-50 p-5 text-center sm:p-6">
+                      <Bath className="mx-auto mb-3 h-8 w-8 text-blue-500" />
+                      <p className="mb-1 text-2xl font-bold text-slate-900">
+                        {property.bathrooms}
+                      </p>
+                      <p className="text-sm text-slate-600">Bathrooms</p>
+                    </div>
+                  )}
+
+                  {hasArea && (
+                    <div className="rounded-xl bg-slate-50 p-5 text-center sm:p-6">
+                      <Maximize2 className="mx-auto mb-3 h-8 w-8 text-blue-500" />
+                      <p className="mb-1 text-2xl font-bold text-slate-900">
+                        {property.area}
+                      </p>
+                      <p className="text-sm text-slate-600">Area</p>
+                    </div>
+                  )}
                 </div>
-                <div className="bg-slate-50 rounded-xl p-6 text-center">
-                  <Bath className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-slate-900 mb-1">{hasBathrooms ? property.bathrooms : '-'}</p>
-                  <p className="text-sm text-slate-600">Bathrooms</p>
-                </div>
-                <div className="bg-slate-50 rounded-xl p-6 text-center">
-                  <Maximize2 className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-slate-900 mb-1">{property.area ?? '-'}</p>
-                  <p className="text-sm text-slate-600">Sq. Yards</p>
-                </div>
-              </div>
+              )}
 
               {/* Action Buttons */}
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <a
                   href="/contact"
-                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-6 rounded-xl transition-colors text-center"
+                  className="flex-1 rounded-xl bg-amber-500 px-6 py-4 text-center font-bold text-white transition-colors hover:bg-amber-600"
                 >
                   Contact Us
                 </a>
+
                 <button
+                  type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-6 py-4 border-2 border-slate-300 hover:border-slate-400 rounded-xl font-semibold text-slate-700 transition-colors"
+                  className="rounded-xl border-2 border-slate-300 px-6 py-4 font-semibold text-slate-700 transition-colors hover:border-slate-400"
                 >
                   Close
                 </button>

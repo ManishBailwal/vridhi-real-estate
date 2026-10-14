@@ -8,8 +8,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const localities = [
   {
     id: 1,
-    name: "Selakui, Dehradun",
-    image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop"
+    name: "Rajpur Road, Dehradun",
+    image: "https://dyimg1.realestateindia.com/prop_images/575025/349768_12.jpg"
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const localities = [
   {
     id: 4,
     name: "Prem Nagar, Dehradun",
-    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=600&fit=crop"
+    image: "https://alchetron.com/cdn/prem-nagar-uttarakhand-ce04cd53-f5d1-4b7a-ae03-53f2ca77530-resize-750.jpeg"
   },
   {
     id: 5,
