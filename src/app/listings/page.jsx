@@ -11,6 +11,7 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  MapPin,
 } from "lucide-react";
 
 import { db } from "@/lib/firebase";
@@ -164,12 +165,10 @@ const PropertyCard = ({ property, showPrice = false }) => {
     {(property.address || property.description) && (
       <div className="border-t border-slate-200 pt-3 mb-3">
         {property.address && (
-          <p className="text-sm text-slate-600 mb-2 line-clamp-1">
-            <span className="font-medium text-slate-700">
-              Location:
-            </span>{" "}
-            {property.address}
-          </p>
+          <p className="flex items-center gap-1.5 text-sm text-slate-600 mb-2 line-clamp-1">
+  <MapPin className="w-4 h-4 shrink-0 text-blue-500" />
+  <span className="truncate">{property.address}</span>
+</p>
         )}
 
         {property.description && (
