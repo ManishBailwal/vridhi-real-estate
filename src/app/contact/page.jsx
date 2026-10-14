@@ -82,10 +82,7 @@ export default function ContactPage() {
                 <p className="text-slate-600">
                   {SITE.address}
                 </p>
-                {/* Add a placeholder for Map */}
-                <div className="mt-4 text-sm text-amber-600 underline hover:text-amber-500 cursor-pointer">
-                  View on Map (Integration required)
-                </div>
+                
               </div>
             </div>
             <div className="flex items-start gap-4">
