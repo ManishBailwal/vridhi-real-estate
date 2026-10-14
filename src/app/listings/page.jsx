@@ -248,7 +248,7 @@ const PropertyCard = ({ property, showPrice = false }) => {
             </button>
 
             {/* Main Property Image */}
-            <div className="relative w-full h-64 sm:h-96 md:h-[500px] bg-black flex items-center justify-center">
+            <div className="relative w-full h-64 sm:h-96 md:h-[500px] bg-slate-100 flex items-center justify-center">
               {images.length > 0 ? (
                 <img
                   src={images[currentImageIndex]}
@@ -256,7 +256,7 @@ const PropertyCard = ({ property, showPrice = false }) => {
                   className="max-h-full max-w-full object-contain"
                 />
               ) : (
-                <div className="text-white flex flex-col items-center gap-3">
+                <div className="text-slate-500 flex flex-col items-center gap-3">
                   <Home className="w-16 h-16" />
                   <span>No image available</span>
                 </div>
