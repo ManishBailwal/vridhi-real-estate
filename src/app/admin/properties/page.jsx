@@ -23,6 +23,9 @@ export default function PropertiesManagementPage() {
 
   const [formData, setFormData] = useState({
     title: '',
+    propertyType: 'Residential',
+transactionType: 'New Property',
+description: '',
     address: '',
     price: '',
     bedrooms: '',
@@ -148,6 +151,9 @@ export default function PropertiesManagementPage() {
       // Reset form
       setFormData({
         title: '',
+        propertyType: 'Residential',
+transactionType: 'New Property',
+description: '',
         address: '',
         price: '',
         bedrooms: '',
@@ -176,7 +182,11 @@ export default function PropertiesManagementPage() {
   const handleEdit = (property) => {
     setFormData({
       title: property.title,
+      propertyType: property.propertyType || 'Residential',
+transactionType: property.transactionType || 'New Property',
+description: property.description || '',
       address: property.address,
+
       price: property.price?.toString() || '',
       bedrooms: property.bedrooms?.toString() || '',
       bathrooms: property.bathrooms?.toString() || '',
@@ -223,6 +233,9 @@ export default function PropertiesManagementPage() {
   const handleCancel = () => {
     setFormData({
       title: '',
+      propertyType: 'Residential',
+transactionType: 'New Property',
+description: '',
       address: '',
       price: '',
       bedrooms: '',
@@ -367,9 +380,69 @@ export default function PropertiesManagementPage() {
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         placeholder="e.g., Luxury Villa in Sahaspur"
+                         className="placeholder:text-slate-400"
                         required
                       />
                     </div>
+
+                    {/* Property Type */}
+<div className="space-y-2">
+  <Label htmlFor="propertyType">Property Type *</Label>
+  <select
+    id="propertyType"
+    value={formData.propertyType}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        propertyType: e.target.value,
+      })
+    }
+    required
+    className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm"
+  >
+    <option value="Residential">Residential</option>
+    <option value="Commercial">Commercial</option>
+  </select>
+</div>
+
+{/* Transaction Type */}
+<div className="space-y-2">
+  <Label htmlFor="transactionType">Transaction Type *</Label>
+  <select
+    id="transactionType"
+    value={formData.transactionType}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        transactionType: e.target.value,
+      })
+    }
+    required
+    className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm"
+  >
+    <option value="New Property">New Property</option>
+    <option value="Resale">Resale</option>
+  </select>
+</div>
+
+{/* Property Description */}
+<div className="space-y-2">
+  <Label htmlFor="description">Property Description *</Label>
+  <Textarea
+    id="description"
+    value={formData.description}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        description: e.target.value,
+      })
+    }
+    placeholder="Describe the property, its features, and other details..."
+     className="placeholder:text-slate-400"
+    rows={5}
+    required
+  />
+</div>
 
                     {/* Address */}
                     <div className="space-y-2">
@@ -379,6 +452,7 @@ export default function PropertiesManagementPage() {
                         value={formData.address}
                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                         placeholder="e.g., Sahaspur, Dehradun"
+                         className="placeholder:text-slate-400"
                         required
                       />
                     </div>
@@ -392,6 +466,7 @@ export default function PropertiesManagementPage() {
                         value={formData.price}
                         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                         placeholder="e.g., 5700000"
+                         className="placeholder:text-slate-400"
                       />
                     </div>
 
@@ -405,6 +480,7 @@ export default function PropertiesManagementPage() {
                           value={formData.bedrooms}
                           onChange={(e) => setFormData({ ...formData, bedrooms: e.target.value })}
                           placeholder="e.g., 3"
+                           className="placeholder:text-slate-400"
                         />
                       </div>
                       <div className="space-y-2">
@@ -415,6 +491,7 @@ export default function PropertiesManagementPage() {
                           value={formData.bathrooms}
                           onChange={(e) => setFormData({ ...formData, bathrooms: e.target.value })}
                           placeholder="e.g., 2"
+                           className="placeholder:text-slate-400"
                         />
                       </div>
                       <div className="space-y-2">
@@ -425,6 +502,7 @@ export default function PropertiesManagementPage() {
                           value={formData.area}
                           onChange={(e) => setFormData({ ...formData, area: e.target.value })}
                           placeholder="e.g., 150"
+                           className="placeholder:text-slate-400"
                           required
                         />
                       </div>
