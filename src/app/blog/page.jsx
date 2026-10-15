@@ -33,7 +33,7 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-20">
+      <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <BookOpen className="w-12 h-12" />
@@ -46,7 +46,7 @@ export default function BlogPage() {
       </section>
 
       {/* Blogs Grid Section */}
-      <section className="py-16">
+      <section className="py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20">
