@@ -30,7 +30,7 @@ import {
   Settings,
   ShoppingBag,
   Briefcase,
-  Building
+  Building,
 } from 'lucide-react'
 
 export function Header() {
@@ -38,10 +38,16 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
+  // Keep the header dark blue on the blog listing and detail pages.
+  const isBlogPage =
+    pathname === '/blog' || pathname.startsWith('/blog/')
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
+
+    handleScroll()
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -52,31 +58,29 @@ export function Header() {
     { href: '/rent', label: 'Rent', icon: Key },
     { href: '/sell', label: 'Sell', icon: DollarSign },
     { href: '/manage', label: 'Manage', icon: Settings },
-    
     { href: '/listings', label: 'Listings', icon: Building },
     { href: '/about', label: 'About Us', icon: Info },
     { href: '/services', label: 'Loans', icon: Briefcase },
-    {href: '/vastu', label: 'Vastu', icon: Compass},
-  
-    
-      { href: '/contact', label: 'Contact', icon: Mail },
-    
+    { href: '/vastu', label: 'Vastu', icon: Compass },
+    { href: '/contact', label: 'Contact', icon: Mail },
   ]
 
   const leftNav = navLinks.slice(0, 5)
   const rightNav = navLinks.slice(5)
 
+  // Blog pages always have a solid background.
+  // Other pages become solid after scrolling.
+  const headerClassName = `fixed top-0 z-50 w-full border-b transition-all duration-300 ${
+    isBlogPage || isScrolled
+      ? 'border-blue-800/30 bg-blue-900 shadow-lg'
+      : 'border-transparent bg-transparent'
+  }`
+
   return (
-    <header
-      className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
-        isScrolled
-          ? 'border-blue-800/30 bg-blue-900 shadow-lg'
-          : 'border-transparent bg-transparent'
-      }`}
-    >
+    <header className={headerClassName}>
       <div className="container mx-auto px-4">
 
-        {/* ================= MOBILE + TABLET ================= */}
+        {/* MOBILE + TABLET */}
         <div className="flex h-20 items-center justify-between lg:hidden">
 
           {/* Logo */}
@@ -89,20 +93,31 @@ export function Header() {
           </Link>
 
           {/* Mobile Menu */}
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <Sheet
+            open={isMobileMenuOpen}
+            onOpenChange={setIsMobileMenuOpen}
+          >
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
+              <Button
+                variant="outline"
+                size="icon"
+                aria-label="Open navigation menu"
+              >
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="bg-gradient-to-b from-blue-900 to-indigo-900 border-white/10">
+            <SheetContent
+              side="right"
+              className="border-white/10 bg-gradient-to-b from-blue-900 to-indigo-900"
+            >
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
                   <div className="rounded-lg bg-amber-500 p-1.5 shadow-md">
                     <Landmark className="h-4 w-4 text-white" />
                   </div>
-                  <span className="text-lg font-bold text-white font-serif">
+
+                  <span className="font-serif text-lg font-bold text-white">
                     {SITE.title}
                   </span>
                 </SheetTitle>
@@ -110,13 +125,16 @@ export function Header() {
 
               <nav className="mt-8 flex flex-col space-y-4">
                 {navLinks.map((link) => {
-                  const isActive = pathname === link.href
+                  const isActive =
+                    pathname === link.href ||
+                    pathname.startsWith(`${link.href}/`)
+
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-md ${
+                      className={`flex items-center gap-2 rounded-md px-3 py-2 ${
                         isActive
                           ? 'bg-amber-500/20 text-amber-400'
                           : 'text-slate-200 hover:bg-amber-500/20 hover:text-white'
@@ -131,7 +149,7 @@ export function Header() {
                 <Link
                   href="/request-listing"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2 bg-amber-500 text-white rounded-md"
+                  className="flex items-center gap-2 rounded-md bg-amber-500 px-3 py-2 text-white hover:bg-amber-600"
                 >
                   <PlusCircle className="h-4 w-4" />
                   List Property
@@ -141,20 +159,23 @@ export function Header() {
           </Sheet>
         </div>
 
-        {/* ================= DESKTOP ================= */}
-        <div className="hidden lg:flex h-24 items-center justify-between relative">
+        {/* DESKTOP */}
+        <div className="relative hidden h-24 items-center justify-between lg:flex">
 
           {/* LEFT NAV */}
           <NavigationMenu>
             <NavigationMenuList>
               {leftNav.map((link) => {
-                const isActive = pathname === link.href
+                const isActive =
+                  pathname === link.href ||
+                  pathname.startsWith(`${link.href}/`)
+
                 return (
                   <NavigationMenuItem key={link.href}>
                     <NavigationMenuLink asChild>
                       <Link
                         href={link.href}
-                        className={`px-3 py-2 text-sm font-medium ${
+                        className={`px-3 py-2 text-sm font-medium transition-colors ${
                           isActive
                             ? 'text-amber-500'
                             : 'text-white hover:text-amber-500'
@@ -171,7 +192,7 @@ export function Header() {
 
           {/* CENTER LOGO */}
           <div className="absolute left-1/2 -translate-x-1/2">
-            <Link href="/">
+            <Link href="/" aria-label="Go to homepage">
               <img
                 src="/logo.png"
                 alt={SITE.title}
@@ -180,18 +201,21 @@ export function Header() {
             </Link>
           </div>
 
-          {/* RIGHT NAV */}
+          {/* RIGHT NAV + CTA */}
           <div className="flex items-center gap-4">
             <NavigationMenu>
               <NavigationMenuList>
                 {rightNav.map((link) => {
-                  const isActive = pathname === link.href
+                  const isActive =
+                    pathname === link.href ||
+                    pathname.startsWith(`${link.href}/`)
+
                   return (
                     <NavigationMenuItem key={link.href}>
                       <NavigationMenuLink asChild>
                         <Link
                           href={link.href}
-                          className={`px-3 py-2 text-sm font-medium ${
+                          className={`px-3 py-2 text-sm font-medium transition-colors ${
                             isActive
                               ? 'text-amber-500'
                               : 'text-white hover:text-amber-500'
@@ -207,12 +231,11 @@ export function Header() {
             </NavigationMenu>
 
             <Link href="/request-listing">
-              <Button className="bg-amber-500 hover:bg-amber-600 text-white">
+              <Button className="bg-amber-500 text-white hover:bg-amber-600">
                 List Property
               </Button>
             </Link>
           </div>
-
         </div>
       </div>
     </header>

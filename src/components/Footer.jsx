@@ -62,6 +62,7 @@ export function Footer() {
               <li><Link href="/sellers-guide" className="text-slate-200 hover:text-white transition">Seller&apos;s Guide</Link></li>
               <li><Link href="/market-report" className="text-slate-200 hover:text-white transition">Market Report</Link></li>
               <li><Link href="/privacy-policy" className="text-slate-200 hover:text-white transition">Privacy Policy</Link></li>
+              <li><Link href="/blog" className="text-slate-200 hover:text-white transition">Blogs</Link></li>
             </ul>
           </div>
 

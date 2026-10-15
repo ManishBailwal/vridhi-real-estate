@@ -4,7 +4,7 @@ import React from 'react';
 
 const Slider = () => {
   const images = [
-    '/slider/1.jpeg',
+   
     '/slider/2.jpeg',
     '/slider/3.jpeg',
   ];
