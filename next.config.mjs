@@ -1,9 +1,9 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
   reactCompiler: true,
+
   images: {
-    // Allow external placeholder images used as fallbacks (e.g. placehold.co)
     remotePatterns: [
       {
         protocol: 'https',
@@ -18,7 +18,6 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    // Allow SVGs from trusted remote sources (these placeholders return SVG)
     dangerouslyAllowSVG: true,
   },
 };
